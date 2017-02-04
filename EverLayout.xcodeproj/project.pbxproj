@@ -37,7 +37,6 @@
 		2D57FA881E46182E0043B897 /* EverLayoutLabelPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA831E46182E0043B897 /* EverLayoutLabelPropertyResolver.swift */; };
 		2D57FA891E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA841E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift */; };
 		2D57FA8B1E46183C0043B897 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */; };
-		2D57FA8D1E46184C0043B897 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D57FA8C1E46184C0043B897 /* SocketIO.framework */; };
 		2D57FA8F1E4618610043B897 /* EverLayoutUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8E1E4618610043B897 /* EverLayoutUpdater.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +73,6 @@
 		2D57FA831E46182E0043B897 /* EverLayoutLabelPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutLabelPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA841E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutButtonPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		2D57FA8C1E46184C0043B897 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SocketIO.framework; sourceTree = "<group>"; };
 		2D57FA8E1E4618610043B897 /* EverLayoutUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutUpdater.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,7 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D57FA8D1E46184C0043B897 /* SocketIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +90,6 @@
 		2D57FA371E46171E0043B897 = {
 			isa = PBXGroup;
 			children = (
-				2D57FA8C1E46184C0043B897 /* SocketIO.framework */,
 				2D57FA431E46171F0043B897 /* EverLayout */,
 				2D57FA421E46171F0043B897 /* Products */,
 			);
@@ -423,6 +419,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/EverLayout/Resources",
 				);
 				INFOPLIST_FILE = EverLayout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -448,6 +445,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/EverLayout/Resources",
 				);
 				INFOPLIST_FILE = EverLayout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -478,6 +476,7 @@
 				2D57FA4B1E46171F0043B897 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
