@@ -22,7 +22,7 @@
 
 import UIKit
 
-class EverLayout: NSObject
+public class EverLayout: NSObject
 {
     private(set) public var layoutName : String!
     private(set) public var layoutData : Data?
@@ -36,7 +36,7 @@ class EverLayout: NSObject
         return (self.target != nil) && (self.host != nil) && (self.layoutData != nil) && (self.configuration != nil)
     }
     
-    convenience init (layoutName : String , layoutData : Data , configuration : EverLayoutConfiguration = EverLayoutConfiguration.default)
+    public convenience init (layoutName : String , layoutData : Data , configuration : EverLayoutConfiguration = EverLayoutConfiguration.default)
     {
         self.init()
         
@@ -93,7 +93,7 @@ class EverLayout: NSObject
     /// - Parameters:
     ///   - view: The superview
     ///   - host: The object which contains properties referenced in the layout
-    public func buildLayout (onView view : UIView , host : NSObject?)
+    public func buildLayout (onView view : UIView , host : NSObject? = nil)
     {
         self.target = view
         self.host = host ?? view
@@ -223,15 +223,7 @@ class EverLayout: NSObject
     /// Clear the layout on the view
     public func clear ()
     {
-        func _clearSubviews (target : UIView)
-        {
-            target.removeFromSuperview()
-            
-            target.subviews.forEach({_clearSubviews(target: $0)})
-        }
-        
-        // Remove all the subviews of the target from their superview
-        self.target?.subviews.forEach({_clearSubviews(target: $0)})
+        self.target?.subviews.forEach({$0.removeFromSuperview()})
         
         // Clear the view index
         self.viewIndex.clear()

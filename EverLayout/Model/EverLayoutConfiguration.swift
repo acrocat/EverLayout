@@ -22,7 +22,7 @@
 
 import UIKit
 
-struct EverLayoutConfiguration
+public struct EverLayoutConfiguration
 {
     static let `default` = EverLayoutConfiguration(
         indexParser: EverLayoutIndexJSONParser(),
