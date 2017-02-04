@@ -1,0 +1,10 @@
+framework module SocketIO {
+  umbrella header "SocketIO.h"
+
+  export *
+  module * { export * }
+}
+
+module SocketIO.Swift {
+    header "SocketIO-Swift.h"
+}
