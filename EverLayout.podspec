@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = "An AutoLayout solution for iOS"
+  s.description  = "EverLayout is a DSL based layout builder for iOS. It harnesses the strengths of Apple's AutoLayout, whilst clearing controller clutter and facilitating Live Reload!"
 
   s.homepage     = "https://github.com/acrocat/EverLayout"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -77,7 +77,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/acrocat/EverLayout.git", :commit => "f9f4ab4448494c6401914a272445a272b52a4919" }
+  s.source       = { :git => "https://github.com/acrocat/EverLayout.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

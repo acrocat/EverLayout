@@ -61,7 +61,7 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
     /// - Returns: Entire view id as a string
     private func rawViewId (source: Any?) -> String?
     {
-        guard let source = self.parseSource(source: source) else { return nil }
+        guard let source = self.parseSource(source: source as Any) else { return nil }
         
         return source.dictionary?[EverLayoutViewJSONParser.KEY_ID]?.string
     }
