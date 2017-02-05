@@ -51,6 +51,9 @@ public class EverLayoutView: EverLayoutRawData
     // The model that this view is a child of in the index
     public var parentModel : EverLayoutView?
     
+    // The view is at the root of a layout file
+    public var isRoot : Bool = false
+    
     convenience init (rawData : Any , parser : EverLayoutViewParser)
     {
         self.init(withRawData: rawData)

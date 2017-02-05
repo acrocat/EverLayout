@@ -29,8 +29,8 @@ public class EverLayout: NSObject
     private(set) public var configuration : EverLayoutConfiguration?
     
     public let viewIndex : EverLayoutViewIndex = EverLayoutViewIndex()
-    private(set) public var target : UIView?
-    private(set) public var host : NSObject?
+    private(set) public weak var target : UIView?
+    private(set) public weak var host : NSObject?
     
     private var buildable : Bool {
         return (self.target != nil) && (self.host != nil) && (self.layoutData != nil) && (self.configuration != nil)
@@ -136,6 +136,7 @@ public class EverLayout: NSObject
         // Add the root view to the view index
         if let rootView = self.configuration?.indexParser.rootView(source: self.layoutData!)
         {
+            rootView.isRoot = true
             _addViewToViewIndex(viewModel: rootView)
         }
     }
@@ -151,30 +152,34 @@ public class EverLayout: NSObject
             
             var target : UIView?
             
-            if viewModel.isNewElement
+            if viewModel.isRoot
             {
-                // The target view does not exist in the host and needs to be created
-                // If the viewModel specifies a superclass, the new view should try to instantiate that
-                target = viewModel.templateClass?.init() ?? UIView()
+                viewModel.target = self.target
             }
             else
             {
-                // The target view is supposed to be a property of the host.
-                if let view = self.host!.property(forKey: viewId) as? UIView
+                if viewModel.isNewElement
                 {
-                    target = view
+                    // The target view does not exist in the host and needs to be created
+                    // If the viewModel specifies a superclass, the new view should try to instantiate that
+                    target = viewModel.templateClass?.init() ?? UIView()
                 }
                 else
                 {
-                     // The host does not seem to have the property we're looking for.
-                    // Throw a warning
-                    
-                    target = self.target
+                    // The target view is supposed to be a property of the host.
+                    if let view = self.host!.property(forKey: viewId) as? UIView
+                    {
+                        target = view
+                    }
+                    else
+                    {
+                        EverLayoutReporter.default.warning(message: "Unable to find target view:- \(viewId)")
+                    }
                 }
+                
+                target?.translatesAutoresizingMaskIntoConstraints = false
+                viewModel.target = target
             }
-            
-            target?.translatesAutoresizingMaskIntoConstraints = false
-            viewModel.target = target
         }
     }
     
