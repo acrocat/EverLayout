@@ -228,7 +228,11 @@ public class EverLayout: NSObject
     /// Clear the layout on the view
     public func clear ()
     {
-        self.target?.subviews.forEach({$0.removeFromSuperview()})
+        // As long as the viewModel isn't the root of the layout, we need to remove each view from its superview
+        for (_ , viewModel) in self.viewIndex.contents
+        {
+            if viewModel?.isRoot == false { viewModel?.target?.removeFromSuperview() }
+        }
         
         // Clear the view index
         self.viewIndex.clear()
