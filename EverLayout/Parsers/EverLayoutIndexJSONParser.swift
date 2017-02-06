@@ -31,7 +31,8 @@ class EverLayoutIndexJSONParser : NSObject , EverLayoutIndexParser
     public func rootView(source: Any) -> EverLayoutView?
     {
         guard let source = source as? Data else { return nil }
+        guard let jsonSource = JSON(data: source).dictionary else { return nil }
         
-        return EverLayoutView(rawData: JSON(data: source) , parser: EverLayoutViewJSONParser())
+        return EverLayoutView(rawData: ("root" , jsonSource) , parser: EverLayoutViewJSONParser())
     }
 }
