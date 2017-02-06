@@ -63,7 +63,7 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
         ">=": NSLayoutRelation.greaterThanOrEqual
     ]
     
-    public static let ATTRIBUTE_SEPARATOR : Character = ":"
+    public static let ATTRIBUTE_SEPARATOR : Character = " "
     public static let VIEW_ATTRIBUTE_SEPARATOR : Character = "."
     
     public static let MOD_TARGET_VIEW : Character = "@"
