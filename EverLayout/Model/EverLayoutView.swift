@@ -38,6 +38,9 @@ public class EverLayoutView: EverLayoutRawData
     public var properties : [EverLayoutViewProperty?]? {
         return self.viewParser.viewProperties(source: self.rawData)
     }
+    public var zIndex : Int {
+        return self.viewParser.viewZIndex(source: self.rawData) ?? 0
+    }
     public var isNewElement : Bool {
         return self.viewParser.isNewElement(source: self.rawData)
     }

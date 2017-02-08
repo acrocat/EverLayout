@@ -45,6 +45,7 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
     public static let KEY_PROPERTIES : String = "properties"
     public static let KEY_D_PROPERTIES : String = "dProperties"
     public static let KEY_SUBVIEWS : String = "views"
+    public static let KEY_Z_INDEX : String = "z-index"
     
     // Modifier characters
     public static let MOD_NEW_ELEM : Character = "!"
@@ -152,6 +153,18 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
             
             return EverLayoutConstraint(rawData: (key , value) , parser: EverLayoutConstraintJSONParser())
         })
+    }
+    
+    /// Get the z-index of this view
+    ///
+    /// - Parameter source: raw view model data
+    /// - Returns: z-index of view as Int
+    func viewZIndex (source: Any) -> Int
+    {
+        guard let source = self.parseSource(source: source) else { return 0 }
+        guard let zIndex = source.viewData[EverLayoutViewJSONParser.KEY_Z_INDEX]?.string else { return 0 }
+        
+        return Int(zIndex ) ?? 0
     }
     
     /// Parse subviews

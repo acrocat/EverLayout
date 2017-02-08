@@ -34,6 +34,8 @@ public protocol EverLayoutViewParser : EverLayoutParser
     
     func viewProperties (source : Any) -> [EverLayoutViewProperty?]?
     
+    func viewZIndex (source : Any) -> Int
+    
     func viewConstraints (source : Any) -> [EverLayoutConstraint?]?
     
     func subviews (source : Any) -> [Any]?
