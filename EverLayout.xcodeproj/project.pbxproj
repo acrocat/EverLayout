@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D25780E1E4B719E0005BDA0 /* EverLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */; };
 		2D57FA461E46171F0043B897 /* EverLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D57FA441E46171F0043B897 /* EverLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D57FA551E4617BB0043B897 /* UIColor+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA521E4617BB0043B897 /* UIColor+EverLayout.swift */; };
 		2D57FA561E4617BB0043B897 /* NSObject+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA531E4617BB0043B897 /* NSObject+EverLayout.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutDelegate.swift; sourceTree = "<group>"; };
 		2D57FA411E46171F0043B897 /* EverLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EverLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D57FA441E46171F0043B897 /* EverLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EverLayout.h; sourceTree = "<group>"; };
 		2D57FA451E46171F0043B897 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				2D57FA781E46181C0043B897 /* EverLayoutViewParser.swift */,
 				2D57FA791E46181C0043B897 /* EverLayoutConstraintParser.swift */,
 				2D57FA7A1E46181C0043B897 /* EverLayoutPropertyParser.swift */,
+				2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				2D57FA861E46182E0043B897 /* EverLayoutImageViewPropertyResolver.swift in Sources */,
 				2D57FA6C1E4617C80043B897 /* EverLayoutConstraintContext.swift in Sources */,
 				2D57FA551E4617BB0043B897 /* UIColor+EverLayout.swift in Sources */,
+				2D25780E1E4B719E0005BDA0 /* EverLayoutDelegate.swift in Sources */,
 				2D57FA731E4617D40043B897 /* EverLayoutViewJSONParser.swift in Sources */,
 				2D57FA7C1E46181C0043B897 /* EverLayoutIndexParser.swift in Sources */,
 				2D57FA571E4617BB0043B897 /* String+EverLayout.swift in Sources */,

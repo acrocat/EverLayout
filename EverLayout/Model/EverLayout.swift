@@ -24,6 +24,8 @@ import UIKit
 
 public class EverLayout: NSObject
 {
+    public weak var delegate : EverLayoutDelegate?
+    
     private(set) public var layoutName : String!
     private(set) public var layoutData : Data?
     private(set) public var configuration : EverLayoutConfiguration?
@@ -103,6 +105,9 @@ public class EverLayout: NSObject
         self.buildViewHierarchy()
         self.addViewConstraints()
         self.addViewProperties()
+        
+        // Tell the delegate that the layout loaded
+        self.delegate?.layout(self , didLoadOnView: view)
     }
     
     /// Fill the viewIndex with models for each view in the layout data
