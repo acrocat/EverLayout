@@ -44,7 +44,9 @@ public class EverLayoutUpdater: NSObject
             
             if let layoutName = data.dictionary?["layoutName"]?.string , let layoutData = data.dictionary?["layout"]
             {
-                try? self.postLayoutUpdate(layoutName: layoutName, layoutData: layoutData.rawData())
+                let layoutName : NSString = layoutName as NSString
+                
+                try? self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: layoutData.rawData())
             }
         }
         
