@@ -30,19 +30,56 @@ public class EverLayout: ELRawData
     private(set) public var viewIndex : ViewIndex?
     private(set) public var target : UIView?
     private(set) public var host : NSObject?
+    private(set) public var injectedData : [String:String] = [:]
     
     public var layoutName : String? {
         return self.indexParser.layoutName(source: self.rawData)
     }
     
+    public convenience init (layoutData : Any)
+    {
+        self.init(withRawData: layoutData)
+        
+        self.subscribeToLayoutUpdates()
+    }
+    
+    /// Starts the process of parsing the layout data and building a view hierarchy on the view argument
+    ///
+    /// - Parameters:
+    ///   - view: root view
+    ///   - host: object containing values references in the layout data
     public func buildLayout (onView view : UIView , host: NSObject? = nil)
     {
         self.target = view
         self.host = host ?? view
         
+        self._injectDataIntoLayout()
         self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, host: host)
+    }
+    
+    /// Set data to be injected when the layout is built
+    ///
+    /// - Parameter data: Dictionary of key-values for variables in the layout
+    public func injectDataIntoLayout (data : [String : String])
+    {
+        // Store this data so that it can be applied when the layout in created
+        for (name , val) in data
+        {
+            self.injectedData[name] = val
+        }
+    }
+    
+    /// Replacing variable placeholders in the layout data with the values supplied
+    private func _injectDataIntoLayout ()
+    {
+        var dataAsString = String(data: self.rawData as! Data, encoding: .utf8)
         
-        self.subscribeToLayoutUpdates()
+        for (varName , value) in self.injectedData
+        {
+            dataAsString = dataAsString?.replacingOccurrences(of: "#{\(varName)}", with: value)
+        }
+        
+        self.rawData = dataAsString?.data(using: .utf8)
     }
     
     deinit
