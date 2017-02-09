@@ -22,28 +22,14 @@
 
 import UIKit
 
-public class EverLayoutViewProperty: EverLayoutRawData
+public enum ELConstratintMultiplierSign : Character
 {
-    public var propertyParser : EverLayoutPropertyParser!
-    
-    public var name : String? {
-        return self.propertyParser.propertyName(source: self.rawData)
-    }
-    public var value : String? {
-        return self.propertyParser.propertyValue(source: self.rawData)
-    }
-    
-    convenience init (rawData : Any , parser : EverLayoutPropertyParser)
-    {
-        self.init(withRawData : rawData)
-        
-        self.propertyParser = parser
-    }
-    
-    public func applyToView (viewModel : EverLayoutView)
-    {
-        guard let target = viewModel.target else { return }
-        
-        target.applyViewProperty(viewProperty: self)
-    }
+    case multiply = "*"
+    case divide = "/"
+}
+
+public struct ELConstraintMultiplier
+{
+    var value : CGFloat
+    var sign : ELConstratintMultiplierSign
 }

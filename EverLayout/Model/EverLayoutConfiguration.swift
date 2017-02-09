@@ -25,20 +25,20 @@ import UIKit
 public struct EverLayoutConfiguration
 {
     static let `default` = EverLayoutConfiguration(
-        indexParser: EverLayoutIndexJSONParser(),
-        viewParser: EverLayoutViewJSONParser(),
-        constraintParser: EverLayoutConstraintJSONParser(),
-        propertyParser: EverLayoutPropertyJSONParser()
+        indexParser: LayoutIndexJSONParser(),
+        viewParser: LayoutViewJSONParser(),
+        constraintParser: LayoutConstraintJSONParser(),
+        propertyParser: LayoutPropertyJSONParser()
     )
     
     // ---------------------------------------------------------------------------
     // MARK: - Parsing
     // ---------------------------------------------------------------------------
     
-    let indexParser : EverLayoutIndexParser
-    let viewParser : EverLayoutViewParser
-    let constraintParser : EverLayoutConstraintParser
-    let propertyParser : EverLayoutPropertyParser
+    let indexParser : LayoutIndexParser
+    let viewParser : LayoutViewParser
+    let constraintParser : LayoutConstraintParser
+    let propertyParser : LayoutPropertyParser
     
     // ---------------------------------------------------------------------------
     // ---------------------------------------------------------------------------

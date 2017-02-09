@@ -22,16 +22,39 @@
 
 import UIKit
 
-public enum EverLayoutConstraintConstantSign : Character
+public class ViewIndex: NSObject
 {
-    case positive = "+"
-    case negative = "-"
-    case inset = "<"
-    case offset = ">"
-}
-
-public struct EverLayoutConstraintConstant
-{
-    var value : CGFloat
-    var sign : EverLayoutConstraintConstantSign
+    private(set) public var contents : [String : ELView?] = [:]
+    
+    public func view (forKey key : String) -> UIView?
+    {
+        return self.contents[key]??.target
+    }
+    
+    public func viewModel (forKey key : String) -> ELView?
+    {
+        if let viewModel = self.contents[key]
+        {
+            return viewModel
+        }
+        
+        return nil
+    }
+    
+    public func addViewModel (forKey key : String , viewModel : ELView)
+    {
+        if self.contents.keys.contains(key)
+        {
+            // Element with this key already exists in the contents
+        }
+        else
+        {
+            self.contents[key] = viewModel
+        }
+    }
+    
+    public func clear ()
+    {
+        self.contents = [:]
+    }
 }

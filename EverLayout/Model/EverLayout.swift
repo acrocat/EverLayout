@@ -22,12 +22,12 @@
 
 import UIKit
 
-public class EverLayout: EverLayoutRawData
+public class EverLayout: ELRawData
 {
     public weak var delegate : EverLayoutDelegate?
-    public let indexParser : EverLayoutIndexParser = EverLayoutIndexJSONParser()
+    public let indexParser : LayoutIndexParser = LayoutIndexJSONParser()
     
-    private(set) public var viewIndex : EverLayoutViewIndex?
+    private(set) public var viewIndex : ViewIndex?
     private(set) public var target : UIView?
     private(set) public var host : NSObject?
     

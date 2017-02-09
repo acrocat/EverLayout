@@ -22,9 +22,9 @@
 
 import UIKit
 
-public class EverLayoutConstraint: EverLayoutRawData
+public class ELConstraint: ELRawData
 {
-    public var constraintParser : EverLayoutConstraintParser!
+    public var constraintParser : LayoutConstraintParser!
     
     public var leftSideAttributes : [NSLayoutAttribute?]? {
         return self.constraintParser.leftSideAttributes(source: self.rawData)
@@ -32,11 +32,11 @@ public class EverLayoutConstraint: EverLayoutRawData
     public var rightSideAttribute : NSLayoutAttribute? {
         return self.constraintParser.rightSideAttribute(source: self.rawData)
     }
-    public var constant : EverLayoutConstraintConstant {
-        return self.constraintParser.constant(source: self.rawData) ?? EverLayoutConstraintConstant(value: 0, sign: .positive)
+    public var constant : ELConstraintConstant {
+        return self.constraintParser.constant(source: self.rawData) ?? ELConstraintConstant(value: 0, sign: .positive)
     }
-    public var multiplier : EverLayoutConstraintMultiplier {
-        return self.constraintParser.multiplier(source: self.rawData) ?? EverLayoutConstraintMultiplier(value: 1, sign: .multiply)
+    public var multiplier : ELConstraintMultiplier {
+        return self.constraintParser.multiplier(source: self.rawData) ?? ELConstraintMultiplier(value: 1, sign: .multiply)
     }
     public var priority : CGFloat? {
         return self.constraintParser.priority(source: self.rawData)
@@ -48,14 +48,14 @@ public class EverLayoutConstraint: EverLayoutRawData
         return self.constraintParser.comparableViewReference(source: self.rawData)
     }
     
-    convenience init (rawData : Any , parser : EverLayoutConstraintParser)
+    convenience init (rawData : Any , parser : LayoutConstraintParser)
     {
         self.init(withRawData : rawData)
         
         self.constraintParser = parser
     }
     
-    public func establisConstaints (onView view : EverLayoutView , withViewIndex viewIndex : EverLayoutViewIndex)
+    public func establisConstaints (onView view : ELView , withViewIndex viewIndex : ViewIndex)
     {
         guard let target = view.target else { return }
         
@@ -65,7 +65,7 @@ public class EverLayoutConstraint: EverLayoutRawData
             
             // Properties of the constraints can be changed or inferred to make writing them easier. For this we
             // will use a EverLayoutConstraintContext
-            let context = EverLayoutConstraintContext(
+            let context = ELConstraintContext(
                 _target: target,
                 _leftSideAttribute: attr,
                 _relation: self.relation,

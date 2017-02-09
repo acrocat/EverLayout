@@ -22,34 +22,39 @@
 
 import UIKit
 
-public class EverLayoutScrollViewPropertyResolver: EverLayoutPropertyResolver
+public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
 {
-    override public var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
-        
-        props["contentInset"] = {source in
-            if let scrollView = self.view as? UIScrollView
-            {
-                scrollView.contentInset = EverLayoutPropertyResolver.edgeInset(source: source) ?? .zero
-            }
-        }
-        props["contentOffset"] = {source in
-            if let scrollView = self.view as? UIScrollView
-            {
-                scrollView.contentOffset = EverLayoutPropertyResolver.point(source: source) ?? .zero
-            }
-        }
-        
-        return props
-    }
-}
-
-extension UIScrollView
-{
-    override open func applyViewProperty(viewProperty: EverLayoutViewProperty)
+    public static let KEY_LAYOUT_NAME : String = "name"
+    public static let KEY_LAYOUT_ROOT : String = "root"
+    
+    private func parseData (source : Any) -> [String : JSON]?
     {
-        super.applyViewProperty(viewProperty: viewProperty)
+        guard let source = source as? Data else { return nil }
         
-        EverLayoutScrollViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
+        return JSON(data: source).dictionary
+    }
+    
+    public func layoutName (source : Any) -> String?
+    {
+        guard let source = self.parseData(source: source) else { return nil }
+        
+        return source[LayoutIndexJSONParser.KEY_LAYOUT_NAME]?.string
+    }
+    
+    public func sublayouts (source : Any) -> [Any]?
+    {
+        return nil
+    }
+    
+    /// Parse the rootView from the raw index model
+    ///
+    /// - Parameter source: raw data of the entire view index
+    /// - Returns: EverLayoutView model of the root view
+    public func rootView(source: Any) -> ELView?
+    {
+        guard let source = self.parseData(source: source) else { return nil }
+        guard let viewData = source[LayoutIndexJSONParser.KEY_LAYOUT_ROOT]?.dictionary else { return nil }
+        
+        return ELView(rawData: ("root" , viewData), parser: LayoutViewJSONParser())
     }
 }

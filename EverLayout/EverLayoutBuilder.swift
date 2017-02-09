@@ -39,9 +39,9 @@ class EverLayoutBuilder: NSObject
      - Add view properties
      */
  
-    static func buildLayout (_ layout : EverLayout , onView view : UIView , host : NSObject? = nil) -> EverLayoutViewIndex
+    static func buildLayout (_ layout : EverLayout , onView view : UIView , host : NSObject? = nil) -> ViewIndex
     {
-        var viewIndex : EverLayoutViewIndex = self.createViewIndex(layoutData: layout.rawData)
+        var viewIndex : ViewIndex = self.createViewIndex(layoutData: layout.rawData)
         
         self.createTargetViews(viewIndex: &viewIndex, rootView: view, host: host ?? view)
         self.buildViewHierarchy(viewIndex: &viewIndex)
@@ -52,11 +52,11 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Fill the viewIndex with models for each view in the layout data
-    private static func createViewIndex (layoutData : Any) -> EverLayoutViewIndex
+    private static func createViewIndex (layoutData : Any) -> ViewIndex
     {
-        var viewIndex : EverLayoutViewIndex = EverLayoutViewIndex()
+        var viewIndex : ViewIndex = ViewIndex()
         
-        func _addViewToViewIndex (viewModel : EverLayoutView , parentModel : EverLayoutView? = nil , viewIndex : inout EverLayoutViewIndex)
+        func _addViewToViewIndex (viewModel : ELView , parentModel : ELView? = nil , viewIndex : inout ViewIndex)
         {
             if let viewId = viewModel.id
             {
@@ -90,7 +90,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Create actual UIView instances for each view model in the index
-    private static func createTargetViews (viewIndex : inout EverLayoutViewIndex , rootView : UIView  , host : NSObject)
+    private static func createTargetViews (viewIndex : inout ViewIndex , rootView : UIView  , host : NSObject)
     {
         for (viewId , viewModel) in viewIndex.contents
         {
@@ -119,7 +119,7 @@ class EverLayoutBuilder: NSObject
                     }
                     else
                     {
-                        EverLayoutReporter.default.warning(message: "Unable to find target view:- \(viewId)")
+                        ELReporter.default.warning(message: "Unable to find target view:- \(viewId)")
                     }
                 }
                 
@@ -130,7 +130,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Add all UIView instances in the viewIndex as subviews of the target or of other models
-    private static func buildViewHierarchy (viewIndex : inout EverLayoutViewIndex)
+    private static func buildViewHierarchy (viewIndex : inout ViewIndex)
     {
         // Order the view index by z-index
         let sortedIndex = viewIndex.contents.values.sorted { (modelA, modelB) -> Bool in
@@ -155,7 +155,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Parse constraints from layoutData and add them to the views
-    private static func addViewConstraints (viewIndex : inout EverLayoutViewIndex)
+    private static func addViewConstraints (viewIndex : inout ViewIndex)
     {
         for (_ , viewModel) in viewIndex.contents
         {
@@ -165,7 +165,7 @@ class EverLayoutBuilder: NSObject
         }
     }
     
-    private static func addViewProperties (viewIndex : inout EverLayoutViewIndex)
+    private static func addViewProperties (viewIndex : inout ViewIndex)
     {
         for (_ , viewModel) in viewIndex.contents
         {

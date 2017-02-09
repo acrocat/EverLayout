@@ -22,25 +22,9 @@
 
 import UIKit
 
-class EverLayoutPropertyJSONParser: NSObject , EverLayoutPropertyParser
+public protocol LayoutPropertyParser : LayoutParser
 {
-    private func parseSource (source : Any) -> (lhs : String , rhs : String)?
-    {
-        guard let source = source as? (String , String) else { return nil }
-        
-        return (
-            lhs: source.0,
-            rhs: source.1
-        )
-    }
+    func propertyName (source : Any) -> String?
     
-    func propertyName (source: Any) -> String?
-    {
-        return self.parseSource(source: source)?.lhs
-    }
-    
-    func propertyValue (source: Any) -> String?
-    {
-        return self.parseSource(source: source)?.rhs
-    }
+    func propertyValue (source : Any) -> String?
 }

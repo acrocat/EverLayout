@@ -22,39 +22,34 @@
 
 import UIKit
 
-public class EverLayoutIndexJSONParser : NSObject , EverLayoutIndexParser
+public class ScrollViewPropertyResolver: PropertyResolver
 {
-    public static let KEY_LAYOUT_NAME : String = "name"
-    public static let KEY_LAYOUT_ROOT : String = "root"
-    
-    private func parseData (source : Any) -> [String : JSON]?
-    {
-        guard let source = source as? Data else { return nil }
+    override public var exposedProperties: [String : (String) -> Void] {
+        var props = super.exposedProperties
         
-        return JSON(data: source).dictionary
-    }
-    
-    public func layoutName (source : Any) -> String?
-    {
-        guard let source = self.parseData(source: source) else { return nil }
+        props["contentInset"] = {source in
+            if let scrollView = self.view as? UIScrollView
+            {
+                scrollView.contentInset = PropertyResolver.edgeInset(source: source) ?? .zero
+            }
+        }
+        props["contentOffset"] = {source in
+            if let scrollView = self.view as? UIScrollView
+            {
+                scrollView.contentOffset = PropertyResolver.point(source: source) ?? .zero
+            }
+        }
         
-        return source[EverLayoutIndexJSONParser.KEY_LAYOUT_NAME]?.string
+        return props
     }
-    
-    public func sublayouts (source : Any) -> [Any]?
+}
+
+extension UIScrollView
+{
+    override open func applyViewProperty(viewProperty: ELViewProperty)
     {
-        return nil
-    }
-    
-    /// Parse the rootView from the raw index model
-    ///
-    /// - Parameter source: raw data of the entire view index
-    /// - Returns: EverLayoutView model of the root view
-    public func rootView(source: Any) -> EverLayoutView?
-    {
-        guard let source = self.parseData(source: source) else { return nil }
-        guard let viewData = source[EverLayoutIndexJSONParser.KEY_LAYOUT_ROOT]?.dictionary else { return nil }
+        super.applyViewProperty(viewProperty: viewProperty)
         
-        return EverLayoutView(rawData: ("root" , viewData), parser: EverLayoutViewJSONParser())
+        ScrollViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
 }

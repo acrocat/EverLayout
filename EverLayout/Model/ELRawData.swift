@@ -22,11 +22,14 @@
 
 import UIKit
 
-public protocol EverLayoutIndexParser : EverLayoutParser
+public class ELRawData: NSObject
 {
-    func layoutName (source : Any) -> String?
+    public var rawData : Any!
     
-    func rootView (source : Any) -> EverLayoutView?
-    
-    func sublayouts (source : Any) -> [Any]?
+    public convenience init (withRawData rawData : Any)
+    {
+        self.init()
+        
+        self.rawData = rawData
+    }
 }

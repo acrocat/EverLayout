@@ -22,9 +22,9 @@
 
 import UIKit
 
-public class EverLayoutView: EverLayoutRawData
+public class ELView: ELRawData
 {
-    public var viewParser : EverLayoutViewParser!
+    public var viewParser : LayoutViewParser!
     
     public var id : String? {
         return self.viewParser.viewId(source: self.rawData)
@@ -32,10 +32,10 @@ public class EverLayoutView: EverLayoutRawData
     public var templateClass : UIView.Type? {
         return self.viewParser.viewSuperClass(source: self.rawData)
     }
-    public var constraints : [EverLayoutConstraint?]? {
+    public var constraints : [ELConstraint?]? {
         return self.viewParser.viewConstraints(source: self.rawData)
     }
-    public var properties : [EverLayoutViewProperty?]? {
+    public var properties : [ELViewProperty?]? {
         return self.viewParser.viewProperties(source: self.rawData)
     }
     public var zIndex : Int {
@@ -52,12 +52,12 @@ public class EverLayoutView: EverLayoutRawData
     public var target : UIView?
     
     // The model that this view is a child of in the index
-    public var parentModel : EverLayoutView?
+    public var parentModel : ELView?
     
     // The view is at the root of a layout file
     public var isRoot : Bool = false
     
-    convenience init (rawData : Any , parser : EverLayoutViewParser)
+    convenience init (rawData : Any , parser : LayoutViewParser)
     {
         self.init(withRawData: rawData)
         

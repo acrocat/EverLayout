@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EverLayoutLabelPropertyResolver: EverLayoutPropertyResolver
+class LabelPropertyResolver: PropertyResolver
 {
     // ---------------------------------------------------------------------------
     // MARK: - Enum Mapping
@@ -39,37 +39,37 @@ class EverLayoutLabelPropertyResolver: EverLayoutPropertyResolver
         props["text"] = {source in
             if let label = self.view as? UILabel
             {
-                label.text = EverLayoutPropertyResolver.string(value: source)
+                label.text = PropertyResolver.string(value: source)
             }
         }
         props["textColor"] = {source in
             if let label = self.view as? UILabel
             {
-                label.textColor = EverLayoutPropertyResolver.color(value: source)
+                label.textColor = PropertyResolver.color(value: source)
             }
         }
         props["lineBreakMode"] = {source in
             if let label = self.view as? UILabel
             {
-                label.lineBreakMode = EverLayoutLabelPropertyResolver.lineBreakMode(source: source) ?? .byTruncatingTail
+                label.lineBreakMode = LabelPropertyResolver.lineBreakMode(source: source) ?? .byTruncatingTail
             }
         }
         props["textAlignment"] = {source in
             if let label = self.view as? UILabel
             {
-                label.textAlignment = EverLayoutLabelPropertyResolver.textAlignment(source: source) ?? .left
+                label.textAlignment = LabelPropertyResolver.textAlignment(source: source) ?? .left
             }
         }
         props["numberOfLines"] = {source in
             if let label = self.view as? UILabel
             {
-                label.numberOfLines = Int(EverLayoutPropertyResolver.number(value: source) ?? 1)
+                label.numberOfLines = Int(PropertyResolver.number(value: source) ?? 1)
             }
         }
         props["fontSize"] = {source in
             if let label = self.view as? UILabel
             {
-                label.font = label.font.withSize(EverLayoutPropertyResolver.number(value: source) ?? UIFont.systemFontSize)
+                label.font = label.font.withSize(PropertyResolver.number(value: source) ?? UIFont.systemFontSize)
             }
         }
         
@@ -93,10 +93,10 @@ class EverLayoutLabelPropertyResolver: EverLayoutPropertyResolver
 
 extension UILabel
 {
-    override open func applyViewProperty(viewProperty: EverLayoutViewProperty)
+    override open func applyViewProperty(viewProperty: ELViewProperty)
     {
         super.applyViewProperty(viewProperty: viewProperty)
         
-        EverLayoutLabelPropertyResolver(view: self).apply(viewProperty: viewProperty)
+        LabelPropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
 }

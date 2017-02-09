@@ -22,5 +22,28 @@
 
 import UIKit
 
-public protocol EverLayoutParser
-{}
+public class ELViewProperty: ELRawData
+{
+    public var propertyParser : LayoutPropertyParser!
+    
+    public var name : String? {
+        return self.propertyParser.propertyName(source: self.rawData)
+    }
+    public var value : String? {
+        return self.propertyParser.propertyValue(source: self.rawData)
+    }
+    
+    convenience init (rawData : Any , parser : LayoutPropertyParser)
+    {
+        self.init(withRawData : rawData)
+        
+        self.propertyParser = parser
+    }
+    
+    public func applyToView (viewModel : ELView)
+    {
+        guard let target = viewModel.target else { return }
+        
+        target.applyViewProperty(viewProperty: self)
+    }
+}

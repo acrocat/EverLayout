@@ -22,39 +22,25 @@
 
 import UIKit
 
-public class EverLayoutViewIndex: NSObject
+class LayoutPropertyJSONParser: NSObject , LayoutPropertyParser
 {
-    private(set) public var contents : [String : EverLayoutView?] = [:]
-    
-    public func view (forKey key : String) -> UIView?
+    private func parseSource (source : Any) -> (lhs : String , rhs : String)?
     {
-        return self.contents[key]??.target
-    }
-    
-    public func viewModel (forKey key : String) -> EverLayoutView?
-    {
-        if let viewModel = self.contents[key]
-        {
-            return viewModel
-        }
+        guard let source = source as? (String , String) else { return nil }
         
-        return nil
+        return (
+            lhs: source.0,
+            rhs: source.1
+        )
     }
     
-    public func addViewModel (forKey key : String , viewModel : EverLayoutView)
+    func propertyName (source: Any) -> String?
     {
-        if self.contents.keys.contains(key)
-        {
-            // Element with this key already exists in the contents
-        }
-        else
-        {
-            self.contents[key] = viewModel
-        }
+        return self.parseSource(source: source)?.lhs
     }
     
-    public func clear ()
+    func propertyValue (source: Any) -> String?
     {
-        self.contents = [:]
+        return self.parseSource(source: source)?.rhs
     }
 }

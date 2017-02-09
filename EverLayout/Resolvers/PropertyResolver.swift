@@ -22,7 +22,7 @@
 
 import UIKit
 
-public class EverLayoutPropertyResolver
+public class PropertyResolver
 {
     // ---------------------------------------------------------------------------
     // MARK: - Enum Mapping
@@ -59,30 +59,30 @@ public class EverLayoutPropertyResolver
     open var exposedProperties : [String : (String) -> Void] {
         return [
             "backgroundColor": {(source) in
-                self.view?.backgroundColor = EverLayoutPropertyResolver.color(value: source)
+                self.view?.backgroundColor = PropertyResolver.color(value: source)
             },
             "cornerRadius": {(source) in
-                self.view?.layer.cornerRadius = EverLayoutPropertyResolver.number(value: source) ?? 0
+                self.view?.layer.cornerRadius = PropertyResolver.number(value: source) ?? 0
             },
             "borderWidth": {source in
-                self.view?.layer.borderWidth = EverLayoutPropertyResolver.number(value: source) ?? 0
+                self.view?.layer.borderWidth = PropertyResolver.number(value: source) ?? 0
             },
             "borderColor": {source in
-                self.view?.layer.borderColor = EverLayoutPropertyResolver.color(value: source)?.cgColor
+                self.view?.layer.borderColor = PropertyResolver.color(value: source)?.cgColor
             },
             "alpha": {source in
-                self.view?.alpha = EverLayoutPropertyResolver.number(value: source) ?? 1
+                self.view?.alpha = PropertyResolver.number(value: source) ?? 1
             },
             "clipToBounds": {source in
-                self.view?.clipsToBounds = EverLayoutPropertyResolver.bool(value: source)
+                self.view?.clipsToBounds = PropertyResolver.bool(value: source)
             },
             "contentMode": {source in
-                self.view?.contentMode = EverLayoutPropertyResolver.contentMode(source: source) ?? .scaleToFill
+                self.view?.contentMode = PropertyResolver.contentMode(source: source) ?? .scaleToFill
             }
         ]
     }
     
-    open func apply (viewProperty : EverLayoutViewProperty)
+    open func apply (viewProperty : ELViewProperty)
     {
         guard let name = viewProperty.name , let value = viewProperty.value else { return }
         
@@ -153,9 +153,9 @@ public class EverLayoutPropertyResolver
 
 extension UIView
 {
-    open func applyViewProperty (viewProperty : EverLayoutViewProperty)
+    open func applyViewProperty (viewProperty : ELViewProperty)
     {
-        let resolver : EverLayoutPropertyResolver = EverLayoutPropertyResolver(view: self)
+        let resolver : PropertyResolver = PropertyResolver(view: self)
         
         resolver.apply(viewProperty: viewProperty)
     }

@@ -22,7 +22,7 @@
 
 import UIKit
 
-class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
+class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
 {
     /*
         Example constraints
@@ -90,7 +90,7 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
     private func parseSource (source : Any) -> (lhs : String , rhs : String)?
     {
         guard let source = source as? (String , String) else {
-            EverLayoutReporter.default.error(message: "Constraint source in unrecognized format.")
+            ELReporter.default.error(message: "Constraint source in unrecognized format.")
             return nil
         }
         
@@ -103,7 +103,7 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
     /// - Returns: [String] array of arguments
     private func parseArguments (fromString string : String) -> [String]?
     {
-        return string.components(separatedBy: String(EverLayoutConstraintJSONParser.ATTRIBUTE_SEPARATOR))
+        return string.components(separatedBy: String(LayoutConstraintJSONParser.ATTRIBUTE_SEPARATOR))
     }
 
     /// Finds the value for an argument, specified by its modifier character, if it exists
@@ -160,7 +160,7 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        return self.valueForArgument(withModCharacter: EverLayoutConstraintJSONParser.MOD_TARGET_VIEW, argumentString: source.rhs)
+        return self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_TARGET_VIEW, argumentString: source.rhs)
     }
     
     /// Name of target view. This will strip the mod character and the superclass if it's present
@@ -172,7 +172,7 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
         guard var targetViewId = self.parseTargetViewId(source: source) else { return nil }
         
         // The target view id may contain a right side attribute, we need to strip it
-        if let index = targetViewId.characters.index(of: EverLayoutConstraintJSONParser.VIEW_ATTRIBUTE_SEPARATOR)
+        if let index = targetViewId.characters.index(of: LayoutConstraintJSONParser.VIEW_ATTRIBUTE_SEPARATOR)
         {
             targetViewId = targetViewId.substring(to: index)
         }
@@ -195,11 +195,11 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
         
         for comp in comps
         {
-            if let attr = EverLayoutConstraintJSONParser.ATTRIBUTE_KEYS[comp]
+            if let attr = LayoutConstraintJSONParser.ATTRIBUTE_KEYS[comp]
             {
                 attrs.append(attr)
             }
-            else if let attr = EverLayoutConstraintJSONParser.COMPOUND_ATTRIBUTE_KEYS[comp]
+            else if let attr = LayoutConstraintJSONParser.COMPOUND_ATTRIBUTE_KEYS[comp]
             {
                 attrs.append(contentsOf: attr)
             }
@@ -217,9 +217,9 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
         guard let source = self.parseSource(source: source) else { return nil }
         
         // Relation is noted in the right hand side by the MOD_RELATION character
-        if let relation = self.valueForArgument(withModCharacter: EverLayoutConstraintJSONParser.MOD_RELATION, argumentString: source.rhs)
+        if let relation = self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_RELATION, argumentString: source.rhs)
         {
-            return EverLayoutConstraintJSONParser.RELATION_KEYS[relation]
+            return LayoutConstraintJSONParser.RELATION_KEYS[relation]
         }
         
         return nil
@@ -229,23 +229,23 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
     ///
     /// - Parameter source: raw constraint data
     /// - Returns: EverLayotuConstraintConstant
-    func constant (source: Any) -> EverLayoutConstraintConstant?
+    func constant (source: Any) -> ELConstraintConstant?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        let availableSigns = [EverLayoutConstraintJSONParser.MOD_POSITIVE_CONST , EverLayoutConstraintJSONParser.MOD_NEGATIVE_CONST , EverLayoutConstraintJSONParser.MOD_INSET_CONST , EverLayoutConstraintJSONParser.MOD_OFFSET_CONST]
+        let availableSigns = [LayoutConstraintJSONParser.MOD_POSITIVE_CONST , LayoutConstraintJSONParser.MOD_NEGATIVE_CONST , LayoutConstraintJSONParser.MOD_INSET_CONST , LayoutConstraintJSONParser.MOD_OFFSET_CONST]
         
         if let (mod , value) = self.valueForArgument(withModCharacters: availableSigns, argumentString: source.rhs)
         {
-            if let sign = EverLayoutConstraintConstantSign(rawValue: mod)
+            if let sign = ELConstraintConstantSign(rawValue: mod)
             {
                 if let value = value.toCGFloat()
                 {
-                    return EverLayoutConstraintConstant(value: value, sign: sign)
+                    return ELConstraintConstant(value: value, sign: sign)
                 }
                 else
                 {
-                    EverLayoutReporter.default.warning(message: "Invalid value for constant: \(value)")
+                    ELReporter.default.warning(message: "Invalid value for constant: \(value)")
                 }
             }
         }
@@ -257,19 +257,19 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
     ///
     /// - Parameter source: raw constraint data
     /// - Returns: CFloat for multiplier
-    func multiplier (source: Any) -> EverLayoutConstraintMultiplier?
+    func multiplier (source: Any) -> ELConstraintMultiplier?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        let availableSigns = [EverLayoutConstraintJSONParser.MOD_MULTIPLIER , EverLayoutConstraintJSONParser.MOD_DIVIDER]
+        let availableSigns = [LayoutConstraintJSONParser.MOD_MULTIPLIER , LayoutConstraintJSONParser.MOD_DIVIDER]
         
         if let (mod , value) = self.valueForArgument(withModCharacters: availableSigns, argumentString: source.rhs)
         {
-            if let sign = EverLayoutConstratintMultiplierSign(rawValue: mod)
+            if let sign = ELConstratintMultiplierSign(rawValue: mod)
             {
                 if let value = value.toCGFloat()
                 {
-                    return EverLayoutConstraintMultiplier(value: value, sign: sign)
+                    return ELConstraintMultiplier(value: value, sign: sign)
                 }
             }
         }
@@ -285,7 +285,7 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        if let priorityString = self.valueForArgument(withModCharacter: EverLayoutConstraintJSONParser.MOD_PRIORITY, argumentString: source.rhs)
+        if let priorityString = self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_PRIORITY, argumentString: source.rhs)
         {
             if let double = Double(priorityString)
             {
@@ -306,11 +306,11 @@ class EverLayoutConstraintJSONParser: NSObject , EverLayoutConstraintParser
         
         // A right side attribute is noted by appending the attribute name to the end of the target view's ID using 
         // VIEW_ATTRIBUTE_SEPARATOR
-        if let index = targetView.characters.index(of: EverLayoutConstraintJSONParser.VIEW_ATTRIBUTE_SEPARATOR)
+        if let index = targetView.characters.index(of: LayoutConstraintJSONParser.VIEW_ATTRIBUTE_SEPARATOR)
         {
             let attributeName = targetView.substring(from: targetView.index(after: index))
             
-            return EverLayoutConstraintJSONParser.ATTRIBUTE_KEYS[attributeName]
+            return LayoutConstraintJSONParser.ATTRIBUTE_KEYS[attributeName]
         }
         
         return nil

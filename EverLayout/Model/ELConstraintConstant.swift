@@ -22,14 +22,16 @@
 
 import UIKit
 
-public enum EverLayoutConstratintMultiplierSign : Character
+public enum ELConstraintConstantSign : Character
 {
-    case multiply = "*"
-    case divide = "/"
+    case positive = "+"
+    case negative = "-"
+    case inset = "<"
+    case offset = ">"
 }
 
-public struct EverLayoutConstraintMultiplier
+public struct ELConstraintConstant
 {
     var value : CGFloat
-    var sign : EverLayoutConstratintMultiplierSign
+    var sign : ELConstraintConstantSign
 }

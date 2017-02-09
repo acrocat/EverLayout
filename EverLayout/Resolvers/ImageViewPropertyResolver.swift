@@ -22,21 +22,34 @@
 
 import UIKit
 
-public protocol EverLayoutViewParser : EverLayoutParser
+public class ImageViewPropertyResolver: PropertyResolver
 {
-    func view (source : Any) -> EverLayoutView?
+    override public var exposedProperties: [String : (String) -> Void] {
+        var props = super.exposedProperties
+        
+        props["image"] = {(source) in
+            if let imageView = self.view as? UIImageView
+            {
+                imageView.image = ImageViewPropertyResolver.image(source: source)
+            }
+        }
+        
+        return props
+    }
     
-    func viewId (source : Any?) -> String?
-    
-    func viewSuperClass (source : Any?) -> UIView.Type?
-    
-    func isNewElement (source : Any?) -> Bool
-    
-    func viewProperties (source : Any) -> [EverLayoutViewProperty?]?
-    
-    func viewZIndex (source : Any) -> Int
-    
-    func viewConstraints (source : Any) -> [EverLayoutConstraint?]?
-    
-    func subviews (source : Any) -> [Any]?
+    static func image (source : String) -> UIImage?
+    {
+        return UIImage(named: source)
+    }
+}
+
+extension UIImageView
+{
+    override open func applyViewProperty(viewProperty: ELViewProperty)
+    {
+        super.applyViewProperty(viewProperty: viewProperty)
+        
+        let resolver : ImageViewPropertyResolver = ImageViewPropertyResolver(view: self)
+        resolver.apply(viewProperty: viewProperty)
+    }
 }

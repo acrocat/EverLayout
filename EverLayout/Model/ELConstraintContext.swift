@@ -22,7 +22,7 @@
 
 import UIKit
 
-struct EverLayoutConstraintContext
+struct ELConstraintContext
 {
     private static let INDEPENDANT_ATTRIBUTES : [NSLayoutAttribute] = [
         .width , .height
@@ -39,8 +39,8 @@ struct EverLayoutConstraintContext
     var _relation : NSLayoutRelation
     var _comparableView : UIView?
     var _rightSideAttribute : NSLayoutAttribute?
-    var _constant : EverLayoutConstraintConstant
-    var _multiplier : EverLayoutConstraintMultiplier
+    var _constant : ELConstraintConstant
+    var _multiplier : ELConstraintMultiplier
     
     var target : UIView {
         return self._target
@@ -60,28 +60,28 @@ struct EverLayoutConstraintContext
         return self._comparableView
     }
     var rightSideAttribute : NSLayoutAttribute? {
-        if EverLayoutConstraintContext.INDEPENDANT_ATTRIBUTES.contains(self.leftSideAttribute) && self._comparableView == nil
+        if ELConstraintContext.INDEPENDANT_ATTRIBUTES.contains(self.leftSideAttribute) && self._comparableView == nil
         {
             return .notAnAttribute
         }
         
         return self._rightSideAttribute
     }
-    var constant : EverLayoutConstraintConstant {
+    var constant : ELConstraintConstant {
         let sign = self._constant.sign
         var value = self._constant.value
         
         // If the constant is to inset and we are using a 'perspective inset' attribute, or offset and we are using 'perspective offset' attributes
         // then we should inverse the constant. Same if it is just a negative value
-        if (EverLayoutConstraintContext.PERSPECTIVE_INSET_ATTRIBUTES.contains(self.leftSideAttribute) && sign == .inset) || (EverLayoutConstraintContext.PERSPECTIVE_OFFSET_ATTRIBUTES.contains(self.leftSideAttribute) && sign == .offset) ||
+        if (ELConstraintContext.PERSPECTIVE_INSET_ATTRIBUTES.contains(self.leftSideAttribute) && sign == .inset) || (ELConstraintContext.PERSPECTIVE_OFFSET_ATTRIBUTES.contains(self.leftSideAttribute) && sign == .offset) ||
             (sign == .negative)
         {
             value *= -1
         }
         
-        return EverLayoutConstraintConstant(value: value, sign: sign)
+        return ELConstraintConstant(value: value, sign: sign)
     }
-    var multiplier : EverLayoutConstraintMultiplier {
+    var multiplier : ELConstraintMultiplier {
         let sign = self._multiplier.sign
         var value = self._multiplier.value
         
@@ -90,6 +90,6 @@ struct EverLayoutConstraintContext
             value = 1 / value
         }
         
-        return EverLayoutConstraintMultiplier(value: value, sign: sign)
+        return ELConstraintMultiplier(value: value, sign: sign)
     }
 }

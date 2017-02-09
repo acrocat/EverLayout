@@ -23,7 +23,7 @@
 import UIKit
 import SocketIO
 
-public class EverLayoutUpdater: NSObject
+public class EverLayoutBridge: NSObject
 {
     static var socket : SocketIOClient!
     private static let DEFAULT_IP : String = "http://localhost"

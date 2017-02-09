@@ -22,19 +22,5 @@
 
 import UIKit
 
-public protocol EverLayoutConstraintParser : EverLayoutParser
-{
-    func leftSideAttributes (source : Any) -> [NSLayoutAttribute?]?
-    
-    func relation (source : Any) -> NSLayoutRelation?
-    
-    func constant (source : Any) -> EverLayoutConstraintConstant?
-    
-    func multiplier (source : Any) -> EverLayoutConstraintMultiplier?
-    
-    func priority (source : Any) -> CGFloat?
-    
-    func rightSideAttribute (source : Any) -> NSLayoutAttribute?
-    
-    func comparableViewReference (source: Any) -> String?
-}
+public protocol LayoutParser
+{}

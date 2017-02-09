@@ -22,7 +22,7 @@
 
 import UIKit
 
-class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
+class LayoutViewJSONParser: NSObject , LayoutViewParser
 {
     // Example view model JSON
     /*
@@ -69,11 +69,11 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
         return source.viewId
     }
     
-    func view (source: Any) -> EverLayoutView?
+    func view (source: Any) -> ELView?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        return EverLayoutView(rawData: (source.viewId , source.viewData), parser: EverLayoutViewJSONParser())
+        return ELView(rawData: (source.viewId , source.viewData), parser: LayoutViewJSONParser())
     }
     
     /// Parses only the view name from the view id in the view model
@@ -86,9 +86,9 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
         
         // The id is responsible for declaring if an element is new and if the element subclasses a UIView subclass.
         // We need to parse the id to only return the id of the view
-        if id.characters.first == EverLayoutViewJSONParser.MOD_NEW_ELEM { id.characters.removeFirst() }
+        if id.characters.first == LayoutViewJSONParser.MOD_NEW_ELEM { id.characters.removeFirst() }
         
-        if let index = id.characters.index(of: EverLayoutViewJSONParser.MOD_SUPERCLASS)
+        if let index = id.characters.index(of: LayoutViewJSONParser.MOD_SUPERCLASS)
         {
             id = id.substring(to: index)
         }
@@ -102,7 +102,7 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
         
         // The id may or may not contain info on a superclass for which this view must subclass
         // The superlcass is only valid if this view is marked as a newElement
-        if self.isNewElement(source: source) == true , let index = id.characters.index(of: EverLayoutViewJSONParser.MOD_SUPERCLASS)
+        if self.isNewElement(source: source) == true , let index = id.characters.index(of: LayoutViewJSONParser.MOD_SUPERCLASS)
         {
             let className = id.substring(from: id.index(after: index))
             
@@ -120,22 +120,22 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
     {
         guard let id = self.rawViewId(source: source) else { return false }
         
-        return id.characters.first == EverLayoutViewJSONParser.MOD_NEW_ELEM
+        return id.characters.first == LayoutViewJSONParser.MOD_NEW_ELEM
     }
     
     /// Parse view properties
     ///
     /// - Parameter source: raw view model data
     /// - Returns: Array of EverLayoutViewProperties
-    func viewProperties (source: Any) -> [EverLayoutViewProperty?]?
+    func viewProperties (source: Any) -> [ELViewProperty?]?
     {
         guard let source = self.parseSource(source: source) else { return nil }
-        guard let jsonData = source.viewData[EverLayoutViewJSONParser.KEY_PROPERTIES]?.dictionary else { return nil }
+        guard let jsonData = source.viewData[LayoutViewJSONParser.KEY_PROPERTIES]?.dictionary else { return nil }
         
-        return jsonData.map({ (key , value) -> EverLayoutViewProperty? in
+        return jsonData.map({ (key , value) -> ELViewProperty? in
             guard let value = value.string else { return nil }
             
-            return EverLayoutViewProperty(rawData: (key , value) , parser : EverLayoutPropertyJSONParser())
+            return ELViewProperty(rawData: (key , value) , parser : LayoutPropertyJSONParser())
         })
     }
     
@@ -143,15 +143,15 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
     ///
     /// - Parameter source: raw view model data
     /// - Returns: Array of EverLayoutConstraints
-    func viewConstraints (source: Any) -> [EverLayoutConstraint?]?
+    func viewConstraints (source: Any) -> [ELConstraint?]?
     {
         guard let source = self.parseSource(source: source) else { return nil }
-        guard let jsonData = source.viewData[EverLayoutViewJSONParser.KEY_CONSTRAINTS]?.dictionary else { return nil }
+        guard let jsonData = source.viewData[LayoutViewJSONParser.KEY_CONSTRAINTS]?.dictionary else { return nil }
         
-        return jsonData.map({ (key , value) -> EverLayoutConstraint? in
+        return jsonData.map({ (key , value) -> ELConstraint? in
             guard let value = value.string else { return nil }
             
-            return EverLayoutConstraint(rawData: (key , value) , parser: EverLayoutConstraintJSONParser())
+            return ELConstraint(rawData: (key , value) , parser: LayoutConstraintJSONParser())
         })
     }
     
@@ -162,7 +162,7 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
     func viewZIndex (source: Any) -> Int
     {
         guard let source = self.parseSource(source: source) else { return 0 }
-        guard let zIndex = source.viewData[EverLayoutViewJSONParser.KEY_Z_INDEX]?.string else { return 0 }
+        guard let zIndex = source.viewData[LayoutViewJSONParser.KEY_Z_INDEX]?.string else { return 0 }
         
         return Int(zIndex ) ?? 0
     }
@@ -174,7 +174,7 @@ class EverLayoutViewJSONParser: NSObject , EverLayoutViewParser
     func subviews(source: Any) -> [Any]?
     {
         guard let source = self.parseSource(source: source) else { return nil }
-        guard let subviewData = source.viewData[EverLayoutViewJSONParser.KEY_SUBVIEWS]?.dictionary else { return nil }
+        guard let subviewData = source.viewData[LayoutViewJSONParser.KEY_SUBVIEWS]?.dictionary else { return nil }
         
         var subviews : [(String , [String : JSON])] = []
         

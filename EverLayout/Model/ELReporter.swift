@@ -22,14 +22,14 @@
 
 import UIKit
 
-enum EverLayoutReportEmphasis : String
+enum ELReportEmphasis : String
 {
     case info = "INFO"
     case warning = "WARNING"
     case error = "ERROR"
 }
 
-enum EverLayoutReporterConfigurationOptions : Int
+enum ELReporterConfigurationOptions : Int
 {
     // Printing
     case printWarnings = 0
@@ -50,17 +50,17 @@ enum EverLayoutReporterConfigurationOptions : Int
 struct EverLayoutReport
 {
     let message : String
-    let emphasis : EverLayoutReportEmphasis
+    let emphasis : ELReportEmphasis
 }
 
-class EverLayoutReporter: NSObject
+class ELReporter: NSObject
 {
-    public static let `default`: EverLayoutReporter = EverLayoutReporter()
+    public static let `default`: ELReporter = ELReporter()
     
-    private(set) public var configuration : [EverLayoutReporterConfigurationOptions : Bool] = [:]
+    private(set) public var configuration : [ELReporterConfigurationOptions : Bool] = [:]
     private var _configValue : UInt16 = 0
     
-    convenience init  (config : [EverLayoutReporterConfigurationOptions : Bool])
+    convenience init  (config : [ELReporterConfigurationOptions : Bool])
     {
         self.init()
         
