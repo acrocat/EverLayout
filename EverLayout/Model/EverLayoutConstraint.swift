@@ -77,6 +77,12 @@ public class EverLayoutConstraint: EverLayoutRawData
             // Create the constraint from the context
             let constraint : NSLayoutConstraint = NSLayoutConstraint(item: context.target, attribute: context.leftSideAttribute, relatedBy: context.relation, toItem: context.comparableView, attribute: context.rightSideAttribute ?? context.leftSideAttribute, multiplier: context.multiplier.value, constant: context.constant.value)
             
+            // Constraint priority
+            if let priority = self.priority
+            {
+                constraint.priority = UILayoutPriority(priority)
+            }
+            
             // Add the constraint to either the target's superview or just the target itself
             if target.superview != nil
             {
