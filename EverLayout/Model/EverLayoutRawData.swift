@@ -26,7 +26,7 @@ public class EverLayoutRawData: NSObject
 {
     public var rawData : Any!
     
-    convenience init (withRawData rawData : Any)
+    public convenience init (withRawData rawData : Any)
     {
         self.init()
         

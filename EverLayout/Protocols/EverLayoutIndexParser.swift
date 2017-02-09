@@ -22,7 +22,11 @@
 
 import UIKit
 
-protocol EverLayoutIndexParser : EverLayoutParser
+public protocol EverLayoutIndexParser : EverLayoutParser
 {
+    func layoutName (source : Any) -> String?
+    
     func rootView (source : Any) -> EverLayoutView?
+    
+    func sublayouts (source : Any) -> [Any]?
 }

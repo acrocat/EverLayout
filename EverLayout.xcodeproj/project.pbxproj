@@ -39,6 +39,7 @@
 		2D57FA891E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA841E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift */; };
 		2D57FA8B1E46183C0043B897 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */; };
 		2D57FA8F1E4618610043B897 /* EverLayoutUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8E1E4618610043B897 /* EverLayoutUpdater.swift */; };
+		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		2D57FA841E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutButtonPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2D57FA8E1E4618610043B897 /* EverLayoutUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutUpdater.swift; sourceTree = "<group>"; };
+		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				2D57FA4C1E4617290043B897 /* Extensions */,
 				2D57FA441E46171F0043B897 /* EverLayout.h */,
 				2D57FA451E46171F0043B897 /* Info.plist */,
+				2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */,
 			);
 			path = EverLayout;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				2D57FA671E4617C80043B897 /* EverLayoutConstraint.swift in Sources */,
 				2D57FA741E4617D40043B897 /* EverLayoutConstraintJSONParser.swift in Sources */,
 				2D57FA891E46182E0043B897 /* EverLayoutButtonPropertyResolver.swift in Sources */,
+				2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */,
 				2D57FA8F1E4618610043B897 /* EverLayoutUpdater.swift in Sources */,
 				2D57FA691E4617C80043B897 /* EverLayoutViewIndex.swift in Sources */,
 				2D57FA6B1E4617C80043B897 /* EverLayoutConstratintMultiplier.swift in Sources */,
