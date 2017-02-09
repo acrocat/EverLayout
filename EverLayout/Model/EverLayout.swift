@@ -193,9 +193,23 @@ public class EverLayout: NSObject
     {
         guard self.buildable else { return }
         
-        for (_ , viewModel) in self.viewIndex.contents
+        // Order the view index by z-index
+        let sortedIndex = self.viewIndex.contents.values.sorted { (modelA, modelB) -> Bool in
+            guard let parentA = modelA?.parentModel?.id , let parentB = modelB?.parentModel?.id else { return false }
+            
+            if parentA == parentB
+            {
+                return (modelA?.zIndex ?? 0) < (modelB?.zIndex ?? 0)
+            }
+            else
+            {
+                return parentA < parentB
+            }
+        }
+        
+        for viewModel in sortedIndex
         {
-            guard let target = viewModel?.target , let parentTarget = viewModel?.parentModel?.target else { continue }
+            guard let viewModel = viewModel , let target = viewModel.target , let parentTarget = viewModel.parentModel?.target else { continue }
             
             parentTarget.addSubview(target)
         }
