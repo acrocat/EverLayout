@@ -45,7 +45,7 @@ class EverLayoutBuilder: NSObject
         
         self.createTargetViews(viewIndex: &viewIndex, rootView: view, host: host ?? view)
         self.buildViewHierarchy(viewIndex: &viewIndex)
-        self.addViewConstraints(viewIndex: &viewIndex)
+        self.addViewConstraints(viewIndex: &viewIndex , layoutHost : host)
         self.addViewProperties(viewIndex: &viewIndex)
         
         return viewIndex
@@ -155,13 +155,13 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Parse constraints from layoutData and add them to the views
-    private static func addViewConstraints (viewIndex : inout ViewIndex)
+    private static func addViewConstraints (viewIndex : inout ViewIndex , layoutHost : NSObject? = nil)
     {
         for (_ , viewModel) in viewIndex.contents
         {
             guard let constraints = viewModel?.constraints , let viewModel = viewModel else { continue }
             
-            constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: viewIndex)})
+            constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: viewIndex , layoutHost: layoutHost)})
         }
     }
     

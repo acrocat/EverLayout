@@ -33,7 +33,7 @@ extension NSObject
         // Use reflection to make this a safe inspection of the object
         if Mirror(reflecting: self).children.contains(where: { (property , value) -> Bool in
             return property == key
-        })
+        }) || self is NSDictionary
         {
             return self.value(forKey: key)
         }

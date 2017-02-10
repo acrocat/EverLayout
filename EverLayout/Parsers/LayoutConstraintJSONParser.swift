@@ -78,6 +78,8 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     
     public static let MOD_PRIORITY : Character = "$"
     
+    public static let MOD_IDENTIFIER : Character = "!"
+    
     private static let INDEPENDANT_ATTRIBUTE_KEYS : [NSLayoutAttribute] = [
         .width,
         .height
@@ -323,5 +325,12 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     func comparableViewReference (source: Any) -> String?
     {
         return self.parseTargetViewName(source: source)
+    }
+    
+    func identifier(source: Any) -> String?
+    {
+        guard let source = self.parseSource(source: source) else { return nil }
+        
+        return self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_IDENTIFIER, argumentString: source.rhs)
     }
 }

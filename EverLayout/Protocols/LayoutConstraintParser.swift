@@ -37,4 +37,6 @@ public protocol LayoutConstraintParser : LayoutParser
     func rightSideAttribute (source : Any) -> NSLayoutAttribute?
     
     func comparableViewReference (source: Any) -> String?
+    
+    func identifier (source: Any) -> String?
 }

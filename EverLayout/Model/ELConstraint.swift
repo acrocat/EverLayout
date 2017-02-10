@@ -47,6 +47,9 @@ public class ELConstraint: ELRawData
     public var comparableViewReference : String? {
         return self.constraintParser.comparableViewReference(source: self.rawData)
     }
+    public var identifier : String? {
+        return self.constraintParser.identifier(source: self.rawData)
+    }
     
     public init (rawData : Any , parser : LayoutConstraintParser)
     {
@@ -55,7 +58,7 @@ public class ELConstraint: ELRawData
         self.constraintParser = parser
     }
     
-    public func establisConstaints (onView view : ELView , withViewIndex viewIndex : ViewIndex)
+    public func establisConstaints (onView view : ELView , withViewIndex viewIndex : ViewIndex , layoutHost : NSObject? = nil)
     {
         guard let target = view.target else { return }
         
@@ -69,7 +72,7 @@ public class ELConstraint: ELRawData
                 _target: target,
                 _leftSideAttribute: attr,
                 _relation: self.relation,
-                _comparableView: (self.comparableViewReference == "super") ? target.superview : viewIndex.view(forKey: self.comparableViewReference ?? ""),
+                _comparableView: (self.comparableViewReference == "super") ? target.superview : viewIndex.view(forKey: self.comparableViewReference ?? "") ?? layoutHost?.property(forKey: self.comparableViewReference ?? "") as? UIView,
                 _rightSideAttribute: self.rightSideAttribute,
                 _constant: self.constant,
                 _multiplier: self.multiplier)
@@ -82,6 +85,9 @@ public class ELConstraint: ELRawData
             {
                 constraint.priority = UILayoutPriority(priority)
             }
+            
+            // Add an identifier to the constraint
+            constraint.identifier = self.identifier
             
             // Add the constraint to either the target's superview or just the target itself
             if target.superview != nil
