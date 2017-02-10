@@ -72,6 +72,8 @@ public class EverLayout: ELRawData
         }
         
         self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, host: host)
+        
+        self.delegate?.layout(self, didLoadOnView: view)
     }
     
     public func getSubLayout (_ name : String) -> EverLayout?
