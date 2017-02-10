@@ -29,7 +29,7 @@ public class EverLayout: ELRawData
     
     private(set) public var viewIndex : ViewIndex?
     private(set) public var target : UIView?
-    private(set) public var host : NSObject?
+    private(set) public var viewEnvironment : NSObject?
     private(set) public var injectedData : [String:String] = [:]
     
     public var layoutName : String? {
@@ -59,11 +59,11 @@ public class EverLayout: ELRawData
     ///
     /// - Parameters:
     ///   - view: root view
-    ///   - host: object containing values references in the layout data
-    public func buildLayout (onView view : UIView , host: NSObject? = nil)
+    ///   - viewEnvironment: object containing UIView properties which are referenced in the layout
+    public func buildLayout (onView view : UIView , viewEnvironment: NSObject? = nil)
     {
         self.target = view
-        self.host = host ?? view
+        self.viewEnvironment = viewEnvironment ?? view
         
         // Inject data into layout
         if let rawData = self.rawData as? Data
@@ -71,7 +71,7 @@ public class EverLayout: ELRawData
             self.rawData = self._injectDataIntoLayout(data: self.injectedData, layoutData: rawData)
         }
         
-        self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, host: host)
+        self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, viewEnvironment: viewEnvironment)
         
         self.delegate?.layout(self, didLoadOnView: view)
     }
@@ -181,9 +181,9 @@ public class EverLayout: ELRawData
     {
         self.clear()
         
-        if let target = self.target , let host = self.host
+        if let target = self.target , let viewEnvironment = self.viewEnvironment
         {
-            self.buildLayout(onView: target, host: host)
+            self.buildLayout(onView: target, viewEnvironment: viewEnvironment)
         }
     }
     

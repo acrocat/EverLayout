@@ -58,7 +58,7 @@ public class ELConstraint: ELRawData
         self.constraintParser = parser
     }
     
-    public func establisConstaints (onView view : ELView , withViewIndex viewIndex : ViewIndex , layoutHost : NSObject? = nil)
+    public func establisConstaints (onView view : ELView , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil)
     {
         guard let target = view.target else { return }
         
@@ -72,7 +72,7 @@ public class ELConstraint: ELRawData
                 _target: target,
                 _leftSideAttribute: attr,
                 _relation: self.relation,
-                _comparableView: (self.comparableViewReference == "super") ? target.superview : viewIndex.view(forKey: self.comparableViewReference ?? "") ?? layoutHost?.property(forKey: self.comparableViewReference ?? "") as? UIView,
+                _comparableView: (self.comparableViewReference == "super") ? target.superview : viewIndex.view(forKey: self.comparableViewReference ?? "") ?? viewEnvironment?.property(forKey: self.comparableViewReference ?? "") as? UIView,
                 _rightSideAttribute: self.rightSideAttribute,
                 _constant: self.constant,
                 _multiplier: self.multiplier)

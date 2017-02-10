@@ -39,13 +39,13 @@ class EverLayoutBuilder: NSObject
      - Add view properties
      */
  
-    static func buildLayout (_ layout : EverLayout , onView view : UIView , host : NSObject? = nil) -> ViewIndex
+    static func buildLayout (_ layout : EverLayout , onView view : UIView , viewEnvironment : NSObject? = nil) -> ViewIndex
     {
         var viewIndex : ViewIndex = self.createViewIndex(layoutData: layout.rawData)
         
-        self.createTargetViews(viewIndex: &viewIndex, rootView: view, host: host ?? view)
+        self.createTargetViews(viewIndex: &viewIndex, rootView: view, viewEnvironment: viewEnvironment ?? view)
         self.buildViewHierarchy(viewIndex: &viewIndex)
-        self.addViewConstraints(viewIndex: &viewIndex , layoutHost : host)
+        self.addViewConstraints(viewIndex: &viewIndex , viewEnvironment : viewEnvironment)
         self.addViewProperties(viewIndex: &viewIndex)
         
         return viewIndex
@@ -90,7 +90,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Create actual UIView instances for each view model in the index
-    private static func createTargetViews (viewIndex : inout ViewIndex , rootView : UIView  , host : NSObject)
+    private static func createTargetViews (viewIndex : inout ViewIndex , rootView : UIView  , viewEnvironment : NSObject)
     {
         for (viewId , viewModel) in viewIndex.contents
         {
@@ -106,14 +106,14 @@ class EverLayoutBuilder: NSObject
             {
                 if viewModel.isNewElement
                 {
-                    // The target view does not exist in the host and needs to be created
+                    // The target view does not exist in the view environment and needs to be created
                     // If the viewModel specifies a superclass, the new view should try to instantiate that
                     target = viewModel.templateClass?.init() ?? UIView()
                 }
                 else
                 {
-                    // The target view is supposed to be a property of the host.
-                    if let view = host.property(forKey: viewId) as? UIView
+                    // The target view is supposed to be a property of the view environment.
+                    if let view = viewEnvironment.property(forKey: viewId) as? UIView
                     {
                         target = view
                     }
@@ -155,13 +155,13 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Parse constraints from layoutData and add them to the views
-    private static func addViewConstraints (viewIndex : inout ViewIndex , layoutHost : NSObject? = nil)
+    private static func addViewConstraints (viewIndex : inout ViewIndex , viewEnvironment : NSObject? = nil)
     {
         for (_ , viewModel) in viewIndex.contents
         {
             guard let constraints = viewModel?.constraints , let viewModel = viewModel else { continue }
             
-            constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: viewIndex , layoutHost: layoutHost)})
+            constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: viewIndex , viewEnvironment: viewEnvironment)})
         }
     }
     
