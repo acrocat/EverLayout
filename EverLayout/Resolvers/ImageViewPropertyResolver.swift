@@ -49,7 +49,6 @@ extension UIImageView
     {
         super.applyViewProperty(viewProperty: viewProperty)
         
-        let resolver : ImageViewPropertyResolver = ImageViewPropertyResolver(view: self)
-        resolver.apply(viewProperty: viewProperty)
+        ImageViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
 }

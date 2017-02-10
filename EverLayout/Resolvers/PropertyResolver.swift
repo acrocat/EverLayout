@@ -154,10 +154,8 @@ public class PropertyResolver
 extension UIView
 {
     open func applyViewProperty (viewProperty : ELViewProperty)
-    {
-        let resolver : PropertyResolver = PropertyResolver(view: self)
-        
-        resolver.apply(viewProperty: viewProperty)
+    {   
+        PropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
 }
 
