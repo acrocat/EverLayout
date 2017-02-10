@@ -33,9 +33,9 @@ public class ELViewProperty: ELRawData
         return self.propertyParser.propertyValue(source: self.rawData)
     }
     
-    convenience init (rawData : Any , parser : LayoutPropertyParser)
+    public init (rawData : Any , parser : LayoutPropertyParser)
     {
-        self.init(withRawData : rawData)
+        super.init(rawData: rawData)
         
         self.propertyParser = parser
     }

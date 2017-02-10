@@ -48,9 +48,9 @@ public class ELConstraint: ELRawData
         return self.constraintParser.comparableViewReference(source: self.rawData)
     }
     
-    convenience init (rawData : Any , parser : LayoutConstraintParser)
+    public init (rawData : Any , parser : LayoutConstraintParser)
     {
-        self.init(withRawData : rawData)
+        super.init(rawData: rawData)
         
         self.constraintParser = parser
     }

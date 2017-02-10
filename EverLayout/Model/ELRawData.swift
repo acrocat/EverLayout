@@ -26,9 +26,9 @@ public class ELRawData: NSObject
 {
     public var rawData : Any!
     
-    public convenience init (withRawData rawData : Any)
+    public init (rawData : Any)
     {
-        self.init()
+        super.init()
         
         self.rawData = rawData
     }

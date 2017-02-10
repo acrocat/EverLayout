@@ -28,5 +28,5 @@ public protocol LayoutIndexParser : LayoutParser
     
     func rootView (source : Any) -> ELView?
     
-    func sublayouts (source : Any) -> [Any]?
+    func sublayouts (source : Any) -> [String: Any?]?
 }

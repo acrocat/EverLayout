@@ -57,9 +57,9 @@ public class ELView: ELRawData
     // The view is at the root of a layout file
     public var isRoot : Bool = false
     
-    convenience init (rawData : Any , parser : LayoutViewParser)
+    public init (rawData : Any , parser : LayoutViewParser)
     {
-        self.init(withRawData: rawData)
+        super.init(rawData: rawData)
         
         self.viewParser = parser
     }

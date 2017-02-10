@@ -25,7 +25,7 @@ import UIKit
 public class EverLayout: ELRawData
 {
     public weak var delegate : EverLayoutDelegate?
-    public let indexParser : LayoutIndexParser = LayoutIndexJSONParser()
+    public var indexParser : LayoutIndexParser!
     
     private(set) public var viewIndex : ViewIndex?
     private(set) public var target : UIView?
@@ -35,10 +35,19 @@ public class EverLayout: ELRawData
     public var layoutName : String? {
         return self.indexParser.layoutName(source: self.rawData)
     }
+    public var sublayouts : [String : Any?]? {
+        return self.indexParser.sublayouts(source: self.rawData)
+    }
     
-    public convenience init (layoutData : Any)
+    /// Init with layout data and a parser
+    ///
+    /// - Parameters:
+    ///   - layoutData: Raw data for the entire layout
+    ///   - layoutIndexParser: index parser to use
+    public init (layoutData : Data , layoutIndexParser : LayoutIndexParser? = LayoutIndexJSONParser())
     {
-        self.init(withRawData: layoutData)
+        super.init(rawData: layoutData)
+        self.indexParser = layoutIndexParser
         
         self.subscribeToLayoutUpdates()
     }
@@ -53,9 +62,35 @@ public class EverLayout: ELRawData
         self.target = view
         self.host = host ?? view
         
-        self._injectDataIntoLayout()
+        // Inject data into layout
+        if let rawData = self.rawData as? Data
+        {
+            self.rawData = self._injectDataIntoLayout(data: self.injectedData, layoutData: rawData)
+        }
+        
         self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, host: host)
     }
+    
+    /// Similar to building a full layout, this will begin the process of building a sublayout on the passed view
+    ///
+    /// - Parameters:
+    ///   - name: Name of sublayout to load
+    ///   - view: The root view to build this layout on
+    ///   - host: An optional object which contains the properties referenced in this layout
+    ///   - data: An optional dictionary of data to inject into this sublayout
+//    public func buildSubLayout (_ name : String , onView view : UIView , host : NSObject? = nil , data : [String : String]? = nil)
+//    {
+//        guard var sublayout = self.sublayouts?[name] else { return }
+//        
+//        // Inject data into the sublayout
+//        if var sublayout = sublayout as? Data , let data = data
+//        {
+//            sublayout = self._injectDataIntoLayout(data: data, layoutData: sublayout)!
+//        }
+//        
+//        // Build!
+//        EverLayoutBuilder.buildLayout(sublayout, onView: view, host: host)
+//    }
     
     /// Set data to be injected when the layout is built
     ///
@@ -70,16 +105,16 @@ public class EverLayout: ELRawData
     }
     
     /// Replacing variable placeholders in the layout data with the values supplied
-    private func _injectDataIntoLayout ()
+    private func _injectDataIntoLayout (data : [String : String] , layoutData : Data) -> Data?
     {
-        var dataAsString = String(data: self.rawData as! Data, encoding: .utf8)
+        var dataAsString = String(data: layoutData, encoding: .utf8)
         
-        for (varName , value) in self.injectedData
+        for (varName , value) in data
         {
             dataAsString = dataAsString?.replacingOccurrences(of: "#{\(varName)}", with: value)
         }
         
-        self.rawData = dataAsString?.data(using: .utf8)
+        return dataAsString?.data(using: .utf8)
     }
     
     deinit

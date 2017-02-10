@@ -26,6 +26,7 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
 {
     public static let KEY_LAYOUT_NAME : String = "name"
     public static let KEY_LAYOUT_ROOT : String = "root"
+    public static let KEY_SUBLAYOUTS : String = "layouts"
     
     private func parseData (source : Any) -> [String : JSON]?
     {
@@ -34,6 +35,10 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         return JSON(data: source).dictionary
     }
     
+    /// Parse the name of the layout
+    ///
+    /// - Parameter source: raw data of the layout
+    /// - Returns: Name of layout
     public func layoutName (source : Any) -> String?
     {
         guard let source = self.parseData(source: source) else { return nil }
@@ -41,14 +46,16 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         return source[LayoutIndexJSONParser.KEY_LAYOUT_NAME]?.string
     }
     
-    public func sublayouts (source : Any) -> [Any]?
+    public func sublayouts (source : Any) -> [String : Any?]?
     {
-        return nil
+        guard let source = self.parseData(source: source) else { return nil }
+        
+        return source[LayoutIndexJSONParser.KEY_SUBLAYOUTS]?.dictionary
     }
     
     /// Parse the rootView from the raw index model
     ///
-    /// - Parameter source: raw data of the entire view index
+    /// - Parameter source: raw data of the layout
     /// - Returns: EverLayoutView model of the root view
     public func rootView(source: Any) -> ELView?
     {
