@@ -49,7 +49,10 @@ public class EverLayout: ELRawData
         super.init(rawData: layoutData)
         self.indexParser = layoutIndexParser
         
-        self.subscribeToLayoutUpdates()
+        if let layoutName = self.layoutName
+        {
+            self.subscribeToLayoutUpdates(forLayout: layoutName)
+        }
     }
     
     /// Starts the process of parsing the layout data and building a view hierarchy on the view argument
@@ -69,6 +72,13 @@ public class EverLayout: ELRawData
         }
         
         self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, host: host)
+    }
+    
+    public func getSubLayout (_ name : String) -> EverLayout?
+    {
+        guard let layoutData = self.sublayouts?[name] as? Data else { return nil }
+        
+        return EverLayout(layoutData: layoutData, layoutIndexParser: self.indexParser)
     }
     
     /// Similar to building a full layout, this will begin the process of building a sublayout on the passed view
@@ -126,9 +136,9 @@ public class EverLayout: ELRawData
     // MARK: - Layout Updates
     // ---------------------------------------------------------------------------
     
-    private func subscribeToLayoutUpdates ()
+    private func subscribeToLayoutUpdates (forLayout name : String)
     {
-        let notificationName : Notification.Name = Notification.Name("layout-update__\(self.layoutName!)")
+        let notificationName : Notification.Name = Notification.Name("layout-update__\(name)")
         
         print("Listening to " + notificationName.rawValue)
         

@@ -49,8 +49,16 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
     public func sublayouts (source : Any) -> [String : Any?]?
     {
         guard let source = self.parseData(source: source) else { return nil }
+        guard let sublayoutData = source[LayoutIndexJSONParser.KEY_SUBLAYOUTS]?.dictionary else { return nil }
         
-        return source[LayoutIndexJSONParser.KEY_SUBLAYOUTS]?.dictionary
+        var sublayouts : [String : Any?] = [:]
+        
+        for (layoutName , layoutData) in sublayoutData
+        {
+            sublayouts[layoutName] = try? layoutData.rawData()
+        }
+        
+        return sublayouts
     }
     
     /// Parse the rootView from the raw index model
