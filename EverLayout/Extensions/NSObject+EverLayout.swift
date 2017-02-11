@@ -31,9 +31,7 @@ extension NSObject
     open func property (forKey key : String) -> Any?
     {
         // Use reflection to make this a safe inspection of the object
-        if Mirror(reflecting: self).children.contains(where: { (property , value) -> Bool in
-            return property == key
-        }) || self is NSDictionary
+        if self.checkForProperty(key) || self is NSDictionary
         {
             return self.value(forKey: key)
         }
@@ -41,6 +39,26 @@ extension NSObject
         {
             return nil
         }
+    }
+    
+    internal func checkForProperty (_ name : String) -> Bool
+    {
+        var mirror : Mirror? = Mirror(reflecting: self)
+        while mirror != nil
+        {
+            if mirror?.children.contains(where: { (property , value) -> Bool in
+                return property == name
+            }) == true
+            {
+                return true
+            }
+            else
+            {
+                mirror = mirror?.superclassMirror
+            }
+        }
+        
+        return false
     }
 }
 
