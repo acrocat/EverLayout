@@ -22,7 +22,7 @@
 
 import UIKit
 
-public class ELRawData: NSObject
+open class ELRawData: NSObject
 {
     public var rawData : Any!
     

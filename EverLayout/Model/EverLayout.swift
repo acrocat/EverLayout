@@ -22,7 +22,7 @@
 
 import UIKit
 
-public class EverLayout: ELRawData
+open class EverLayout: ELRawData
 {
     public weak var delegate : EverLayoutDelegate?
     public var indexParser : LayoutIndexParser!
