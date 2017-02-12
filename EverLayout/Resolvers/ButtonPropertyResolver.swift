@@ -25,6 +25,18 @@ class ButtonPropertyResolver: PropertyResolver
                 button.setTitleColor(PropertyResolver.color(value: source) ?? .black, for: .normal)
             }
         }
+        props["backgroundImage"] = {source in
+            if let button = self.view as? UIButton
+            {
+                button.setBackgroundImage(ImageViewPropertyResolver.image(source: source), for: .normal)
+            }
+        }
+        props["image"] = {source in
+            if let button = self.view as? UIButton
+            {
+                button.setImage(ImageViewPropertyResolver.image(source: source), for: .normal)
+            }
+        }
         
         return props
     }
