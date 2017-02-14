@@ -39,7 +39,7 @@ public class ELView: ELRawData
         return self.viewParser.viewProperties(source: self.rawData)
     }
     public var zIndex : Int {
-        return self.viewParser.viewZIndex(source: self.rawData) ?? 0
+        return self.viewParser.viewZIndex(source: self.rawData)
     }
     public var isNewElement : Bool {
         return self.viewParser.isNewElement(source: self.rawData)
