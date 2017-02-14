@@ -1,0 +1,5 @@
+site_name: EverLayout Documentation
+pages:
+  - Getting Started: index.md
+
+theme: readthedocs
