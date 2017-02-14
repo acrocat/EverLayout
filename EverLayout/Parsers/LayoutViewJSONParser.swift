@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 
 import UIKit
+import SwiftyJSON
 
 class LayoutViewJSONParser: NSObject , LayoutViewParser
 {

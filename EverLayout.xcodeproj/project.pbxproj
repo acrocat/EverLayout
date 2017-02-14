@@ -37,9 +37,9 @@
 		2D57FA871E46182E0043B897 /* ScrollViewPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA821E46182E0043B897 /* ScrollViewPropertyResolver.swift */; };
 		2D57FA881E46182E0043B897 /* LabelPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA831E46182E0043B897 /* LabelPropertyResolver.swift */; };
 		2D57FA891E46182E0043B897 /* ButtonPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */; };
-		2D57FA8B1E46183C0043B897 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */; };
 		2D57FA8F1E4618610043B897 /* EverLayoutBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */; };
 		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
+		EA01C956B704AD23AD1A518C /* Pods_EverLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE5D92620B2DE9A9ADA5C599 /* Pods_EverLayout.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,9 +75,11 @@
 		2D57FA821E46182E0043B897 /* ScrollViewPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA831E46182E0043B897 /* LabelPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPropertyResolver.swift; sourceTree = "<group>"; };
-		2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBridge.swift; sourceTree = "<group>"; };
 		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
+		4772F178EAD6DE88DFC74BFB /* Pods-EverLayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout/Pods-EverLayout.debug.xcconfig"; sourceTree = "<group>"; };
+		FB1E0A82314DB2E45DC79A7B /* Pods-EverLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout/Pods-EverLayout.release.xcconfig"; sourceTree = "<group>"; };
+		FE5D92620B2DE9A9ADA5C599 /* Pods_EverLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA01C956B704AD23AD1A518C /* Pods_EverLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +99,8 @@
 			children = (
 				2D57FA431E46171F0043B897 /* EverLayout */,
 				2D57FA421E46171F0043B897 /* Products */,
+				E61A2BC078EEB030144B1EF3 /* Pods */,
+				61E72D646280AA3EBC0D1FE0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */,
-				2D57FA511E46175B0043B897 /* Resources */,
 				2D57FA501E4617540043B897 /* Resolvers */,
 				2D57FA4F1E46174C0043B897 /* Protocols */,
 				2D57FA4E1E4617440043B897 /* Parsers */,
@@ -188,12 +192,21 @@
 			path = Resolvers;
 			sourceTree = "<group>";
 		};
-		2D57FA511E46175B0043B897 /* Resources */ = {
+		61E72D646280AA3EBC0D1FE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2D57FA8A1E46183C0043B897 /* SwiftyJSON.swift */,
+				FE5D92620B2DE9A9ADA5C599 /* Pods_EverLayout.framework */,
 			);
-			path = Resources;
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E61A2BC078EEB030144B1EF3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4772F178EAD6DE88DFC74BFB /* Pods-EverLayout.debug.xcconfig */,
+				FB1E0A82314DB2E45DC79A7B /* Pods-EverLayout.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,10 +227,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D57FA491E46171F0043B897 /* Build configuration list for PBXNativeTarget "EverLayout" */;
 			buildPhases = (
+				696919AF0BBA33E5C3ACBC87 /* [CP] Check Pods Manifest.lock */,
 				2D57FA3C1E46171E0043B897 /* Sources */,
 				2D57FA3D1E46171E0043B897 /* Frameworks */,
 				2D57FA3E1E46171E0043B897 /* Headers */,
 				2D57FA3F1E46171E0043B897 /* Resources */,
+				64446AF2906E78FFC0425AF6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -272,6 +287,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		64446AF2906E78FFC0425AF6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EverLayout/Pods-EverLayout-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		696919AF0BBA33E5C3ACBC87 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2D57FA3C1E46171E0043B897 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -306,7 +354,6 @@
 				2D57FA7C1E46181C0043B897 /* LayoutIndexParser.swift in Sources */,
 				2D57FA571E4617BB0043B897 /* String+EverLayout.swift in Sources */,
 				2D57FA561E4617BB0043B897 /* NSObject+EverLayout.swift in Sources */,
-				2D57FA8B1E46183C0043B897 /* SwiftyJSON.swift in Sources */,
 				2D57FA681E4617C80043B897 /* ELViewProperty.swift in Sources */,
 				2D57FA631E4617C80043B897 /* EverLayout.swift in Sources */,
 			);
@@ -416,6 +463,7 @@
 		};
 		2D57FA4A1E46171F0043B897 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4772F178EAD6DE88DFC74BFB /* Pods-EverLayout.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -442,6 +490,7 @@
 		};
 		2D57FA4B1E46171F0043B897 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB1E0A82314DB2E45DC79A7B /* Pods-EverLayout.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";

@@ -22,6 +22,7 @@
 
 import UIKit
 import SocketIO
+import SwiftyJSON
 
 public class EverLayoutBridge: NSObject
 {
