@@ -1,0 +1,8 @@
+site_name: EverLayout Documentation
+pages:
+  - Getting Started: index.md
+  - Writing Layouts: writing.md
+  - Reading Layouts: reading.md
+  - EverLayout Bridge: bridge.md
+
+theme: readthedocs
