@@ -32,7 +32,7 @@ enum ELReportOptions
 {
     case logReports
     case sendReportsToEverLayoutBridge
-    case showReportSeverityOnAppDisplay
+//    case showReportSeverityOnAppDisplay
 }
 
 struct ELReport
@@ -48,7 +48,7 @@ struct ELReport
 class ELReporter: NSObject
 {
     public static let `default`: ELReporter = ELReporter(config: [
-            .logReports , .sendReportsToEverLayoutBridge , .showReportSeverityOnAppDisplay
+            .logReports , .sendReportsToEverLayoutBridge
         ])
     
     private var isErrorRendering : Bool = false
@@ -87,7 +87,7 @@ class ELReporter: NSObject
     {
         if self.configuration.contains(.logReports) { self.log(report: report) }
         if self.configuration.contains(.sendReportsToEverLayoutBridge) { self.send(report: report) }
-        if self.configuration.contains(.showReportSeverityOnAppDisplay) { self.render(report: report) }
+//        if self.configuration.contains(.showReportSeverityOnAppDisplay) { self.render(report: report) }
     }
     
     /// Will print the message to the Xcode log
