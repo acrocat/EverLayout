@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Writing Layouts - EverLayout Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Writing Layouts";
+    var mkdocs_page_input_path = "writing.md";
+    var mkdocs_page_url = "/writing/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> EverLayout Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Writing Layouts</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#json">JSON </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#the-layout-index">The Layout Index </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#the-view-model">The View Model </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#view-name">View Name </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#creating-new-views">Creating New Views </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#creating-new-views-from-uiview-subclasses">Creating New Views From UIView Subclasses </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#writing-constraints">Writing Constraints </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#view-properties">View Properties </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#z-index">Z-Index </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#subviews">Subviews </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#sublayouts">Sublayouts </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#data-injection">Data Injection </a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../reading/">Reading Layouts</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../bridge/">EverLayout Bridge</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">EverLayout Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Writing Layouts</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="json">JSON <a name="json"></a></h1>
+<p>EverLayout is bundled with parsers to translate 
+JSON structures in UIView hierarchies. JSON was the data structure
+of choice because of its wide popularity, however if you do not wish
+to use JSON you can easily implement your own data language 
+by conforming to the <code>LayoutParser</code> protocols. </p>
+<p>Nevertheless, the following explanation of the JSON implementation
+will demonstrate how EverLayout understands layouts.</p>
+<p><strong> Note </strong> - Even though Numbers and Bools are valid data types in JSON, 
+EverLayout currently only recognizes String values. This may be updated in the 
+future.</p>
+<h1 id="the-layout-index">The Layout Index <a name="layout-index"></a></h1>
+<p>The layout index is the root of every layout model.</p>
+<pre><code>{
+    &quot;name&quot;:&quot;SimpleLayout&quot;,
+    &quot;root&quot;:{...},
+    &quot;layouts&quot;:{...}
+}
+</code></pre>
+
+<p>Only 3 properties are currently read in the Layout Index:</p>
+<ul>
+<li><code>name</code> The layout name. So far this is only used 
+to route layout updates when developing with EverLayout Bridge.</li>
+<li><code>root</code> Layouts are built on UIViews, which become the 'root view'
+of the layout I.E This is where the layout begins.</li>
+<li><code>layouts</code> EverLayout supports <a href="#sublayouts">sub-layouts</a></li>
+</ul>
+<h1 id="the-view-model">The View Model <a name="view-mmodel"></a></h1>
+<p>The view model contains layout data for individual UIViews.</p>
+<pre><code>{
+    &quot;constraints&quot;:{...},
+    &quot;properties&quot;:{...},
+    &quot;z-index&quot;:&quot;2&quot;,
+    &quot;views&quot;:{...}
+}
+</code></pre>
+
+<ul>
+<li><code>constraints</code> See <a href="#writing-constraints">Writing Constraints</a></li>
+<li><code>properties</code> See <a href="#view-properties">View Properties</a></li>
+<li><code>z-index</code> See <a href="#z-index">Z-Index</a></li>
+<li><code>views</code> See <a href="#subviews">Subviews</a></li>
+</ul>
+<h1 id="view-name">View Name <a name="view-name"></a></h1>
+<p>Every view in the layout (except the root view, see <a href="#view-index">View Index</a>)
+has a name and is expressed as a subview of another view in this layout.</p>
+<pre><code>{
+    ...
+    &quot;views&quot;:{
+        &quot;subviewName&quot;:{
+            ...
+        }
+    }
+}
+</code></pre>
+
+<p>The key being the view's name, and the value its <a href="#view-model">view model</a>.</p>
+<p>Given the sample, EverLayout would scan this layout's view environment
+for a property with this name. If it finds one, it will 
+map this view model to that UIView, including adding it as 
+a subview.</p>
+<p>If EverLayout is unable to find the view, it will move on.</p>
+<h1 id="creating-new-views">Creating New Views <a name="creating-views"></a></h1>
+<p>The default behaviour for EverLayout is to find the view being referenced
+by scanning the properties of its view environment. However in 
+some cases you may wish to create new views from inside the layout 
+file and have them become a part of your layout hierarchy.</p>
+<p>This means:</p>
+<ul>
+<li>You can create basic views to test layout ideas without having to
+re-compile (when using EverLayout Bridge).</li>
+<li>Views with basic functionality (like wrappers for other views)
+no longer need to be described in your code.</li>
+<li>More sophisticated layout updates can be made without
+having to update your code and re-submit your app.</li>
+</ul>
+<p>If your view name is prefixed with <code>!</code>, it will be considered a
+'new view' and created during the layout build.</p>
+<pre><code>{
+    &quot;!newWrapperView&quot;:{
+        ...
+    }
+}
+</code></pre>
+
+<h1 id="creating-new-views-from-uiview-subclasses">Creating New Views From UIView Subclasses <a name="creating-subclasses"></a></h1>
+<p>In addition to being able to create new views, you can also
+specify which UIView subclass you want your new view to be.</p>
+<pre><code>{
+    &quot;!newImageView:UIImageView&quot;: {
+        ...
+    }
+}
+</code></pre>
+
+<p>Append the name of your new view with <code>:</code> followed by 
+a class name. In the example EverLayout creates a new 
+UIImageView.</p>
+<p>To create an instance of a custom class, you must also 
+specify your application bundle ID, like so:</p>
+<p><code>!myNewClassInstance:MyApp.MyClassName</code></p>
+<h1 id="writing-constraints">Writing Constraints <a name="writing-constraints"></a></h1>
+<p>EverLayout uses AutoLayout constraints to position its elements.
+The constraints for each view are generated during the layout
+build based on key-value rules in the view model.</p>
+<p>The format of these constraint rules may not immediately make sense,
+and might take a while to get used to. They're based on ideas
+taken from <a href="https://github.com/SnapKit/SnapKit">SnapKit</a>.</p>
+<pre><code>{
+    &quot;constraints&quot;:{
+        &quot;top right bottom left&quot;:&quot;@super&quot;
+    }
+}
+</code></pre>
+
+<p>The example above creates 4 NSLayoutConstraints that attach
+the left, top, right and bottom attributes of this view to 
+their counterparts in the superview.</p>
+<pre><code>{
+    &quot;constraints&quot;:{
+        &quot;bottom left right&quot;:&quot;@super &lt;8&quot;,
+        &quot;height&quot;:&quot;@super /2&quot;
+    }
+}
+</code></pre>
+
+<p>The second example creates constraints which tether the bottom, left and 
+right edges to the superview with an 8 unit inset, and then gives this view a height 
+of half the superview height.</p>
+<p>Each rule is broken into left-hand and right-hand statements (key and value). Both 
+statements contain arguments separated by a space " ".</p>
+<p>For the left-hand statement, any NSLayoutAttribute is valid 
+along with some additional 'compound attributes'.</p>
+<ul>
+<li><code>edges</code> Translates to <code>top</code> <code>left</code> <code>right</code> <code>bottom</code></li>
+<li><code>center</code> Translates to <code>centerX</code> <code>centerY</code></li>
+</ul>
+<p>The right-hand statement can have many arguments, each denoted by
+a modifier character.</p>
+<ul>
+<li><code>@</code> Target a view in the layout / view environment</li>
+<li><code>.</code> A dot separator can be added to a target name to specify 
+an NSLayoutAttribute of that view to target (e.g <code>@viewName.right</code>)</li>
+<li><code>+</code> A positive constant</li>
+<li><code>-</code> A negative constant</li>
+<li><code>&lt;</code> A inset constant, which is basically a constant where <code>+</code> and <code>-</code> are inferred from content</li>
+<li><code>*</code> A multiplier</li>
+<li><code>/</code> A divider</li>
+<li><code>!</code> Constraint identifier (for debugging)</li>
+<li><code>%</code> A relation (e.g <code>%&gt;=</code> creates a 'greater than or equal to' relation)</li>
+<li><code>$</code> A constraint priority</li>
+</ul>
+<p><strong>Note:</strong>
+EverLayout will try to infer missing constraint properties based
+on the information that is supplied.</p>
+<p><code>"width": "@view +12"</code> Will create a constraint with the width
+of <code>view</code>, plus 12 units.</p>
+<p><code>"width": "+12"</code> Will create a constraint that has a width of 
+12 units.</p>
+<h1 id="view-properties">View Properties <a name="view-properties"></a></h1>
+<p>Some properties of UIView (and its subclasses) have been made settable
+in the layout files. You can set these under <code>properties</code> in the view model.</p>
+<p>These are the properties currently available:</p>
+<p><strong> UIView </strong></p>
+<ul>
+<li><code>backgroundColor</code> Color can be the name of the color (<code>red</code>) or a hex 
+string (<code>#333333</code>).</li>
+<li><code>cornerRadius</code> Translates to <code>layer.cornerRadius</code></li>
+<li><code>borderWidth</code> Translates to <code>layer.borderWidth</code></li>
+<li><code>borderColor</code> Translates to <code>layer.borderColor</code></li>
+<li><code>alpha</code></li>
+<li><code>clipToBounds</code></li>
+<li><code>contentMode</code></li>
+</ul>
+<p><strong> UILabel </strong></p>
+<ul>
+<li><code>text</code></li>
+<li><code>textColor</code></li>
+<li><code>lineBreakMode</code></li>
+<li><code>textAlignment</code></li>
+<li><code>numberOfLines</code></li>
+<li><code>fontSize</code></li>
+</ul>
+<p><strong> UIButton </strong></p>
+<ul>
+<li><code>text</code> Translates to a call to setTitle(...)</li>
+<li><code>textColor</code> Translates to a call to setTitleColor(...)</li>
+<li><code>backgroundImage</code> Translates to a call to setBackgroundImage(...)</li>
+<li><code>image</code> Translates to a call to setImage(...)</li>
+</ul>
+<p><strong> UIImageView </strong></p>
+<ul>
+<li><code>image</code> The value used is passed into UIImage(named: ...)</li>
+</ul>
+<p><strong> UIScrollView </strong></p>
+<ul>
+<li><code>contentInset</code> Value is passed into UIEdgeInsetFromString</li>
+<li><code>contentOffset</code> Value is passed in CGPointFromString</li>
+</ul>
+<h1 id="z-index">Z-Index <a name="z-index"></a></h1>
+<p>The order in which EverLayout adds subviews is not always clear. If you
+have views which overlap each other, the <code>z-index</code> can be set 
+to tell EverLayout which views should be at the top.</p>
+<pre><code>{
+    &quot;onBottom&quot;: {
+        &quot;z-index&quot;:&quot;1&quot;
+    },
+    &quot;onTop&quot;:{
+        &quot;z-index&quot;:&quot;2&quot;
+    }
+}
+</code></pre>
+
+<p>Like in CSS, the higher the <code>z-index</code> the closer to the surface the view
+will be.</p>
+<h1 id="subviews">Subviews <a name="subviews"></a></h1>
+<p>Every view in the layout (except the root view) is added as a subview 
+of another. Subviews are added like so:</p>
+<pre><code>{
+    &quot;constraints&quot;: {...},
+    &quot;properties&quot;:{...},
+    &quot;views&quot;:{
+        &quot;firstSubview&quot;:{
+            ...
+        },
+        &quot;secondSubview&quot;: {
+            ...
+        }
+    }
+}
+</code></pre>
+
+<p>The key is the view's name (see <a href="#view-name">view names</a>), and the value
+is the view model (see <a href="#view-model">view model</a>).</p>
+<h1 id="sublayouts">Sublayouts <a name="sublayouts"></a></h1>
+<p>An EverLayout can have 'sub-layouts'.</p>
+<pre><code>{
+    &quot;name&quot;:&quot;MainLayoutName&quot;,
+    &quot;root&quot;:{...},
+    &quot;layouts&quot;:{
+        &quot;exampleSubLayout&quot;:{
+            &quot;root&quot;: {...}
+        },
+        &quot;secondSubLayout&quot;:{
+            &quot;root&quot;: {...}
+        }
+    }
+}
+</code></pre>
+
+<p>A sub-layout has mostly the same structure as a regular layout,
+except its name is its key. Technically sub-layouts can also have sub-layouts,
+although I can't say I've actually tried this.</p>
+<p>For more info on using sub-layouts, see <a href="../reading/">Reading Layouts</a>.</p>
+<h1 id="data-injection">Data Injection <a name="data-injection"></a></h1>
+<p>'Data Injection' is a glorified 'Find and Replace' on your source layout
+data. You can mark 'variables' in your layout files like so:</p>
+<pre><code>{
+    &quot;viewName&quot;:{
+        &quot;properties&quot;:{
+            &quot;backgroundColor&quot;:&quot;#{color}&quot;
+        }
+    }
+}
+</code></pre>
+
+<p>Before building your layout:</p>
+<pre><code>    self.layout?.injectData([
+        &quot;color&quot;:&quot;red&quot;
+    ])
+</code></pre>
+
+<p>EverLayout will replace all instances of <code>#{color}</code> in your layout
+with <code>red</code>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../reading/" class="btn btn-neutral float-right" title="Reading Layouts">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../reading/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

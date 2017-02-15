@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Reading Layouts - EverLayout Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Reading Layouts";
+    var mkdocs_page_input_path = "reading.md";
+    var mkdocs_page_url = "/reading/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> EverLayout Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../writing/">Writing Layouts</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Reading Layouts</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#layout-data">Layout Data</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#building-layout">Building Layout</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#view-environment">View Environment </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#view-index">View Index </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#everlayoutdelegate">EverLayoutDelegate </a></li>
+                
+            
+                <li class="toctree-l3"><a href="#sublayouts">Sublayouts </a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../bridge/">EverLayout Bridge</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">EverLayout Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Reading Layouts</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="layout-data">Layout Data</h1>
+<pre><code>    let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: &quot;ViewController&quot;, ofType: &quot;json&quot;, inDirectory: &quot;Layouts&quot;)!) as! Data
+
+    self.layout = EverLayout(layoutData: layoutData, layoutIndexParser: LayoutIndexJSONParser())
+</code></pre>
+
+<p>A layout is initialized with a <code>Data</code> object. Generally layout 
+data would be stored in a file a loaded in from the Bundle, or the layout
+can be downloaded from a server.</p>
+<p>The only requirement here is that your layout is correctly formatted for
+the parser. By default, EverLayout uses a <a href="../writing/#json">JSON</a> parser,
+but you can make your own parsers for any language by conforming
+to the different <code>LayoutParser</code> protocols.</p>
+<h1 id="building-layout">Building Layout</h1>
+<pre><code>    self.layout!.buildLayout(onView: self.view, viewEnvironment: self)
+</code></pre>
+
+<p>Building a layout requires a root view (see <a href="../writing/#layout-index">layout Index</a>)
+and a <a href="#view-environment">View Environment</a> is optional. If left nil,
+the root view will be used as the view environment.</p>
+<p><strong> Note </strong>
+ - The instance of EverLayout should be strongly held.
+If the layout is deallocated, EverLayout Bridge won't be able to update it.</p>
+<h1 id="view-environment">View Environment <a name='view-environment'></a></h1>
+<p>A view environment is an instance of NSObject which contains the properties
+referenced in the layout file. For instance, in a View Controller, you would
+want the root view of your layout to be the controller's view, but the controller
+itself is the object containing the other views in your layout.</p>
+<pre><code>    class ViewController : UIViewController
+    {
+        private var layout : EverLayout(...)
+        public let viewInLayout : UIView = UIView()
+
+        override func viewDidLoad ()
+        {
+            super.viewDidLoad()
+
+            self.layout!.buildLayout(onView: self.view, viewEnvironment: self)
+        }
+    }
+</code></pre>
+
+<pre><code>{
+    &quot;name&quot;:&quot;ViewController&quot;,
+    &quot;root&quot;:{
+        &quot;views&quot;:{
+            &quot;viewInLayout&quot;:{
+                ...
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>In the above example, EverLayout will use the ViewController as the View Environment
+and find <code>viewInLayout</code> as a property. During the build process it will
+add this view to the root.</p>
+<pre><code>    let viewEnvironment : NSDictionary = [
+        &quot;viewInLayout&quot;: UIView()
+    ]
+
+    self.layout?.buildLayout(onView: self , viewEnvironment: viewEnvironment)
+</code></pre>
+
+<p>As EverLayout is looking for an NSObject as a View Environment, you can alternatively
+use an NSDictionary to directly pass the views into the layout. This is
+helpful when using sub-layouts.</p>
+<p><strong> Note </strong>
+ - <code>NSDictionary</code> can be used because it is a subclass of NSObject. The Swift
+ <code>Dictionary</code> is not and will not work.</p>
+<p><strong> Note </strong>
+ - Properties accessed from the View Environment must be <code>public</code>, otherwise
+ you will likely face a crash.</p>
+<h1 id="view-index">View Index <a name="view-index"></a></h1>
+<p>A View Index is created by the layout when it builds. The View Index keeps
+track of all the views created in the layout and allows you to access
+them after the layout has successfully built.</p>
+<pre><code>    let wrapperView = self.layout?.viewIndex.view(forKey: &quot;wrapperView&quot;)
+</code></pre>
+
+<p>Being able to access views from the View Index is helpful when the layout is
+creating new views (see <a href="../writing/#creating-views">Creating Views</a>)</p>
+<h1 id="everlayoutdelegate">EverLayoutDelegate <a name="delegate"></a></h1>
+<p>Conform to <code>EverLayoutDelegate</code> and implement 
+<code>layout(_ layout:EverLayout , didBuildOnView: UIView)</code>
+which is called when a layout successfully builds on a view.</p>
+<p><strong> Note </strong> 
+ - Make sure you set the <code>delegate</code> before building the layout.</p>
+<h1 id="sublayouts">Sublayouts <a name="sublayouts"></a></h1>
+<p>See <a href="../writing/#sublayouts">Writing Sublayouts</a></p>
+<p>Sub-layouts can be accessed like so:</p>
+<pre><code>    let subLayout = self.layout?.getSubLayout(&quot;sublayout-name&quot;)
+</code></pre>
+
+<p><code>subLayout</code> is just another instance of EverLayout.</p>
+<p>Sub-layouts can be made effective when used with <a href="../writing/#data-injection">Data Injection</a>
+and <a href="#view-environments">View Environment</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../bridge/" class="btn btn-neutral float-right" title="EverLayout Bridge">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../writing/" class="btn btn-neutral" title="Writing Layouts"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../writing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../bridge/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>
