@@ -12,7 +12,7 @@ submitting for the App Review Process.
 
 # Docs
 
-More detailed documentation here
+More detailed documentation [here](https://acrocat.github.io/EverLayout/).
 
 # Installation
 
