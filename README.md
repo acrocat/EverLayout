@@ -20,7 +20,7 @@ EverLayout can be installed with CocoaPods.
 
 `pod 'EverLayout'`
 
-More information on EverLayout Bridge can be found here
+More information on EverLayout Bridge can be found [here](https://github.com/acrocat/EverLayoutBridge)
 
 # Simple Example
 
