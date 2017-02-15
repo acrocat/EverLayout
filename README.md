@@ -10,6 +10,10 @@ This means:
 submitting for the App Review Process.
 * Build layouts with real-time update using a simple HTTP server (or EverLayout Bridge).
 
+# Docs
+
+More detailed documentation here
+
 # Installation
 
 EverLayout can be installed with CocoaPods.

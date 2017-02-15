@@ -8,6 +8,11 @@ by conforming to the `LayoutParser` protocols.
 Nevertheless, the following explanation of the JSON implementation
 will demonstrate how EverLayout understands layouts.
 
+** Note ** - Even though Numbers and Bools are valid data types in JSON, 
+EverLayout currently only recognizes String values. This may be updated in the 
+future.
+
+
 # The Layout Index <a name="layout-index"></a>
 The layout index is the root of every layout model.
 ```

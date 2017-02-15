@@ -7,7 +7,7 @@ layout files and sends them to the app when they've been updated.
 
 `npm install ever-layout-bridge`
 
-You can get more information on EverLayout Bridge here
+You can get more information on EverLayout Bridge [here](https://github.com/acrocat/EverLayoutBridge)
 
 # Connecting
 
