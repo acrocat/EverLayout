@@ -31,11 +31,10 @@ If the layout is deallocated, EverLayout Bridge won't be able to update it.
 
 # View Environment <a name='view-environment'></a>
 
-A view environment is as instance of NSObject which contains properties
+A view environment is an instance of NSObject which contains the properties
 referenced in the layout file. For instance, in a View Controller, you would
 want the root view of your layout to be the controller's view, but the controller
-itself is the object containing the other views in your layout that you 
-would want to use in your layout.
+itself is the object containing the other views in your layout.
 
 ```
 	class ViewController : UIViewController
@@ -66,7 +65,7 @@ would want to use in your layout.
 
 In the above example, EverLayout will use the ViewController as the View Environment
 and find `viewInLayout` as a property. During the build process it will
-add this view to the root, so this isn't something to worry about.
+add this view to the root.
 
 ```
 	let viewEnvironment : NSDictionary = [
@@ -81,8 +80,8 @@ use an NSDictionary to directly pass the views into the layout. This is
 helpful when using sub-layouts.
 
 ** Note **
- - `NSDictionary` can be used because it is a subclass of NSObject. Swift
- `Dictionary`s are not and will not work.
+ - `NSDictionary` can be used because it is a subclass of NSObject. The Swift
+ `Dictionary` is not and will not work.
 
 ** Note **
  - Properties accessed from the View Environment must be `public`, otherwise
@@ -114,14 +113,13 @@ which is called when a layout successfully builds on a view.
 
 See [Writing Sublayouts](writing.md#sublayouts)
 
-Sub-layouts can be access like so:
+Sub-layouts can be accessed like so:
 
 ```
 	let subLayout = self.layout?.getSubLayout("sublayout-name")
 ```
 
-`subLayout` is just another instance of EverLayout but its layout data
-is just that of this sub-layout.
+`subLayout` is just another instance of EverLayout.
 
 Sub-layouts can be made effective when used with [Data Injection](writing.md#data-injection)
 and [View Environment](#view-environments).

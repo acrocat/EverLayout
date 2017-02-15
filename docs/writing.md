@@ -1,6 +1,6 @@
 #JSON <a name="json"></a>
-EverLayout is bundled with parsers that I wrote to translate 
-JSON structures in UIView view hierarchies. JSON was the data structure
+EverLayout is bundled with parsers to translate 
+JSON structures in UIView hierarchies. JSON was the data structure
 of choice because of its wide popularity, however if you do not wish
 to use JSON you can easily implement your own data language 
 by conforming to the `LayoutParser` protocols. 
@@ -18,7 +18,7 @@ The layout index is the root of every layout model.
 ```
 {
 	"name":"SimpleLayout",
-	"views":{...},
+	"root":{...},
 	"layouts":{...}
 }
 ```
@@ -28,9 +28,8 @@ Only 3 properties are currently read in the Layout Index:
 * `name` The layout name. So far this is only used 
 to route layout updates when developing with EverLayout Bridge.
 * `root` Layouts are built on UIViews, which become the 'root view'
-of the layout. The root property of the layout is the view model
-for this view i.e where the layout begins.
-* `layouts` EverLayout supports 'sub-layouts', they can be described here.
+of the layout I.E This is where the layout begins.
+* `layouts` EverLayout supports [sub-layouts](#sublayouts)
 
 # The View Model <a name="view-mmodel"></a>
 
@@ -46,14 +45,13 @@ The view model contains layout data for individual UIViews.
 
 * `constraints` See [Writing Constraints](#writing-constraints)
 * `properties` See [View Properties](#view-properties)
-* `z-index` See [z-index](#z-index)
+* `z-index` See [Z-Index](#z-index)
 * `views` See [Subviews](#subviews)
 
 # View Name <a name="view-name"></a>
 
 Every view in the layout (except the root view, see [View Index](#view-index))
-has a name and is expressed as a [subview](#subviews) of another view in a key-value
-format.
+has a name and is expressed as a subview of another view in this layout.
 
 ```
 {
@@ -69,9 +67,9 @@ format.
 The key being the view's name, and the value its [view model](#view-model).
 
 Given the sample, EverLayout would scan this layout's view environment
-for a property with this name that is a UIView. If it finds one, it will 
+for a property with this name. If it finds one, it will 
 map this view model to that UIView, including adding it as 
-a subview of this view model's parent model
+a subview.
 
 If EverLayout is unable to find the view, it will move on.
 
@@ -105,7 +103,7 @@ If your view name is prefixed with `!`, it will be considered a
 # Creating New Views From UIView Subclasses <a name="creating-subclasses"></a>
 
 In addition to being able to create new views, you can also
-specify which UIView subclass (if any) you want your new view to be.
+specify which UIView subclass you want your new view to be.
 
 ```
 {
@@ -132,7 +130,7 @@ build based on key-value rules in the view model.
 
 The format of these constraint rules may not immediately make sense,
 and might take a while to get used to. They're based on ideas
-I got from [SnapKit](https://github.com/SnapKit/SnapKit).
+taken from [SnapKit](https://github.com/SnapKit/SnapKit).
 
 ```
 {
@@ -159,8 +157,8 @@ The second example creates constraints which tether the bottom, left and
 right edges to the superview with an 8 unit inset, and then gives this view a height 
 of half the superview height.
 
-Each rule is broken into left-hand, and right-hand statements (key and value). Each 
-statement contains contains arguments separated by a space " ".
+Each rule is broken into left-hand and right-hand statements (key and value). Both 
+statements contain arguments separated by a space " ".
 
 For the left-hand statement, any NSLayoutAttribute is valid 
 along with some additional 'compound attributes'.
@@ -187,8 +185,8 @@ an NSLayoutAttribute of that view to target (e.g `@viewName.right`)
 EverLayout will try to infer missing constraint properties based
 on the information that is supplied.
 
-`"width": "@view +12"` Will create a constraint that has the width
-of `view`, plus 12.
+`"width": "@view +12"` Will create a constraint with the width
+of `view`, plus 12 units.
 
 `"width": "+12"` Will create a constraint that has a width of 
 12 units.
@@ -229,8 +227,7 @@ string (`#333333`).
 
 ** UIImageView **
 
-* `image` The value for setting an image should be the name of the asset
-in your bundle
+* `image` The value used is passed into UIImage(named: ...)
 
 ** UIScrollView **
 
