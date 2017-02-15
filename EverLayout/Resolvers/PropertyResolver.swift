@@ -93,6 +93,10 @@ public class PropertyResolver
         else
         {
             // Unrecognised property
+            // Would be nice to report this, but it doesn't cause crashes so 
+            // not a priority
+            
+            return
         }
     }
     

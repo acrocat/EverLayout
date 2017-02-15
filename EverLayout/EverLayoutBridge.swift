@@ -26,21 +26,26 @@ import SwiftyJSON
 
 public class EverLayoutBridge: NSObject
 {
-    static var socket : SocketIOClient!
+    static var socket : SocketIOClient?
     private static let DEFAULT_IP : String = "http://localhost"
     private static let DEFAULT_PORT : String = "3000"
     
+    /// Try to establish a socket connection with the EverLayout Bridge server app
+    ///
+    /// - Parameters:
+    ///   - IP: Address to connect to
+    ///   - port: Port to connect on
     public static func connectToLayoutServer (withIP IP : String? = nil , port : String? = nil)
     {
         let address = "\(IP ?? self.DEFAULT_IP):\(port ?? self.DEFAULT_PORT)"
         
         self.socket = SocketIOClient(socketURL: URL(string: address)!)
         
-        self.socket.on("connection") { (data, ack) in
+        self.socket?.on("connection") { (data, ack) in
             print("Connected")
         }
         
-        self.socket.on("layout-update") { (data, ack) in
+        self.socket?.on("layout-update") { (data, ack) in
             let data = self.parseData(data)
             
             if let layoutName = data.dictionary?["layoutName"]?.string , let layoutData = data.dictionary?["layout"]
@@ -51,20 +56,37 @@ public class EverLayoutBridge: NSObject
             }
         }
         
-        self.socket.connect()
+        self.socket?.connect()
     }
     
+    /// Get useful info from the data received
+    ///
+    /// - Parameter data: raw data
+    /// - Returns: JSON Data
     private static func parseData (_ data : [Any]) -> JSON
     {
         return JSON(data.first as Any)
     }
     
+    /// Uses NotificationCenter to send update messages to loaded layouts in the app
+    ///
+    /// - Parameters:
+    ///   - layoutName: Name of the layout that has been updated
+    ///   - layoutData: The new layout data
     private static func postLayoutUpdate (layoutName : String , layoutData : Data)
     {
         let notificationName : Notification.Name = Notification.Name("layout-update__\(layoutName)")
         
-        print("sending " + notificationName.rawValue)
-        
         NotificationCenter.default.post(name: notificationName, object: layoutData)
+    }
+    
+    /// Report a message to the bridge
+    ///
+    /// - Parameter message: message to report
+    public static func sendReport (message : String)
+    {
+        self.socket?.emit("report", [
+                "message":message
+            ])
     }
 }

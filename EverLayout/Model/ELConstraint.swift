@@ -90,13 +90,24 @@ public class ELConstraint: ELRawData
             constraint.identifier = self.identifier
             
             // Add the constraint to either the target's superview or just the target itself
-            if target.superview != nil
+            let constraintTarget = target.superview ?? target
+            
+            // Check that these the view and comparable view are in the same hierarchy before
+            // adding the constraint as this will cause a crash
+            if target.sharesAncestry(withView: context.comparableView ?? target)
             {
-                target.superview?.addConstraint(constraint)
+                constraintTarget.addConstraint(constraint)
             }
             else
             {
-                target.addConstraint(constraint)
+                if let identifier = self.identifier
+                {
+                    ELReporter.default.error(message: "Some views do not share a view ancestry and so this constraint cannot be made. Constraint: \(identifier)")
+                }
+                else
+                {
+                    ELReporter.default.error(message: "Some views do not share a view ancestry and so this constraint cannot be made. Use constraint identifiers to determine which constraint is causing the problem.")
+                }
             }
         }
     }

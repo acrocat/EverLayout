@@ -24,89 +24,113 @@ import UIKit
 
 enum ELReportEmphasis : String
 {
-    case info = "INFO"
     case warning = "WARNING"
     case error = "ERROR"
 }
 
-enum ELReporterConfigurationOptions : Int
+enum ELReportOptions
 {
-    // Printing
-    case printWarnings = 0
-    case printInfo = 1
-    case printErrors = 2
-    
-    // Broadcasting
-    case broadcastWarnings = 3
-    case broadcastInfo = 4
-    case broadcastErrors = 5
-    
-    // Rendering
-    case renderWarnings = 6
-    case renderInfo = 7
-    case renderErrors = 8
+    case logReports
+    case sendReportsToEverLayoutBridge
+    case showReportSeverityOnAppDisplay
 }
 
-struct EverLayoutReport
+struct ELReport
 {
     let message : String
     let emphasis : ELReportEmphasis
+    
+    var description : String {
+        return "\(self.emphasis.rawValue) - \(self.message)"
+    }
 }
 
 class ELReporter: NSObject
 {
-    public static let `default`: ELReporter = ELReporter()
+    public static let `default`: ELReporter = ELReporter(config: [
+            .logReports , .sendReportsToEverLayoutBridge , .showReportSeverityOnAppDisplay
+        ])
     
-    private(set) public var configuration : [ELReporterConfigurationOptions : Bool] = [:]
-    private var _configValue : UInt16 = 0
+    private var isErrorRendering : Bool = false
+    private var configuration : [ELReportOptions] = []
     
-    convenience init  (config : [ELReporterConfigurationOptions : Bool])
+    /// Init with config options
+    ///
+    /// - Parameter config: Array of config options
+    convenience init (config : [ELReportOptions])
     {
         self.init()
         
         self.configuration = config
     }
     
-    public func info (message : String)
-    {
-        
-    }
-    
+    /// Report a warning
+    ///
+    /// - Parameter message: warning message
     public func warning (message : String)
     {
-        self.dispatchReport(EverLayoutReport(message: message, emphasis: .warning))
+        self.dispatchReport(ELReport(message: message, emphasis: .warning))
     }
     
+    /// Report an error
+    ///
+    /// - Parameter message: error message
     public func error (message : String)
-    {}
-    
-    private func dispatchReport (_ report : EverLayoutReport)
     {
-        self.log(report: report)
-        self.broadcast(report: report)
-        self.render(report: report)
+        self.dispatchReport(ELReport(message: message, emphasis: .error))
+    }
+    
+    /// Determine which reporting methods should be used based on configuration and then call them
+    ///
+    /// - Parameter report: The report to send
+    private func dispatchReport (_ report : ELReport)
+    {
+        if self.configuration.contains(.logReports) { self.log(report: report) }
+        if self.configuration.contains(.sendReportsToEverLayoutBridge) { self.send(report: report) }
+        if self.configuration.contains(.showReportSeverityOnAppDisplay) { self.render(report: report) }
     }
     
     /// Will print the message to the Xcode log
     ///
     /// - Parameters:
     ///   - report : Message and emphasis
-    private func log (report: EverLayoutReport)
+    private func log (report: ELReport)
     {   
-        print("\(report.emphasis.rawValue):- \(report.message)")
+        print(report.description)
     }
     
     /// Attempts to send the message to the companion app
     ///
     /// - Parameters:
     ///   - report : Message and emphasis
-    private func broadcast (report : EverLayoutReport)
-    {}
+    private func send (report : ELReport)
+    {
+        EverLayoutBridge.sendReport(message: report.description)
+    }
     
     /// Will display the message on the device display
     ///
     /// - Parameters:
     ///   - report : Message and emphasis
-    private func render (report: EverLayoutReport)
-    {}
+    private func render (report: ELReport)
+    {
+        if self.isErrorRendering { return }
+        
+        self.isErrorRendering = true
+        
+        // Get the view of the rootViewController
+        if let view = UIApplication.shared.keyWindow?.rootViewController?.view
+        {
+            // Add a border to the view to signify that there is a report
+            view.layer.borderWidth = 5
+            view.layer.borderColor = UIColor.red.cgColor
+            
+            let deadlineTime = DispatchTime.now() + .seconds(2)
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                [weak self] in
+                self?.isErrorRendering = false
+                view.layer.borderWidth = 0
+            }
+        }
+    }
 }
