@@ -39,6 +39,7 @@
 		2D57FA891E46182E0043B897 /* ButtonPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */; };
 		2D57FA8F1E4618610043B897 /* EverLayoutBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */; };
 		2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */; };
+		2DBAE95C1E5DCE9200677D98 /* ELJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */; };
 		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
 		EA01C956B704AD23AD1A518C /* Pods_EverLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE5D92620B2DE9A9ADA5C599 /* Pods_EverLayout.framework */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBridge.swift; sourceTree = "<group>"; };
 		2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+EverLayout.swift"; sourceTree = "<group>"; };
+		2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELJSON.swift; sourceTree = "<group>"; };
 		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
 		4772F178EAD6DE88DFC74BFB /* Pods-EverLayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout/Pods-EverLayout.debug.xcconfig"; sourceTree = "<group>"; };
 		FB1E0A82314DB2E45DC79A7B /* Pods-EverLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout/Pods-EverLayout.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				2D57FA451E46171F0043B897 /* Info.plist */,
 				2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */,
 				2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */,
+				2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */,
 			);
 			path = EverLayout;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				2D57FA7B1E46181C0043B897 /* LayoutParser.swift in Sources */,
 				2D57FA851E46182E0043B897 /* PropertyResolver.swift in Sources */,
 				2D57FA751E4617D40043B897 /* LayoutPropertyJSONParser.swift in Sources */,
+				2DBAE95C1E5DCE9200677D98 /* ELJSON.swift in Sources */,
 				2D57FA6A1E4617C80043B897 /* ELConstraintConstant.swift in Sources */,
 				2D57FA7F1E46181C0043B897 /* LayoutPropertyParser.swift in Sources */,
 				2D57FA861E46182E0043B897 /* ImageViewPropertyResolver.swift in Sources */,

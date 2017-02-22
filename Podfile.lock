@@ -1,15 +1,12 @@
 PODS:
   - Socket.IO-Client-Swift (8.2.0)
-  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Socket.IO-Client-Swift (= 8.2.0)
-  - SwiftyJSON (= 3.1.4)
 
 SPEC CHECKSUMS:
   Socket.IO-Client-Swift: 900cf511777045c80d1ce1f11f71261e87765dd1
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 8e38056c832d9b2a4d5992c0e326d3b01dc82454
+PODFILE CHECKSUM: 83ea6e5016c26b9a778d1ae57c7d123c347e10ee
 
 COCOAPODS: 1.2.0.beta.1

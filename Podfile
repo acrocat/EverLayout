@@ -7,6 +7,6 @@ target 'EverLayout' do
 
   # Pods for EverLayout
   pod 'Socket.IO-Client-Swift' , '8.2.0'
-  pod 'SwiftyJSON' , '3.1.4'
+  #pod 'SwiftyJSON' , '3.1.4'
 
 end

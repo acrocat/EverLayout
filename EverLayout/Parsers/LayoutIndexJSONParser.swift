@@ -21,7 +21,6 @@
 //  THE SOFTWARE.
 
 import UIKit
-import SwiftyJSON
 
 public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
 {
@@ -56,7 +55,7 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         
         for (layoutName , layoutData) in sublayoutData
         {
-            sublayouts[layoutName] = try? layoutData.rawData()
+            sublayouts[layoutName] = layoutData.rawData
         }
         
         return sublayouts
