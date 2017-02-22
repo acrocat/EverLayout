@@ -4,11 +4,10 @@ can read layout data in JSON and interpret and build these layouts
 entirely at runtime. 
 
 This means:
-
-* View controllers without layout code
-* Downloadable layout files - update the app's UI without 
-submitting for the App Review Process.
+* Create comprehensive layouts without the clumsiness of Interface Builder or view controllers bloated with layout code.
+* Downloadable layouts - Layouts written in JSON can be downloaded from a web server, meaning an App UI can be updated without having to submit for App Review.
 * Build layouts with real-time update using a simple HTTP server (or EverLayout Bridge).
+* A/B Testing - Testing multiple UIs with your users is easy when building a layout is just loading a file.
 
 # Docs
 
