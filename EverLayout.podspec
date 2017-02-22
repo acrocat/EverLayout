@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "EverLayout"
-  s.version      = "0.1.1"
+  s.version      = "0.2.0"
   s.summary      = "Reusable, downloadable, up-datable iOS layouts"
 
   s.homepage     = "https://github.com/acrocat/EverLayout"
@@ -16,5 +16,4 @@ Pod::Spec.new do |s|
   s.source_files  = "EverLayout", "EverLayout/**/*.{swift}"
 
   s.dependency "Socket.IO-Client-Swift" , "8.2.0"
-#  s.dependency "SwiftyJSON" , "3.1.4"
 end
