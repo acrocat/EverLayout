@@ -63,4 +63,4 @@ layouts described with code.
 
 # Dependencies
 
-At the moment EverLayout uses [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) to parse JSON files, and [Socket.IO](https://github.com/socketio/socket.io-client-swift) for communication with EverLayout Bridge.
+At the moment EverLayout uses [Socket.IO](https://github.com/socketio/socket.io-client-swift) for communication with EverLayout Bridge.
