@@ -90,7 +90,10 @@ public class ELConstraint: ELRawData
             constraint.identifier = self.identifier
             
             // Add the constraint to either the target's superview or just the target itself
-            let constraintTarget = target.superview ?? target
+//            let constraintTarget = target.superview ?? target
+            
+            // Add the constraint to the root view
+            let constraintTarget = viewIndex.rootView() ?? target.superview ?? target
             
             // Check that these the view and comparable view are in the same hierarchy before
             // adding the constraint as this will cause a crash

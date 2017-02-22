@@ -26,6 +26,16 @@ public class ViewIndex: NSObject
 {
     private(set) public var contents : [String : ELView?] = [:]
     
+    public func rootViewModel () -> ELView?
+    {
+        return self.contents.first?.value
+    }
+    
+    public func rootView () -> UIView?
+    {
+        return self.rootViewModel()?.target
+    }
+    
     public func view (forKey key : String) -> UIView?
     {
         return self.contents[key]??.target
