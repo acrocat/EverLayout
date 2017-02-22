@@ -36,25 +36,28 @@ public class EverLayoutBridge: NSObject
     ///   - port: Port to connect on
     public static func connectToLayoutServer (withIP IP : String? = nil , port : String? = nil)
     {
-//        let address = "\(IP ?? self.DEFAULT_IP):\(port ?? self.DEFAULT_PORT)"
-//        
-//        self.socket = SocketIOClient(socketURL: URL(string: address)!)
-//        
-//        self.socket?.on("connection") { (data, ack) in
-//            print("Connected")
-//        }
-//        
-//        self.socket?.on("layout-update") { (data, ack) in
-//            let data = self.parseData(data)
-//            
-//            if let layoutName = data.dictionary?["layoutName"]?.string , let layoutData = data.dictionary?["layout"]
-//            {
-//                let layoutName : NSString = layoutName as NSString
-//                
-//                try? self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: layoutData.rawData)
-//            }
-//        }
-//        
+        let address = "\(IP ?? self.DEFAULT_IP):\(port ?? self.DEFAULT_PORT)"
+        
+        self.socket = SocketIOClient(socketURL: URL(string: address)!)
+        
+        self.socket?.on("connection") { (data, ack) in
+            print("Connected")
+        }
+        
+        self.socket?.on("layout-update") { (data, ack) in
+            let data = self.parseData(data)
+            
+            if let layoutName = data.dictionary?["layoutName"]?.string , let layoutData = data.dictionary?["layout"]
+            {
+                let layoutName : NSString = layoutName as NSString
+                
+                if let rawData = layoutData.getRawData()
+                {
+                    self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: rawData)
+                }
+            }
+        }
+        
         self.socket?.connect()
     }
     

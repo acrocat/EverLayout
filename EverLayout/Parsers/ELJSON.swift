@@ -78,4 +78,10 @@ class ELJSON
             return ELJSON(item)
         })
     }
+    
+    public func getRawData () -> Data? {
+        guard let rawData = self.rawData else { return nil }
+        
+        return try? JSONSerialization.data(withJSONObject: rawData, options: .prettyPrinted)
+    }
 }

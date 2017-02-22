@@ -55,7 +55,7 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         
         for (layoutName , layoutData) in sublayoutData
         {
-            sublayouts[layoutName] = layoutData.rawData
+            sublayouts[layoutName] = layoutData.getRawData()
         }
         
         return sublayouts

@@ -126,9 +126,7 @@
 				2D57FA4C1E4617290043B897 /* Extensions */,
 				2D57FA441E46171F0043B897 /* EverLayout.h */,
 				2D57FA451E46171F0043B897 /* Info.plist */,
-				2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */,
 				2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */,
-				2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */,
 			);
 			path = EverLayout;
 			sourceTree = "<group>";
@@ -147,6 +145,7 @@
 		2D57FA4D1E46173A0043B897 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */,
 				2D57FA581E4617C80043B897 /* EverLayout.swift */,
 				2D57FA591E4617C80043B897 /* EverLayoutConfiguration.swift */,
 				2D57FA5A1E4617C80043B897 /* ELRawData.swift */,
@@ -165,6 +164,7 @@
 		2D57FA4E1E4617440043B897 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
+				2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */,
 				2D57FA6E1E4617D40043B897 /* LayoutIndexJSONParser.swift */,
 				2D57FA6F1E4617D40043B897 /* LayoutViewJSONParser.swift */,
 				2D57FA701E4617D40043B897 /* LayoutConstraintJSONParser.swift */,
