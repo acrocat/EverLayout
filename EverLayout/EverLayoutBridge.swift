@@ -51,9 +51,9 @@ public class EverLayoutBridge: NSObject
             {
                 let layoutName : NSString = layoutName as NSString
                 
-                if let rawData = layoutData.getRawData()
+                if let rawData = layoutData.rawData
                 {
-                    self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: rawData)
+                    self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: rawData as! Data)
                 }
             }
         }
