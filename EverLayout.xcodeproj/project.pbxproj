@@ -164,11 +164,8 @@
 		2D57FA4E1E4617440043B897 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */,
-				2D57FA6E1E4617D40043B897 /* LayoutIndexJSONParser.swift */,
-				2D57FA6F1E4617D40043B897 /* LayoutViewJSONParser.swift */,
-				2D57FA701E4617D40043B897 /* LayoutConstraintJSONParser.swift */,
-				2D57FA711E4617D40043B897 /* LayoutPropertyJSONParser.swift */,
+				2DA7C8331E5F256B00CF75DB /* XML */,
+				2DA7C8321E5F254300CF75DB /* JSON */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -196,6 +193,25 @@
 				2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */,
 			);
 			path = Resolvers;
+			sourceTree = "<group>";
+		};
+		2DA7C8321E5F254300CF75DB /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */,
+				2D57FA6E1E4617D40043B897 /* LayoutIndexJSONParser.swift */,
+				2D57FA6F1E4617D40043B897 /* LayoutViewJSONParser.swift */,
+				2D57FA701E4617D40043B897 /* LayoutConstraintJSONParser.swift */,
+				2D57FA711E4617D40043B897 /* LayoutPropertyJSONParser.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		2DA7C8331E5F256B00CF75DB /* XML */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = XML;
 			sourceTree = "<group>";
 		};
 		61E72D646280AA3EBC0D1FE0 /* Frameworks */ = {

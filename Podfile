@@ -7,5 +7,7 @@ target 'EverLayout' do
 
   # Pods for EverLayout
   pod 'Socket.IO-Client-Swift' , '8.2.0'
+  pod "SwiftyXMLParser"
+
 
 end
