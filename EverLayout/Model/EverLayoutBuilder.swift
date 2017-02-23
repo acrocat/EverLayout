@@ -24,7 +24,7 @@ import UIKit
 
 class EverLayoutBuilder: NSObject
 {
-    private static let configuration : EverLayoutConfiguration = EverLayoutConfiguration.default
+    private(set) public var configuration : EverLayoutConfiguration = EverLayoutConfiguration.default
     
     // ---------------------------------------------------------------------------
     // MARK: - Build Layout
@@ -39,7 +39,14 @@ class EverLayoutBuilder: NSObject
      - Add view properties
      */
  
-    static func buildLayout (_ layout : EverLayout , onView view : UIView , viewEnvironment : NSObject? = nil) -> ViewIndex
+    public init (configuration : EverLayoutConfiguration? = nil)
+    {
+        super.init()
+        
+        self.configuration = configuration ?? EverLayoutConfiguration.default
+    }
+    
+    public func buildLayout (_ layout : EverLayout , onView view : UIView , viewEnvironment : NSObject? = nil) -> ViewIndex
     {
         var viewIndex : ViewIndex = self.createViewIndex(layoutData: layout.rawData)
         
@@ -52,7 +59,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Fill the viewIndex with models for each view in the layout data
-    private static func createViewIndex (layoutData : Any) -> ViewIndex
+    private func createViewIndex (layoutData : Any) -> ViewIndex
     {
         var viewIndex : ViewIndex = ViewIndex()
         
@@ -90,7 +97,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Create actual UIView instances for each view model in the index
-    private static func createTargetViews (viewIndex : inout ViewIndex , rootView : UIView  , viewEnvironment : NSObject)
+    private func createTargetViews (viewIndex : inout ViewIndex , rootView : UIView  , viewEnvironment : NSObject)
     {
         for (viewId , viewModel) in viewIndex.contents
         {
@@ -130,7 +137,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Add all UIView instances in the viewIndex as subviews of the target or of other models
-    private static func buildViewHierarchy (viewIndex : inout ViewIndex)
+    private func buildViewHierarchy (viewIndex : inout ViewIndex)
     {
         // Order the view index by z-index
         let sortedIndex = viewIndex.contents.values.sorted { (modelA, modelB) -> Bool in
@@ -155,7 +162,7 @@ class EverLayoutBuilder: NSObject
     }
     
     /// Parse constraints from layoutData and add them to the views
-    private static func addViewConstraints (viewIndex : inout ViewIndex , viewEnvironment : NSObject? = nil)
+    private func addViewConstraints (viewIndex : inout ViewIndex , viewEnvironment : NSObject? = nil)
     {
         for (_ , viewModel) in viewIndex.contents
         {
@@ -165,7 +172,7 @@ class EverLayoutBuilder: NSObject
         }
     }
     
-    private static func addViewProperties (viewIndex : inout ViewIndex)
+    private func addViewProperties (viewIndex : inout ViewIndex)
     {
         for (_ , viewModel) in viewIndex.contents
         {

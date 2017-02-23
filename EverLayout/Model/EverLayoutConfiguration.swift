@@ -31,14 +31,27 @@ public struct EverLayoutConfiguration
         propertyParser: LayoutPropertyJSONParser()
     )
     
+    public init (
+        indexParser: LayoutIndexParser,
+        viewParser : LayoutViewParser,
+        constraintParser : LayoutConstraintParser,
+        propertyParser : LayoutPropertyParser
+    )
+    {
+        self.indexParser = indexParser
+        self.viewParser = viewParser
+        self.constraintParser = constraintParser
+        self.propertyParser = propertyParser
+    }
+    
     // ---------------------------------------------------------------------------
     // MARK: - Parsing
     // ---------------------------------------------------------------------------
     
-    let indexParser : LayoutIndexParser
-    let viewParser : LayoutViewParser
-    let constraintParser : LayoutConstraintParser
-    let propertyParser : LayoutPropertyParser
+    public let indexParser : LayoutIndexParser
+    public let viewParser : LayoutViewParser
+    public let constraintParser : LayoutConstraintParser
+    public let propertyParser : LayoutPropertyParser
     
     // ---------------------------------------------------------------------------
     // ---------------------------------------------------------------------------

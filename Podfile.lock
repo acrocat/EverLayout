@@ -1,15 +1,15 @@
 PODS:
   - Socket.IO-Client-Swift (8.2.0)
-  - SwiftyXMLParser (3.0.0)
+  - SwiftyXML (1.1.0)
 
 DEPENDENCIES:
   - Socket.IO-Client-Swift (= 8.2.0)
-  - SwiftyXMLParser
+  - SwiftyXML
 
 SPEC CHECKSUMS:
   Socket.IO-Client-Swift: 900cf511777045c80d1ce1f11f71261e87765dd1
-  SwiftyXMLParser: 8d2295fb4fbc6e2ff241e7c8d7717e159be35969
+  SwiftyXML: 3054a135ca252ef97991cd264aa698a41ef854c3
 
-PODFILE CHECKSUM: d7b83d76bafccf92e2a1568581332f41e8e732d7
+PODFILE CHECKSUM: a84d7ee8e829ef6e54b7932c6b0a9c48f5a54f54
 
 COCOAPODS: 1.2.0.beta.1

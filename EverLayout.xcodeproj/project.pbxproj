@@ -39,6 +39,10 @@
 		2D57FA891E46182E0043B897 /* ButtonPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */; };
 		2D57FA8F1E4618610043B897 /* EverLayoutBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */; };
 		2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */; };
+		2DA7C8351E5F25BF00CF75DB /* LayoutIndexXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7C8341E5F25BF00CF75DB /* LayoutIndexXMLParser.swift */; };
+		2DA7C8371E5F27F800CF75DB /* LayoutViewXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7C8361E5F27F800CF75DB /* LayoutViewXMLParser.swift */; };
+		2DA7C83B1E5F2C3300CF75DB /* LayoutPropertyXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7C83A1E5F2C3300CF75DB /* LayoutPropertyXMLParser.swift */; };
+		2DA7C83D1E5F2E7100CF75DB /* LayoutConstraintXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7C83C1E5F2E7100CF75DB /* LayoutConstraintXMLParser.swift */; };
 		2DBAE95C1E5DCE9200677D98 /* ELJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */; };
 		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
 		EA01C956B704AD23AD1A518C /* Pods_EverLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE5D92620B2DE9A9ADA5C599 /* Pods_EverLayout.framework */; };
@@ -79,6 +83,10 @@
 		2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBridge.swift; sourceTree = "<group>"; };
 		2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+EverLayout.swift"; sourceTree = "<group>"; };
+		2DA7C8341E5F25BF00CF75DB /* LayoutIndexXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutIndexXMLParser.swift; sourceTree = "<group>"; };
+		2DA7C8361E5F27F800CF75DB /* LayoutViewXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutViewXMLParser.swift; sourceTree = "<group>"; };
+		2DA7C83A1E5F2C3300CF75DB /* LayoutPropertyXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPropertyXMLParser.swift; sourceTree = "<group>"; };
+		2DA7C83C1E5F2E7100CF75DB /* LayoutConstraintXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraintXMLParser.swift; sourceTree = "<group>"; };
 		2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELJSON.swift; sourceTree = "<group>"; };
 		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
 		4772F178EAD6DE88DFC74BFB /* Pods-EverLayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout/Pods-EverLayout.debug.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +218,10 @@
 		2DA7C8331E5F256B00CF75DB /* XML */ = {
 			isa = PBXGroup;
 			children = (
+				2DA7C8341E5F25BF00CF75DB /* LayoutIndexXMLParser.swift */,
+				2DA7C8361E5F27F800CF75DB /* LayoutViewXMLParser.swift */,
+				2DA7C83A1E5F2C3300CF75DB /* LayoutPropertyXMLParser.swift */,
+				2DA7C83C1E5F2E7100CF75DB /* LayoutConstraintXMLParser.swift */,
 			);
 			path = XML;
 			sourceTree = "<group>";
@@ -351,6 +363,7 @@
 				2D57FA7D1E46181C0043B897 /* LayoutViewParser.swift in Sources */,
 				2D57FA6D1E4617C80043B897 /* ELReporter.swift in Sources */,
 				2D57FA871E46182E0043B897 /* ScrollViewPropertyResolver.swift in Sources */,
+				2DA7C83B1E5F2C3300CF75DB /* LayoutPropertyXMLParser.swift in Sources */,
 				2D57FA651E4617C80043B897 /* ELRawData.swift in Sources */,
 				2D57FA661E4617C80043B897 /* ELView.swift in Sources */,
 				2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */,
@@ -362,6 +375,7 @@
 				2D57FA691E4617C80043B897 /* ViewIndex.swift in Sources */,
 				2D57FA6B1E4617C80043B897 /* ELConstraintMultiplier.swift in Sources */,
 				2D57FA641E4617C80043B897 /* EverLayoutConfiguration.swift in Sources */,
+				2DA7C8351E5F25BF00CF75DB /* LayoutIndexXMLParser.swift in Sources */,
 				2D57FA721E4617D40043B897 /* LayoutIndexJSONParser.swift in Sources */,
 				2D57FA7E1E46181C0043B897 /* LayoutConstraintParser.swift in Sources */,
 				2D57FA7B1E46181C0043B897 /* LayoutParser.swift in Sources */,
@@ -374,6 +388,8 @@
 				2D57FA6C1E4617C80043B897 /* ELConstraintContext.swift in Sources */,
 				2D57FA551E4617BB0043B897 /* UIColor+EverLayout.swift in Sources */,
 				2D25780E1E4B719E0005BDA0 /* EverLayoutDelegate.swift in Sources */,
+				2DA7C8371E5F27F800CF75DB /* LayoutViewXMLParser.swift in Sources */,
+				2DA7C83D1E5F2E7100CF75DB /* LayoutConstraintXMLParser.swift in Sources */,
 				2D57FA731E4617D40043B897 /* LayoutViewJSONParser.swift in Sources */,
 				2D57FA7C1E46181C0043B897 /* LayoutIndexParser.swift in Sources */,
 				2D57FA571E4617BB0043B897 /* String+EverLayout.swift in Sources */,

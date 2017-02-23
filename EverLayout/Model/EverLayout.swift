@@ -25,18 +25,18 @@ import UIKit
 open class EverLayout: ELRawData
 {
     public weak var delegate : EverLayoutDelegate?
-    public var indexParser : LayoutIndexParser!
     
+    private(set) public var parserConfiguration : EverLayoutConfiguration = EverLayoutConfiguration.default
     private(set) public var viewIndex : ViewIndex?
     private(set) public var target : UIView?
     private(set) public var viewEnvironment : NSObject?
     private(set) public var injectedData : [String:String] = [:]
     
     public var layoutName : String? {
-        return self.indexParser.layoutName(source: self.rawData)
+        return self.parserConfiguration.indexParser.layoutName(source: self.rawData)
     }
     public var sublayouts : [String : Any?]? {
-        return self.indexParser.sublayouts(source: self.rawData)
+        return self.parserConfiguration.indexParser.sublayouts(source: self.rawData)
     }
     
     /// Init with layout data and a parser
@@ -44,10 +44,10 @@ open class EverLayout: ELRawData
     /// - Parameters:
     ///   - layoutData: Raw data for the entire layout
     ///   - layoutIndexParser: index parser to use
-    public init (layoutData : Data , layoutIndexParser : LayoutIndexParser? = LayoutIndexJSONParser())
+    public init (layoutData : Data , parserConfiguration : EverLayoutConfiguration? = nil)
     {
         super.init(rawData: layoutData)
-        self.indexParser = layoutIndexParser
+        self.parserConfiguration = parserConfiguration ?? EverLayoutConfiguration.default
         
         if let layoutName = self.layoutName
         {
@@ -71,7 +71,8 @@ open class EverLayout: ELRawData
             self.rawData = self._injectDataIntoLayout(data: self.injectedData, layoutData: rawData)
         }
         
-        self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, viewEnvironment: viewEnvironment)
+        let layoutBuilder : EverLayoutBuilder = EverLayoutBuilder(configuration: self.parserConfiguration)
+        self.viewIndex = layoutBuilder.buildLayout(self, onView: view, viewEnvironment: viewEnvironment)
         
         self.delegate?.layout(self, didLoadOnView: view)
     }
@@ -80,7 +81,7 @@ open class EverLayout: ELRawData
     {
         guard let layoutData = self.sublayouts?[name] as? Data else { return nil }
         
-        return EverLayout(layoutData: layoutData, layoutIndexParser: self.indexParser)
+        return EverLayout(layoutData: layoutData, parserConfiguration: self.parserConfiguration)
     }
     
     /// Similar to building a full layout, this will begin the process of building a sublayout on the passed view
