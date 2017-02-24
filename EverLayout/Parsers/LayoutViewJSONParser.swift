@@ -147,12 +147,22 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         guard let jsonData = source.viewData[LayoutViewJSONParser.KEY_CONSTRAINTS]?.dictionary else { return nil }
+
+        var constraints : [ELConstraint?] = []
         
-        return jsonData.map({ (key , value) -> ELConstraint? in
-            guard let value = value.string else { return nil }
-            
-            return ELConstraint(rawData: (key , value) , parser: LayoutConstraintJSONParser())
-        })
+        for (lhs , rhs) in jsonData {
+            // rhs can either be a constraint argument as a String, or an array of constraint arguments
+            if let rhs = rhs.string {
+                constraints.append(ELConstraint(rawData: (lhs , rhs), parser: LayoutConstraintJSONParser()))
+            } else if let rhs = rhs.array {
+                for argument in rhs {
+                    guard let argument = argument.string else { return nil }
+                    constraints.append(ELConstraint(rawData: (lhs , argument) , parser: LayoutConstraintJSONParser()))
+                }
+            }
+        }
+        
+        return constraints
     }
     
     /// Get the z-index of this view
