@@ -26,6 +26,7 @@ import SocketIO
 public class EverLayoutBridge: NSObject
 {
     static var socket : SocketIOClient?
+    
     private static let DEFAULT_IP : String = "http://localhost"
     private static let DEFAULT_PORT : String = "3000"
     
@@ -51,7 +52,7 @@ public class EverLayoutBridge: NSObject
             {
                 let layoutName : NSString = layoutName as NSString
                 
-                if let rawData = layoutData.getRawData()
+                if let rawData = layoutData.rawData as? Data
                 {
                     self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: rawData)
                 }
@@ -65,8 +66,7 @@ public class EverLayoutBridge: NSObject
     ///
     /// - Parameter data: raw data
     /// - Returns: JSON Data
-    private static func parseData (_ data : [Any]) -> JSON
-    {
+    private static func parseData (_ data : [Any]) -> JSON {
         return JSON(data.first as Any)
     }
     
@@ -75,8 +75,7 @@ public class EverLayoutBridge: NSObject
     /// - Parameters:
     ///   - layoutName: Name of the layout that has been updated
     ///   - layoutData: The new layout data
-    private static func postLayoutUpdate (layoutName : String , layoutData : Data)
-    {
+    private static func postLayoutUpdate (layoutName : String , layoutData : Data) {
         let notificationName : Notification.Name = Notification.Name("layout-update__\(layoutName)")
         
         NotificationCenter.default.post(name: notificationName, object: layoutData)
@@ -85,8 +84,7 @@ public class EverLayoutBridge: NSObject
     /// Report a message to the bridge
     ///
     /// - Parameter message: message to report
-    public static func sendReport (message : String)
-    {
+    public static func sendReport (message : String) {
         self.socket?.emit("report", [
                 "message":message
             ])

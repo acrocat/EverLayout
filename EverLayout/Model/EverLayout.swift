@@ -83,27 +83,6 @@ open class EverLayout: ELRawData
         return EverLayout(layoutData: layoutData, layoutIndexParser: self.indexParser)
     }
     
-    /// Similar to building a full layout, this will begin the process of building a sublayout on the passed view
-    ///
-    /// - Parameters:
-    ///   - name: Name of sublayout to load
-    ///   - view: The root view to build this layout on
-    ///   - host: An optional object which contains the properties referenced in this layout
-    ///   - data: An optional dictionary of data to inject into this sublayout
-//    public func buildSubLayout (_ name : String , onView view : UIView , host : NSObject? = nil , data : [String : String]? = nil)
-//    {
-//        guard var sublayout = self.sublayouts?[name] else { return }
-//        
-//        // Inject data into the sublayout
-//        if var sublayout = sublayout as? Data , let data = data
-//        {
-//            sublayout = self._injectDataIntoLayout(data: data, layoutData: sublayout)!
-//        }
-//        
-//        // Build!
-//        EverLayoutBuilder.buildLayout(sublayout, onView: view, host: host)
-//    }
-    
     /// Set data to be injected when the layout is built
     ///
     /// - Parameter data: Dictionary of key-values for variables in the layout
