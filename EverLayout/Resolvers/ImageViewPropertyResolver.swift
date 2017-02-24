@@ -39,7 +39,19 @@ public class ImageViewPropertyResolver: PropertyResolver
     
     static func image (source : String) -> UIImage?
     {
-        return UIImage(named: source)
+        // Try loading the image from an asset
+        var image = UIImage(named: source)
+        
+        if image == nil {
+            // Attempt to load this image as a url
+            if let imageUrl = URL(string: source) {
+                if let imageData = NSData(contentsOf: imageUrl) {
+                    image = UIImage(data: imageData as Data)
+                }
+            }
+        }
+        
+        return image
     }
 }
 
