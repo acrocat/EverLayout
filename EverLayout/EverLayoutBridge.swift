@@ -51,7 +51,7 @@ public class EverLayoutBridge: NSObject
             {
                 let layoutName : NSString = layoutName as NSString
                 
-                if let rawData = layoutData.getRawData()
+                if let rawData = layoutData.rawData as? Data
                 {
                     self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: rawData)
                 }
@@ -90,5 +90,5 @@ public class EverLayoutBridge: NSObject
         self.socket?.emit("report", [
                 "message":message
             ])
-    }
+    } 
 }
