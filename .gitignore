@@ -24,3 +24,7 @@ xcuserdata/
 
 #CocoaPods
 Pods
+
+# Carthage
+Carthage
+Cartfile.resolved

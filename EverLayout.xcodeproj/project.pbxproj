@@ -39,6 +39,7 @@
 		2D57FA891E46182E0043B897 /* ButtonPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */; };
 		2D57FA8F1E4618610043B897 /* EverLayoutBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */; };
 		2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */; };
+		2D8B07891E794C3F00C71ED9 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8B07881E794C3F00C71ED9 /* SocketIO.framework */; };
 		2DBAE95C1E5DCE9200677D98 /* ELJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */; };
 		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPropertyResolver.swift; sourceTree = "<group>"; };
 		2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBridge.swift; sourceTree = "<group>"; };
 		2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+EverLayout.swift"; sourceTree = "<group>"; };
+		2D8B07881E794C3F00C71ED9 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
 		2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELJSON.swift; sourceTree = "<group>"; };
 		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D8B07891E794C3F00C71ED9 /* SocketIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +101,7 @@
 			children = (
 				2D57FA431E46171F0043B897 /* EverLayout */,
 				2D57FA421E46171F0043B897 /* Products */,
+				2D8B07871E794C3F00C71ED9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +193,14 @@
 				2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */,
 			);
 			path = Resolvers;
+			sourceTree = "<group>";
+		};
+		2D8B07871E794C3F00C71ED9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D8B07881E794C3F00C71ED9 /* SocketIO.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,6 +436,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/EverLayout/Resources",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = EverLayout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -450,6 +463,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/EverLayout/Resources",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = EverLayout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
