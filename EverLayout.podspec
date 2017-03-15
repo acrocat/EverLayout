@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/acrocat/EverLayout"
 
-  s.license      = "LICENSE"
+  s.license      = { :type => 'MIT' }
 
   s.author       = { "Dale Webster" => "sterdefs@gmail.com" }
 
