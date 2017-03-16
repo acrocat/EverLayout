@@ -151,14 +151,24 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
         var constraints : [ELConstraint?] = []
         
         for (lhs , rhs) in jsonData {
-            // rhs can either be a constraint argument as a String, or an array of constraint arguments
-            if let rhs = rhs.string {
-                constraints.append(ELConstraint(rawData: (lhs , rhs), parser: LayoutConstraintJSONParser()))
-            } else if let rhs = rhs.array {
+            // rhs can either be a string, for a shorthand arugment, a dictionary for a comprehensive
+            // argument, or an array of either
+            if let rhs = rhs.array {
                 for argument in rhs {
-                    guard let argument = argument.string else { return nil }
-                    constraints.append(ELConstraint(rawData: (lhs , argument) , parser: LayoutConstraintJSONParser()))
+                    if let argument = argument.string {
+                        // Use shorthand parser
+                        constraints.append(ELConstraint(rawData: (lhs , argument), parser: LayoutConstraintJSONShorthandParser()))
+                    } else if let argument = argument.dictionary {
+                        // Use comprehensive parser
+                        constraints.append(ELConstraint(rawData: (lhs , argument), parser: LayoutConstraintJSONComprehensiveParser()))
+                    }
                 }
+            } else if let rhs = rhs.string {
+                // Use shorthand parser
+                constraints.append(ELConstraint(rawData: (lhs , rhs), parser: LayoutConstraintJSONShorthandParser()))
+            } else if let rhs = rhs.dictionary {
+                // Use comprehensive parser
+                constraints.append(ELConstraint(rawData: (lhs , rhs), parser: LayoutConstraintJSONComprehensiveParser()))
             }
         }
         

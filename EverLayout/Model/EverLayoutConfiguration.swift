@@ -27,7 +27,7 @@ public struct EverLayoutConfiguration
     static let `default` = EverLayoutConfiguration(
         indexParser: LayoutIndexJSONParser(),
         viewParser: LayoutViewJSONParser(),
-        constraintParser: LayoutConstraintJSONParser(),
+        constraintParser: LayoutConstraintJSONShorthandParser(),
         propertyParser: LayoutPropertyJSONParser()
     )
     

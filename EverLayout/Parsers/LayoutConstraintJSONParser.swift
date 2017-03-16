@@ -22,11 +22,11 @@
 
 import UIKit
 
-class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
+class LayoutConstraintJSONShorthandParser: NSObject , LayoutConstraintParser
 {
     /*
         Example constraints
-        "top:left:right:bottom":"s:+12:*1.2"
+        "top left right bottom":"@super <12"
     */
     
     public static let ATTRIBUTE_KEYS : [String : NSLayoutAttribute] = [
@@ -105,7 +105,7 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     /// - Returns: [String] array of arguments
     private func parseArguments (fromString string : String) -> [String]?
     {
-        return string.components(separatedBy: String(LayoutConstraintJSONParser.ATTRIBUTE_SEPARATOR))
+        return string.components(separatedBy: String(LayoutConstraintJSONShorthandParser.ATTRIBUTE_SEPARATOR))
     }
 
     /// Finds the value for an argument, specified by its modifier character, if it exists
@@ -162,7 +162,7 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        return self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_TARGET_VIEW, argumentString: source.rhs)
+        return self.valueForArgument(withModCharacter: LayoutConstraintJSONShorthandParser.MOD_TARGET_VIEW, argumentString: source.rhs)
     }
     
     /// Name of target view. This will strip the mod character and the superclass if it's present
@@ -174,7 +174,7 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
         guard var targetViewId = self.parseTargetViewId(source: source) else { return nil }
         
         // The target view id may contain a right side attribute, we need to strip it
-        if let index = targetViewId.characters.index(of: LayoutConstraintJSONParser.VIEW_ATTRIBUTE_SEPARATOR)
+        if let index = targetViewId.characters.index(of: LayoutConstraintJSONShorthandParser.VIEW_ATTRIBUTE_SEPARATOR)
         {
             targetViewId = targetViewId.substring(to: index)
         }
@@ -197,11 +197,11 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
         
         for comp in comps
         {
-            if let attr = LayoutConstraintJSONParser.ATTRIBUTE_KEYS[comp]
+            if let attr = LayoutConstraintJSONShorthandParser.ATTRIBUTE_KEYS[comp]
             {
                 attrs.append(attr)
             }
-            else if let attr = LayoutConstraintJSONParser.COMPOUND_ATTRIBUTE_KEYS[comp]
+            else if let attr = LayoutConstraintJSONShorthandParser.COMPOUND_ATTRIBUTE_KEYS[comp]
             {
                 attrs.append(contentsOf: attr)
             }
@@ -219,9 +219,9 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
         guard let source = self.parseSource(source: source) else { return nil }
         
         // Relation is noted in the right hand side by the MOD_RELATION character
-        if let relation = self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_RELATION, argumentString: source.rhs)
+        if let relation = self.valueForArgument(withModCharacter: LayoutConstraintJSONShorthandParser.MOD_RELATION, argumentString: source.rhs)
         {
-            return LayoutConstraintJSONParser.RELATION_KEYS[relation]
+            return LayoutConstraintJSONShorthandParser.RELATION_KEYS[relation]
         }
         
         return nil
@@ -235,7 +235,7 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        let availableSigns = [LayoutConstraintJSONParser.MOD_POSITIVE_CONST , LayoutConstraintJSONParser.MOD_NEGATIVE_CONST , LayoutConstraintJSONParser.MOD_INSET_CONST , LayoutConstraintJSONParser.MOD_OFFSET_CONST]
+        let availableSigns = [LayoutConstraintJSONShorthandParser.MOD_POSITIVE_CONST , LayoutConstraintJSONShorthandParser.MOD_NEGATIVE_CONST , LayoutConstraintJSONShorthandParser.MOD_INSET_CONST , LayoutConstraintJSONShorthandParser.MOD_OFFSET_CONST]
         
         if let (mod , value) = self.valueForArgument(withModCharacters: availableSigns, argumentString: source.rhs)
         {
@@ -263,7 +263,7 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        let availableSigns = [LayoutConstraintJSONParser.MOD_MULTIPLIER , LayoutConstraintJSONParser.MOD_DIVIDER]
+        let availableSigns = [LayoutConstraintJSONShorthandParser.MOD_MULTIPLIER , LayoutConstraintJSONShorthandParser.MOD_DIVIDER]
         
         if let (mod , value) = self.valueForArgument(withModCharacters: availableSigns, argumentString: source.rhs)
         {
@@ -287,7 +287,7 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        if let priorityString = self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_PRIORITY, argumentString: source.rhs)
+        if let priorityString = self.valueForArgument(withModCharacter: LayoutConstraintJSONShorthandParser.MOD_PRIORITY, argumentString: source.rhs)
         {
             if let double = Double(priorityString)
             {
@@ -308,11 +308,11 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
         
         // A right side attribute is noted by appending the attribute name to the end of the target view's ID using 
         // VIEW_ATTRIBUTE_SEPARATOR
-        if let index = targetView.characters.index(of: LayoutConstraintJSONParser.VIEW_ATTRIBUTE_SEPARATOR)
+        if let index = targetView.characters.index(of: LayoutConstraintJSONShorthandParser.VIEW_ATTRIBUTE_SEPARATOR)
         {
             let attributeName = targetView.substring(from: targetView.index(after: index))
             
-            return LayoutConstraintJSONParser.ATTRIBUTE_KEYS[attributeName]
+            return LayoutConstraintJSONShorthandParser.ATTRIBUTE_KEYS[attributeName]
         }
         
         return nil
@@ -331,6 +331,6 @@ class LayoutConstraintJSONParser: NSObject , LayoutConstraintParser
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        return self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_IDENTIFIER, argumentString: source.rhs)
+        return self.valueForArgument(withModCharacter: LayoutConstraintJSONShorthandParser.MOD_IDENTIFIER, argumentString: source.rhs)
     }
 }

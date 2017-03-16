@@ -71,6 +71,12 @@ class ELJSON
         return self.parsedData as? Int
     }
     
+    public var float : CGFloat? {
+        guard let number = self.parsedData as? NSNumber else { return nil }
+
+        return CGFloat(number.floatValue)
+    }
+    
     public var array : [ELJSON]? {
         guard let source = self.parsedData as? [Any] else { return nil }
         
