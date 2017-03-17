@@ -46,6 +46,7 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
     public static let KEY_D_PROPERTIES : String = "dProperties"
     public static let KEY_SUBVIEWS : String = "views"
     public static let KEY_Z_INDEX : String = "z-index"
+    public static let KEY_TEMPLATE : String = "template"
     
     // Modifier characters
     public static let MOD_NEW_ELEM : Character = "!"
@@ -208,4 +209,30 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
         
         return subviews
     }
+    
+    /// Returns the name of any sublayouts that should be applied to this view as a template
+    ///
+    /// - Parameter source: raw view model data
+    /// - Returns: Array of sub layout names
+    func templateLayout(source: Any) -> [String]? {
+        guard let source = self.parseSource(source: source) else { return nil }
+        let templates = source.viewData[LayoutViewJSONParser.KEY_TEMPLATE]
+        
+        if let templates = templates?.array {
+            return templates.map({ (jsonItem) -> String in
+                return jsonItem.string ?? ""
+            })
+        } else if let templates = templates?.string {
+            return [templates]
+        } else {
+            return nil
+        }
+    }
 }
+
+
+
+
+
+
+

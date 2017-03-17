@@ -47,6 +47,9 @@ public class ELView: ELRawData
     public var subviews : [Any]? {
         return self.viewParser.subviews(source: self.rawData)
     }
+    public var templateLayouts : [String]? {
+        return self.viewParser.templateLayout(source: self.rawData)
+    }
     
     // The view this model renders to
     public var target : UIView?

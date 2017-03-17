@@ -47,6 +47,7 @@ class EverLayoutBuilder: NSObject
         self.buildViewHierarchy(viewIndex: &viewIndex)
         self.addViewConstraints(viewIndex: &viewIndex , viewEnvironment : viewEnvironment)
         self.addViewProperties(viewIndex: &viewIndex)
+        self.loadTemplateLayouts(layout: layout, viewIndex: viewIndex, viewEnvironment: viewEnvironment)
         
         return viewIndex
     }
@@ -174,4 +175,30 @@ class EverLayoutBuilder: NSObject
             properties.forEach({$0?.applyToView(viewModel: viewModel)})
         }
     }
+    
+    /// Apply sub layouts to view in the layout as templates
+    ///
+    /// - Parameters:
+    ///   - layout: The complete layout
+    ///   - viewIndex: The view index for the layout
+    ///   - viewEnvironment: The view environment that this layout is being built on
+    private static func loadTemplateLayouts (layout : EverLayout , viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
+        for (_ , viewModel) in viewIndex.contents {
+            guard let templateLayouts = viewModel?.templateLayouts , let target = viewModel?.target else { continue }
+            
+            for layoutName in templateLayouts {
+                if let sublayout = layout.getSubLayout(layoutName) {
+                    sublayout.buildLayout(onView: target, viewEnvironment: viewEnvironment)
+                }
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
