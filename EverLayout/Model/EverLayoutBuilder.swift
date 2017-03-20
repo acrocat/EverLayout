@@ -39,15 +39,39 @@ class EverLayoutBuilder: NSObject
      - Add view properties
      */
  
-    static func buildLayout (_ layout : EverLayout , onView view : UIView , viewEnvironment : NSObject? = nil) -> ViewIndex
-    {
+    static func buildLayout (_ layout : EverLayout , onView view : UIView , viewEnvironment : NSObject? = nil) -> ViewIndex {
         var viewIndex : ViewIndex = self.createViewIndex(layoutData: layout.rawData)
         
         self.createTargetViews(viewIndex: &viewIndex, rootView: view, viewEnvironment: viewEnvironment ?? view)
         self.buildViewHierarchy(viewIndex: &viewIndex)
-        self.addViewConstraints(viewIndex: &viewIndex , viewEnvironment : viewEnvironment)
-        self.addViewProperties(viewIndex: &viewIndex)
-        self.loadTemplateLayouts(layout: layout, viewIndex: viewIndex, viewEnvironment: viewEnvironment)
+        
+        // Add view constraints and properties
+        for (_ , viewModel) in viewIndex.contents {
+            guard let viewModel = viewModel else { continue }
+            
+            // Apply constraints
+            if let constraints = viewModel.constraints {
+                self.applyViewConstraints(constraints, toView: viewModel, viewIndex: viewIndex, viewEnvironment: viewEnvironment)
+            }
+            
+            // Apply properties
+            if let properties = viewModel.properties {
+                self.applyViewProperties(properties, toView: viewModel)
+            }
+            
+            // If this view is applying layout templates, apply constraints and properties for those
+            viewModel.templateLayouts?.forEach({ (layoutName) in
+                if let template = layout.getTemplateLayout(layoutName) {
+                    if let constraints = template.constraints {
+                        self.applyViewConstraints(constraints, toView: viewModel, viewIndex: viewIndex, viewEnvironment: viewEnvironment)
+                    }
+                    
+                    if let properties = template.properties {
+                        self.applyViewProperties(properties, toView: viewModel)
+                    }
+                }
+            })
+        }
         
         return viewIndex
     }
@@ -155,43 +179,12 @@ class EverLayoutBuilder: NSObject
         }
     }
     
-    /// Parse constraints from layoutData and add them to the views
-    private static func addViewConstraints (viewIndex : inout ViewIndex , viewEnvironment : NSObject? = nil)
-    {
-        for (_ , viewModel) in viewIndex.contents
-        {
-            guard let constraints = viewModel?.constraints , let viewModel = viewModel else { continue }
-            
-            constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: viewIndex , viewEnvironment: viewEnvironment)})
-        }
+    private static func applyViewConstraints (_ constraints: [ELConstraint?] , toView view : ELView , viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
+        constraints.forEach({$0?.establisConstaints(onView: view, withViewIndex: viewIndex , viewEnvironment: viewEnvironment)})
     }
     
-    private static func addViewProperties (viewIndex : inout ViewIndex)
-    {
-        for (_ , viewModel) in viewIndex.contents
-        {
-            guard let properties = viewModel?.properties , let viewModel = viewModel else { continue }
-            
-            properties.forEach({$0?.applyToView(viewModel: viewModel)})
-        }
-    }
-    
-    /// Apply sub layouts to view in the layout as templates
-    ///
-    /// - Parameters:
-    ///   - layout: The complete layout
-    ///   - viewIndex: The view index for the layout
-    ///   - viewEnvironment: The view environment that this layout is being built on
-    private static func loadTemplateLayouts (layout : EverLayout , viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
-        for (_ , viewModel) in viewIndex.contents {
-            guard let templateLayouts = viewModel?.templateLayouts , let target = viewModel?.target else { continue }
-            
-            for layoutName in templateLayouts {
-                if let sublayout = layout.getSubLayout(layoutName) {
-                    sublayout.buildLayout(onView: target, viewEnvironment: viewEnvironment)
-                }
-            }
-        }
+    private static func applyViewProperties (_ properties : [ELViewProperty?] , toView view : ELView) {
+        properties.forEach({$0?.applyToView(viewModel: view)})
     }
 }
 

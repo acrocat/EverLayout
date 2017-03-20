@@ -22,11 +22,22 @@
 
 import UIKit
 
-public protocol LayoutIndexParser : LayoutParser
-{
-    func layoutName (source : Any) -> String?
+public class ELLayoutTemplate: ELRawData {
+    var templateParser : LayoutTemplateParser!
     
-    func rootView (source : Any) -> ELView?
+    public var templateId : String? {
+        return self.templateParser.templateId(source: self.rawData)
+    }
+    public var constraints : [ELConstraint?]? {
+        return self.templateParser.constraints(source: self.rawData)
+    }
+    public var properties : [ELViewProperty?]? {
+        return self.templateParser.properties(source: self.rawData)
+    }
     
-    func layoutTemplates (source : Any) -> [ELLayoutTemplate?]?
+    public init (rawData : Any , parser : LayoutTemplateParser) {
+        super.init(rawData: rawData)
+        
+        self.templateParser = parser
+    }
 }

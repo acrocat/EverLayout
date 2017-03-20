@@ -26,7 +26,7 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
 {
     public static let KEY_LAYOUT_NAME : String = "name"
     public static let KEY_LAYOUT_ROOT : String = "root"
-    public static let KEY_SUBLAYOUTS : String = "layouts"
+    public static let KEY_TEMPLATES : String = "templates"
     
     private func parseData (source : Any) -> [String : JSON]?
     {
@@ -46,19 +46,20 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         return source[LayoutIndexJSONParser.KEY_LAYOUT_NAME]?.string
     }
     
-    public func sublayouts (source : Any) -> [String : Any?]?
-    {
+    /// Parse the layout template blocks
+    ///
+    /// - Parameter source: Raw layout data
+    /// - Returns: Array of ELLayoutTemplate objects
+    public func layoutTemplates(source: Any) -> [ELLayoutTemplate?]? {
         guard let source = self.parseData(source: source) else { return nil }
-        guard let sublayoutData = source[LayoutIndexJSONParser.KEY_SUBLAYOUTS]?.dictionary else { return nil }
+        guard let templateData = source[LayoutIndexJSONParser.KEY_TEMPLATES]?.dictionary else { return nil }
         
-        var sublayouts : [String : Any?] = [:]
-        
-        for (layoutName , layoutData) in sublayoutData
-        {
-            sublayouts[layoutName] = layoutData.getRawData()
+        var templates : [ELLayoutTemplate?]? = []
+        for (templateName , templateData) in templateData {
+            templates?.append(ELLayoutTemplate(rawData: (templateName , templateData), parser: LayoutTemplateJSONParser()))
         }
         
-        return sublayouts
+        return templates
     }
     
     /// Parse the rootView from the raw index model

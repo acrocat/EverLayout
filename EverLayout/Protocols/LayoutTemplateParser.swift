@@ -22,11 +22,12 @@
 
 import UIKit
 
-public protocol LayoutIndexParser : LayoutParser
-{
-    func layoutName (source : Any) -> String?
+public protocol LayoutTemplateParser: LayoutParser {
     
-    func rootView (source : Any) -> ELView?
+    func templateId (source : Any) -> String?
     
-    func layoutTemplates (source : Any) -> [ELLayoutTemplate?]?
+    func constraints (source : Any) -> [ELConstraint?]?
+    
+    func properties (source : Any) -> [ELViewProperty?]?
+    
 }

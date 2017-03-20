@@ -35,8 +35,8 @@ open class EverLayout: ELRawData
     public var layoutName : String? {
         return self.indexParser.layoutName(source: self.rawData)
     }
-    public var sublayouts : [String : Any?]? {
-        return self.indexParser.sublayouts(source: self.rawData)
+    public var layoutTemplates : [ELLayoutTemplate?]? {
+        return self.indexParser.layoutTemplates(source: self.rawData)
     }
     
     /// Init with layout data and a parser
@@ -76,11 +76,29 @@ open class EverLayout: ELRawData
         self.delegate?.layout(self, didLoadOnView: view)
     }
     
-    public func getSubLayout (_ name : String) -> EverLayout?
-    {
-        guard let layoutData = self.sublayouts?[name] as? Data else { return nil }
+//    public func getSubLayout (_ name : String) -> EverLayout?
+//    {
+//        guard let layoutData = self.sublayouts?[name] as? Data else { return nil }
+//        
+//        return EverLayout(layoutData: layoutData, layoutIndexParser: self.indexParser)
+//    }
+    
+    /// Search this layouts templates for one with the specified Id
+    ///
+    /// - Parameter name: Id of the template
+    /// - Returns: Instance of ELLayoutTemplate if template is found
+    public func getTemplateLayout (_ name : String) -> ELLayoutTemplate? {
+        guard let templates = self.layoutTemplates else { return nil }
         
-        return EverLayout(layoutData: layoutData, layoutIndexParser: self.indexParser)
+        if let index = templates.index(where: { (template) -> Bool in
+            print(template?.templateId)
+            
+            return template?.templateId == name
+        }) {
+            return templates[index]
+        }
+        
+        return nil
     }
     
     /// Set data to be injected when the layout is built
