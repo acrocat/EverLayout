@@ -76,13 +76,6 @@ open class EverLayout: ELRawData
         self.delegate?.layout(self, didLoadOnView: view)
     }
     
-//    public func getSubLayout (_ name : String) -> EverLayout?
-//    {
-//        guard let layoutData = self.sublayouts?[name] as? Data else { return nil }
-//        
-//        return EverLayout(layoutData: layoutData, layoutIndexParser: self.indexParser)
-//    }
-    
     /// Search this layouts templates for one with the specified Id
     ///
     /// - Parameter name: Id of the template
@@ -91,8 +84,6 @@ open class EverLayout: ELRawData
         guard let templates = self.layoutTemplates else { return nil }
         
         if let index = templates.index(where: { (template) -> Bool in
-            print(template?.templateId)
-            
             return template?.templateId == name
         }) {
             return templates[index]
