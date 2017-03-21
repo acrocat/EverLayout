@@ -89,9 +89,6 @@ public class ELConstraint: ELRawData
             // Add an identifier to the constraint
             constraint.identifier = self.identifier
             
-            // Add the constraint to either the target's superview or just the target itself
-//            let constraintTarget = target.superview ?? target
-            
             // Add the constraint to the root view
             let constraintTarget = viewIndex.rootView() ?? target.superview ?? target
             
@@ -100,6 +97,9 @@ public class ELConstraint: ELRawData
             if target.sharesAncestry(withView: context.comparableView ?? target)
             {
                 constraintTarget.addConstraint(constraint)
+                
+                // Add this constraint to the applied constraints of the ELView
+                view.appliedConstraints.append(constraint)
             }
             else
             {

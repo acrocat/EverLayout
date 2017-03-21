@@ -51,6 +51,8 @@ public class ELView: ELRawData
         return self.viewParser.templateLayout(source: self.rawData)
     }
     
+    public var appliedConstraints : [NSLayoutConstraint] = []
+    
     // The view this model renders to
     public var target : UIView?
     
@@ -60,10 +62,16 @@ public class ELView: ELRawData
     // The view is at the root of a layout file
     public var isRoot : Bool = false
     
-    public init (rawData : Any , parser : LayoutViewParser)
-    {
+    public init (rawData : Any , parser : LayoutViewParser) {
         super.init(rawData: rawData)
         
         self.viewParser = parser
+    }
+    
+    /// Uninstall all the constraints that were added by this layout
+    public func unloadConstraints () {
+        for constraint in self.appliedConstraints {
+            self.target?.removeConstraint(constraint)
+        }
     }
 }

@@ -157,7 +157,13 @@ open class EverLayout: ELRawData
         // As long as the viewModel isn't the root of the layout, we need to remove each view from its superview
         for (_ , viewModel) in viewIndex.contents
         {
-            if viewModel?.isRoot == false { viewModel?.target?.removeFromSuperview() }
+            if viewModel?.isRoot == false {
+                // Remove this view from the superview. All constraints should handle themselves.
+                viewModel?.target?.removeFromSuperview()
+            } else {
+                // Remove any constraints applied to this view
+                viewModel?.target?.removeConstraints(viewModel?.appliedConstraints ?? [])
+            }
         }
         
         // Clear the view index
