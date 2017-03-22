@@ -4,7 +4,7 @@ EverLayout uses parsers to translate layouts from JSON data.
 
 The following documentation demonstrates how to use EverLyout to write layouts for the default
 JSON parsers, however if you're interested
-in writing layouts using a different format or general structure, read <a href="formats">Layout Formats</a>
+in writing layouts using a different format or general structure, read <a href="EverLayout/formats">Layout Formats</a>
 to see how to write your own parsers.
 
 ## The Layout Index <a name="layout-index"></a>
