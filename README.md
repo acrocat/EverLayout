@@ -53,14 +53,16 @@ More info [here](https://www.github.com/acrocat/everlayoutbridge)
 {
 	"name":"ViewController",
 	"root":{
-		"exampleButton":{
-			"constraints":{
-				"center":"@super",
-				"width":"+120",
-				"height":"+80"
-			},
-			"properties":{
-				"text":"Tap Me!"
+		"views":{
+			"exampleButton":{
+				"constraints":{
+					"center":"@super",
+					"width":"+120",
+					"height":"+80"
+				},
+				"properties":{
+					"text":"Tap Me!"
+				}
 			}
 		}
 	}
