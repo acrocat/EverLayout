@@ -52,19 +52,21 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#overview">Overview</a></li>
+                <li class="toctree-l3"><a href="#everlayout">EverLayout</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#installation">Installation</a></li>
+                    <li><a class="toctree-l4" href="#features">Features</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#simple-example">Simple Example</a></li>
+                    <li><a class="toctree-l4" href="#installation">Installation</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#discussion">Discussion</a></li>
+                    <li><a class="toctree-l4" href="#usage-example">Usage Example</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#dependencies">Dependencies</a></li>
+                    <li><a class="toctree-l4" href="#simple-example">Simple Example</a></li>
+                
+                    <li><a class="toctree-l4" href="#discussion">Discussion</a></li>
+                
+                    <li><a class="toctree-l4" href="#further-reading">Further Reading</a></li>
+                
+                    <li><a class="toctree-l4" href="#dependencies">Dependencies</a></li>
                 
             
             </ul>
@@ -82,6 +84,13 @@
             <li>
     <li class="toctree-l1 ">
         <a class="" href="reading/">Reading Layouts</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="formats/">Layout Formats</a>
         
     </li>
 <li>
@@ -125,10 +134,9 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="overview">Overview</h1>
-<p>EverLayout is a layout building tool for iOS. Layouts described
-in JSON are parsed, interpreted and built at runtime.</p>
-<p><strong> Why: </strong></p>
+                <h1 id="everlayout">EverLayout</h1>
+<p>EverLayout translates JSON/XML data into iOS layouts which can be downloaded, reused and updated at runtime.</p>
+<h2 id="features">Features</h2>
 <ul>
 <li>Create comprehensive layouts without the clumsiness of 
 Interface Builder or view controllers bloated with layout code.</li>
@@ -139,13 +147,65 @@ having to submit for App Review.</li>
 <li>A/B Testing - Testing multiple UIs with your users is easy
 when building a layout is just loading a file.</li>
 </ul>
-<h1 id="installation">Installation</h1>
-<p>EverLayout can be installed with CocoaPods.</p>
-<p><code>pod 'EverLayout'</code></p>
-<p>EverLayout Bridge is installed with Node Package Manager</p>
-<p><code>npm install -g ever-layout-bridge</code></p>
-<p>More information on EverLayout Bridge <a href="https://github.com/acrocat/EverLayoutBridge">here</a></p>
-<h1 id="simple-example">Simple Example</h1>
+<h2 id="installation">Installation</h2>
+<h4 id="cocoapods">Cocoapods</h4>
+<p>Add EverLayout to your <code>Podfile</code></p>
+<pre><code>platform :ios, '8.0'
+use_frameworks!
+pod 'Everlayout'
+</code></pre>
+
+<h4 id="carthage">Carthage</h4>
+<p>Create a Cartfile that lists the framework and run carthage update.</p>
+<pre><code>github &quot;acrocat/EverLayout
+</code></pre>
+
+<h4 id="everlayout-bridge">EverLayout Bridge</h4>
+<p>EverLayout Bridge can be installed via Node Package Manager.</p>
+<pre><code>npm install -g ever-layout-bridge
+</code></pre>
+
+<p>More info <a href="https://www.github.com/acrocat/everlayoutbridge">here</a></p>
+<h2 id="usage-example">Usage Example</h2>
+<h4 id="layout-file">Layout file</h4>
+<pre><code>{
+    &quot;name&quot;:&quot;ViewController&quot;,
+    &quot;root&quot;:{
+        &quot;views&quot;:{
+            &quot;exampleButton&quot;:{
+                &quot;constraints&quot;:{
+                    &quot;center&quot;:&quot;@super&quot;,
+                    &quot;width&quot;:&quot;+120&quot;,
+                    &quot;height&quot;:&quot;+80&quot;
+                },
+                &quot;properties&quot;:{
+                    &quot;text&quot;:&quot;Tap Me!&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<h4 id="swift">Swift</h4>
+<pre><code>import UIKit
+import EverLayout
+
+class ViewController: UIViewController {
+    private var layout : EverLayout?
+    public let exampleButton : UIButton = UIButton()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: &quot;ViewController&quot;, ofType: &quot;json&quot;, inDirectory: &quot;Layouts&quot;)!) as! Data
+        self.layout = EverLayout(layoutData: layoutData)
+        self.layout?.buildLayout(onView: self.view, viewEnvironment: self)
+    }
+}
+</code></pre>
+
+<h2 id="simple-example">Simple Example</h2>
 <p><img alt="Basic example" src="http://i.imgur.com/owJonXQ.gif" title="Basic example" /></p>
 <pre><code>{
     &quot;name&quot;:&quot;ViewController&quot;,
@@ -174,15 +234,18 @@ layout with the new data.</p>
 <p>In the example I am just changing the properties of a UIView 
 to show how layouts can be designed/built without having to re-compile
 the app.</p>
-<h1 id="discussion">Discussion</h1>
+<h2 id="discussion">Discussion</h2>
 <p>At the moment EverLayout is more of an experiment than a solution.
 The idea was born through frustration of Interface Builder 
 and the existing alternative of clunky layout code.</p>
 <p>The goal of this project is to find a middle ground which can offer the real-time
 'visual' approach of IB, and the flexibility and re-usability of
 layouts described with code.</p>
-<h1 id="dependencies">Dependencies</h1>
-<p>At the moment EverLayout uses <a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a> to parse JSON files, and <a href="https://github.com/socketio/socket.io-client-swift">Socket.IO</a> for communication with EverLayout Bridge.</p>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="https://hackernoon.com/building-and-distributing-ios-layouts-with-everlayout-c9ea41750f6#.b41s5bsh7">Building and distributing iOS Layouts with EverLayout</a></p>
+<h2 id="dependencies">Dependencies</h2>
+<p>EverLayout currently uses <a href="https://github.com/socketio/socket.io-client-swift">Socket.IO</a>
+ to communicate with the EverLayout Bridge for live update.</p>
               
             </div>
           </div>
@@ -229,5 +292,5 @@ layouts described with code.</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-02-15 18:12:15
+Build Date UTC : 2017-03-22 17:18:22
 -->

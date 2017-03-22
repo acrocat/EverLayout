@@ -81,10 +81,14 @@
                 <li class="toctree-l3"><a href="#everlayoutdelegate">EverLayoutDelegate </a></li>
                 
             
-                <li class="toctree-l3"><a href="#sublayouts">Sublayouts </a></li>
-                
-            
             </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../formats/">Layout Formats</a>
         
     </li>
 <li>
@@ -138,7 +142,7 @@
 data would be stored in a file a loaded in from the Bundle, or the layout
 can be downloaded from a server.</p>
 <p>The only requirement here is that your layout is correctly formatted for
-the parser. By default, EverLayout uses a <a href="../writing/#json">JSON</a> parser,
+the parser. By default, EverLayout uses a <a href="../writing/#format">JSON</a> parser,
 but you can make your own parsers for any language by conforming
 to the different <code>LayoutParser</code> protocols.</p>
 <h1 id="building-layout">Building Layout</h1>
@@ -216,15 +220,6 @@ creating new views (see <a href="../writing/#creating-views">Creating Views</a>)
 which is called when a layout successfully builds on a view.</p>
 <p><strong> Note </strong> 
  - Make sure you set the <code>delegate</code> before building the layout.</p>
-<h1 id="sublayouts">Sublayouts <a name="sublayouts"></a></h1>
-<p>See <a href="../writing/#sublayouts">Writing Sublayouts</a></p>
-<p>Sub-layouts can be accessed like so:</p>
-<pre><code>    let subLayout = self.layout?.getSubLayout(&quot;sublayout-name&quot;)
-</code></pre>
-
-<p><code>subLayout</code> is just another instance of EverLayout.</p>
-<p>Sub-layouts can be made effective when used with <a href="../writing/#data-injection">Data Injection</a>
-and <a href="#view-environments">View Environment</a>.</p>
               
             </div>
           </div>
@@ -232,7 +227,7 @@ and <a href="#view-environments">View Environment</a>.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../bridge/" class="btn btn-neutral float-right" title="EverLayout Bridge">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../formats/" class="btn btn-neutral float-right" title="Layout Formats">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../writing/" class="btn btn-neutral" title="Writing Layouts"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -264,7 +259,7 @@ and <a href="#view-environments">View Environment</a>.</p>
         <span><a href="../writing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../bridge/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../formats/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
