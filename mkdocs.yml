@@ -3,6 +3,7 @@ pages:
   - Getting Started: index.md
   - Writing Layouts: writing.md
   - Reading Layouts: reading.md
+  - Layout Formats: formats.md
   - EverLayout Bridge: bridge.md
 
 theme: readthedocs

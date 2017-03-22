@@ -11,7 +11,7 @@ data would be stored in a file a loaded in from the Bundle, or the layout
 can be downloaded from a server.
 
 The only requirement here is that your layout is correctly formatted for
-the parser. By default, EverLayout uses a [JSON](writing.md#json) parser,
+the parser. By default, EverLayout uses a [JSON](writing.md#format) parser,
 but you can make your own parsers for any language by conforming
 to the different `LayoutParser` protocols.
 
@@ -108,19 +108,4 @@ which is called when a layout successfully builds on a view.
 
 ** Note ** 
  - Make sure you set the `delegate` before building the layout.
-
-# Sublayouts <a name="sublayouts"></a>
-
-See [Writing Sublayouts](writing.md#sublayouts)
-
-Sub-layouts can be accessed like so:
-
-```
-	let subLayout = self.layout?.getSubLayout("sublayout-name")
-```
-
-`subLayout` is just another instance of EverLayout.
-
-Sub-layouts can be made effective when used with [Data Injection](writing.md#data-injection)
-and [View Environment](#view-environments).
 
