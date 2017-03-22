@@ -78,6 +78,9 @@ public class PropertyResolver
             },
             "contentMode": {source in
                 self.view?.contentMode = PropertyResolver.contentMode(source: source) ?? .scaleToFill
+            },
+            "hidden": {source in
+                self.view?.isHidden = PropertyResolver.bool(value: source)
             }
         ]
     }
