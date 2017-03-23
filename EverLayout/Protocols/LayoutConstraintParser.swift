@@ -38,5 +38,9 @@ public protocol LayoutConstraintParser : LayoutParser
     
     func comparableViewReference (source: Any) -> String?
     
+    func verticalSizeClass (source : Any) -> UIUserInterfaceSizeClass?
+    
+    func horizontalSizeClass (source: Any) -> UIUserInterfaceSizeClass?
+    
     func identifier (source: Any) -> String?
 }

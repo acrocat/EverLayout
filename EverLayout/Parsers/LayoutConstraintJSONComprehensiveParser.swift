@@ -22,14 +22,7 @@
 
 import UIKit
 
-class LayoutConstraintJSONComprehensiveParser: NSObject , LayoutConstraintParser {
-    
-    public static let ATTRIBUTE_SEPARATOR : String = " "
-    public static let RELATION_KEYS : [String : NSLayoutRelation] = [
-        "gte": NSLayoutRelation.greaterThanOrEqual,
-        "lte": NSLayoutRelation.lessThanOrEqual
-    ]
-    
+class LayoutConstraintJSONComprehensiveParser: LayoutConstraintJSONParser , LayoutConstraintParser {
     private func parseSource (source : Any) -> (lhs: String , rhs: Dictionary<String , JSON>)? {
         guard let source = source as? (String , Dictionary<String , JSON>) else {
             ELReporter.default.error(message: "Constraint source in unrecognized format.")
@@ -64,7 +57,7 @@ class LayoutConstraintJSONComprehensiveParser: NSObject , LayoutConstraintParser
         guard let source = self.parseSource(source: source) else { return nil }
         
         if let relation = source.rhs["relation"]?.string {
-            return LayoutConstraintJSONComprehensiveParser.RELATION_KEYS[relation] ?? .equal
+            return LayoutConstraintJSONParser.COMP_RELATION_KEYS[relation] ?? .equal
         }
         
         return .equal
@@ -114,6 +107,20 @@ class LayoutConstraintJSONComprehensiveParser: NSObject , LayoutConstraintParser
         guard let source = self.parseSource(source: source) else { return nil }
         
         return source.rhs["to"]?.string
+    }
+    
+    func verticalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
+        guard let source = self.parseSource(source: source) else { return nil }
+        guard let sizeClassKey = source.rhs["verticalSizeClass"]?.string else { return nil }
+        
+        return LayoutConstraintJSONParser.COMP_SIZE_CLASS_KEYS[sizeClassKey]
+    }
+    
+    func horizontalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
+        guard let source =  self.parseSource(source: source) else { return nil }
+        guard let sizeClassKey = source.rhs["horizontalSizeClass"]?.string else { return nil }
+        
+        return LayoutConstraintJSONParser.COMP_SIZE_CLASS_KEYS[sizeClassKey]
     }
     
     func identifier(source: Any) -> String? {

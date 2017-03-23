@@ -50,6 +50,12 @@ public class ELConstraint: ELRawData
     public var identifier : String? {
         return self.constraintParser.identifier(source: self.rawData)
     }
+    public var verticalSizeClass : UIUserInterfaceSizeClass? {
+        return self.constraintParser.verticalSizeClass(source: self.rawData)
+    }
+    public var horizontalSizeClass : UIUserInterfaceSizeClass? {
+        return self.constraintParser.horizontalSizeClass(source: self.rawData)
+    }
     
     public init (rawData : Any , parser : LayoutConstraintParser)
     {
