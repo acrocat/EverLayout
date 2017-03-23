@@ -180,7 +180,7 @@ class EverLayoutBuilder: NSObject
     }
     
     private static func applyViewConstraints (_ constraints: [ELConstraint?] , toView view : ELView , viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
-        constraints.forEach({$0?.establisConstaints(onView: view, withViewIndex: viewIndex , viewEnvironment: viewEnvironment)})
+        constraints.forEach({$0?.establistConstraints(onView: view, withViewIndex: viewIndex , viewEnvironment: viewEnvironment)})
     }
     
     private static func applyViewProperties (_ properties : [ELViewProperty?] , toView view : ELView) {

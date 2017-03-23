@@ -58,7 +58,7 @@ public class ELConstraint: ELRawData
         self.constraintParser = parser
     }
     
-    public func establisConstaints (onView view : ELView , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil)
+    public func establistConstraints (onView view : ELView , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil)
     {
         guard let target = view.target else { return }
         
