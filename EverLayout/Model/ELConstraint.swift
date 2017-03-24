@@ -105,7 +105,25 @@ public class ELConstraint: ELRawData
             // adding the constraint as this will cause a crash
             if target.sharesAncestry(withView: context.comparableView ?? target)
             {
-                constraintTarget.addConstraint(constraint)
+                if let vertical = self.verticalSizeClass , let horizontal = self.horizontalSizeClass {
+                    print("View size classes")
+                    print(target.traitCollection.horizontalSizeClass.rawValue)
+                    print(target.traitCollection.verticalSizeClass.rawValue)
+                    
+                    if target.traitCollection.horizontalSizeClass == horizontal && target.traitCollection.verticalSizeClass == vertical {
+                        constraintTarget.addConstraint(constraint)
+                    }
+                } else if let vertical = self.verticalSizeClass {
+                    if target.traitCollection.verticalSizeClass == vertical {
+                        constraintTarget.addConstraint(constraint)
+                    }
+                } else if let horizontal = self.horizontalSizeClass {
+                    if target.traitCollection.horizontalSizeClass == horizontal {
+                        constraintTarget.addConstraint(constraint)
+                    }
+                } else if self.verticalSizeClass == nil && self.horizontalSizeClass == nil {
+                    constraintTarget.addConstraint(constraint)
+                }
             }
             else
             {

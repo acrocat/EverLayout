@@ -22,68 +22,12 @@
 
 import UIKit
 
-class LayoutConstraintJSONShorthandParser: NSObject , LayoutConstraintParser
+class LayoutConstraintJSONShorthandParser: LayoutConstraintJSONParser , LayoutConstraintParser
 {
     /*
         Example constraints
         "top left right bottom":"@super <12"
     */
-    
-    public static let ATTRIBUTE_KEYS : [String : NSLayoutAttribute] = [
-        "left": .left,
-        "right": .right,
-        "top": .top,
-        "bottom": .bottom,
-        "leading" : .leading,
-        "trailing" : .trailing,
-        "width": .width,
-        "height": .height,
-        "centerX": .centerX,
-        "centerY": .centerY,
-        "lastBaseline": .lastBaseline,
-        "firstBaseline": .firstBaseline,
-        "leftMargin": .leftMargin,
-        "rightMargin": .rightMargin,
-        "topMargin": .topMargin,
-        "bottomMargin": .bottomMargin,
-        "leadingMargin": .leadingMargin,
-        "trailingMargin": .trailingMargin,
-        "centerXWithinMargins": .centerXWithinMargins,
-        "centerYWithinMargins": .centerYWithinMargins
-    ]
-    
-    public static let COMPOUND_ATTRIBUTE_KEYS : [String : [NSLayoutAttribute]] = [
-        "edges": [.top, .left, .bottom, .right],
-        "center": [.centerX, .centerY]
-    ]
-    
-    public static let RELATION_KEYS : [String : NSLayoutRelation] = [
-        "<=" : NSLayoutRelation.lessThanOrEqual,
-        "=": NSLayoutRelation.equal,
-        ">=": NSLayoutRelation.greaterThanOrEqual
-    ]
-    
-    public static let ATTRIBUTE_SEPARATOR : Character = " "
-    public static let VIEW_ATTRIBUTE_SEPARATOR : Character = "."
-    
-    public static let MOD_TARGET_VIEW : Character = "@"
-    public static let MOD_RELATION : Character = "%"
-    public static let MOD_POSITIVE_CONST : Character = "+"
-    public static let MOD_NEGATIVE_CONST : Character = "-"
-    public static let MOD_INSET_CONST : Character = "<"
-    public static let MOD_OFFSET_CONST : Character = ">"
-    
-    public static let MOD_MULTIPLIER : Character = "*"
-    public static let MOD_DIVIDER : Character = "/"
-    
-    public static let MOD_PRIORITY : Character = "$"
-    
-    public static let MOD_IDENTIFIER : Character = "!"
-    
-    private static let INDEPENDANT_ATTRIBUTE_KEYS : [NSLayoutAttribute] = [
-        .width,
-        .height
-    ]
     
     /// Convert the source data into (lhs: String , rhs: String) format
     ///
@@ -221,7 +165,7 @@ class LayoutConstraintJSONShorthandParser: NSObject , LayoutConstraintParser
         // Relation is noted in the right hand side by the MOD_RELATION character
         if let relation = self.valueForArgument(withModCharacter: LayoutConstraintJSONShorthandParser.MOD_RELATION, argumentString: source.rhs)
         {
-            return LayoutConstraintJSONShorthandParser.RELATION_KEYS[relation]
+            return LayoutConstraintJSONShorthandParser.SHORT_RELATION_KEYS[relation]
         }
         
         return nil
@@ -325,6 +269,16 @@ class LayoutConstraintJSONShorthandParser: NSObject , LayoutConstraintParser
     func comparableViewReference (source: Any) -> String?
     {
         return self.parseTargetViewName(source: source)
+    }
+    
+    func verticalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
+        guard let source = self.parseSource(source: source) else { return nil }
+        
+        return nil
+    }
+    
+    func horizontalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
+        return nil
     }
     
     /// Get the identifier for this constraint
