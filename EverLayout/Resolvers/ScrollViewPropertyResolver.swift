@@ -24,8 +24,8 @@ import UIKit
 
 public class ScrollViewPropertyResolver: PropertyResolver
 {
-    override public var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override public var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
         props["contentInset"] = {source in
             if let scrollView = self.view as? UIScrollView

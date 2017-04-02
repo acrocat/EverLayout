@@ -192,18 +192,20 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
     ///
     /// - Parameter source: raw view model data
     /// - Returns: Dictionary of subviews, with a String key for the view ID and the value is the view data
-    func subviews(source: Any) -> [Any]?
+    func subviews(source: Any) -> [ELView?]?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         guard let subviewData = source.viewData[LayoutViewJSONParser.KEY_SUBVIEWS]?.dictionary else { return nil }
         
-        var subviews : [(String , [String : JSON])] = []
+//        var subviews : [(String , [String : JSON])] = []
+        var subviews : [ELView?] = []
         
         for subview in subviewData
         {
             if let validData = subview.value.dictionary
             {
-                subviews.append((subview.key , validData))
+//                subviews.append((subview.key , validData))
+                subviews.append(ELView(rawData: (subview.key , validData), parser: LayoutViewJSONParser()))
             }
         }
         

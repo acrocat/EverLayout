@@ -33,8 +33,8 @@ class LabelPropertyResolver: PropertyResolver
     // ---------------------------------------------------------------------------
     // ---------------------------------------------------------------------------
     
-    override var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
         props["text"] = {source in
             if let label = self.view as? UILabel

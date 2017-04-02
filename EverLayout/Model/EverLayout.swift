@@ -27,13 +27,16 @@ open class EverLayout: ELRawData
     public weak var delegate : EverLayoutDelegate?
     public var indexParser : LayoutIndexParser!
     
-    private(set) public var viewIndex : ViewIndex?
+    private(set) public var viewIndex : ViewIndex = ViewIndex()
     private(set) public var target : UIView?
     private(set) public var viewEnvironment : NSObject?
     private(set) public var injectedData : [String:String] = [:]
     
     public var layoutName : String? {
         return self.indexParser.layoutName(source: self.rawData)
+    }
+    public var rootView : ELView? {
+        return self.indexParser.rootView(source: self.rawData)
     }
     public var layoutTemplates : [ELLayoutTemplate?]? {
         return self.indexParser.layoutTemplates(source: self.rawData)
@@ -49,9 +52,57 @@ open class EverLayout: ELRawData
         super.init(rawData: layoutData)
         self.indexParser = layoutIndexParser
         
-        if let layoutName = self.layoutName
-        {
+        // Subscribe for layout updates
+        if let layoutName = self.layoutName {
             self.subscribeToLayoutUpdates(forLayout: layoutName)
+        }
+        
+        // Build the view index from the raw data
+        self.updateViewIndex()
+    }
+    
+    public func updateViewIndex () {
+        func _process (_ view : ELView , parentView : ELView? = nil) {
+            if view.isRoot {
+                if let existingRoot = self.viewIndex.rootViewModel() {
+                    existingRoot.update(rawdata: view.rawData)
+                } else {
+                    _add(view)
+                }
+            } else if let viewId = view.id {
+                if let existingView = self.viewIndex.viewModel(forKey: viewId) {
+                    existingView.update(rawdata: view.rawData)
+                } else {
+                    _add(view , parentView: parentView)
+                }
+            }
+        }
+        func _add (_ view : ELView , parentView : ELView? = nil) {
+            if let viewId = view.id {
+                view.parentModel = parentView
+                
+                self.viewIndex.addViewModel(forKey: viewId, viewModel: view)
+                
+                if let subviews = view.subviews {
+                    for subview in subviews {
+                        guard let subview = subview else { continue }
+                        
+                        _process(subview , parentView: view)
+                    }
+                }
+            }
+        }
+        func _reset (_ view : ELView) {
+            if let viewId = view.id {}
+        }
+        
+        if let rootView = self.rootView {
+            rootView.isRoot = true
+            
+            _process(rootView)
+            
+            // We need to find views that no longer exist
+            
         }
     }
     
@@ -60,18 +111,78 @@ open class EverLayout: ELRawData
     /// - Parameters:
     ///   - view: root view
     ///   - viewEnvironment: object containing UIView properties which are referenced in the layout
-    public func buildLayout (onView view : UIView , viewEnvironment: NSObject? = nil)
-    {
+    public func buildLayout (onView view : UIView , viewEnvironment: NSObject? = nil) {
         self.target = view
         self.viewEnvironment = viewEnvironment ?? view
         
         // Inject data into layout
-        if let rawData = self.rawData as? Data
-        {
+        if let rawData = self.rawData as? Data {
             self.rawData = self._injectDataIntoLayout(data: self.injectedData, layoutData: rawData)
         }
         
-        self.viewIndex = EverLayoutBuilder.buildLayout(self, onView: view, viewEnvironment: viewEnvironment)
+        // Create target views
+        for (viewId , viewModel) in self.viewIndex.contents {
+            guard let viewModel = viewModel else { continue }
+            
+            if viewModel.isRoot {
+                viewModel.target = view
+            } else {
+                var target : UIView?
+                
+                if viewModel.isNewElement {
+                    // The target view does not exist in the environment so will be created as a virtual element
+                    target = viewModel.templateClass?.init() ?? UIView()
+                } else {
+                    // The target view is supposed to be a property of the view environment.
+                    if let view = viewEnvironment?.property(forKey: viewId) as? UIView {
+                        target = view
+                    } else {
+                        ELReporter.default.warning(message: "Unable to find target view:- \(viewId)")
+                    }
+                }
+                
+                target?.translatesAutoresizingMaskIntoConstraints = false
+                viewModel.target = target
+            }
+        }
+        
+        // Build view hierarchy
+        // Order the view index by z-index
+        let sortedIndex = viewIndex.contents.values.sorted { (modelA, modelB) -> Bool in
+            guard let parentA = modelA?.parentModel?.id , let parentB = modelB?.parentModel?.id else { return false }
+            
+            if parentA == parentB {
+                return (modelA?.zIndex ?? 0) < (modelB?.zIndex ?? 0)
+            } else {
+                return parentA < parentB
+            }
+        }
+        
+        for viewModel in sortedIndex {
+            guard let viewModel = viewModel , let target = viewModel.target , let parentTarget = viewModel.parentModel?.target else { continue }
+            
+            parentTarget.addSubview(target)
+        }
+        
+        // Adding constraints and properties
+        for (_ , viewModel) in self.viewIndex.contents {
+            guard let viewModel = viewModel else { continue }
+            
+            viewModel.constraints?.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: self.viewIndex)})
+            viewModel.properties?.forEach({$0?.applyToView(viewModel: viewModel)})
+            
+            // Add constraints and properties from a template
+            viewModel.templateLayouts?.forEach({ [unowned self] (layoutName) in
+                if let template = self.getTemplateLayout(layoutName) {
+                    if let constraints = template.constraints {
+                        constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: self.viewIndex)})
+                    }
+                    if let properties = template.properties {
+                        properties.forEach({$0?.applyToView(viewModel: viewModel)})
+                    }
+                }
+            })
+        }
         
         self.delegate?.layout(self, didLoadOnView: view)
     }
@@ -117,8 +228,7 @@ open class EverLayout: ELRawData
         return dataAsString?.data(using: .utf8)
     }
     
-    deinit
-    {
+    deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -126,8 +236,7 @@ open class EverLayout: ELRawData
     // MARK: - Layout Updates
     // ---------------------------------------------------------------------------
     
-    private func subscribeToLayoutUpdates (forLayout name : String)
-    {
+    private func subscribeToLayoutUpdates (forLayout name : String) {
         let notificationName : Notification.Name = Notification.Name("layout-update__\(name)")
         
         print("Listening to " + notificationName.rawValue)
@@ -135,12 +244,11 @@ open class EverLayout: ELRawData
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLayoutUpdate), name: notificationName, object: nil)
     }
     
-    @objc private func didReceiveLayoutUpdate (notification : Notification)
-    {
-        if let layoutData = notification.object as? Data
-        {
+    @objc private func didReceiveLayoutUpdate (notification : Notification) {
+        if let layoutData = notification.object as? Data {
             self.rawData = layoutData
             
+            self.updateViewIndex()
             self.refresh()
         }
     }
@@ -150,33 +258,17 @@ open class EverLayout: ELRawData
     // ---------------------------------------------------------------------------
     
     /// Clear the layout on the view
-    public func clear ()
-    {
-        guard let viewIndex = self.viewIndex else { return }
-        
-        // As long as the viewModel isn't the root of the layout, we need to remove each view from its superview
-        for (_ , viewModel) in viewIndex.contents
-        {
-            if viewModel?.isRoot == false {
-                // Remove this view from the superview. All constraints should handle themselves.
-                viewModel?.target?.removeFromSuperview()
-            } else {
-                // Remove any constraints applied to this view
-                viewModel?.target?.removeConstraints(viewModel?.appliedConstraints ?? [])
-            }
+    public func clear () {
+        self.viewIndex.contents.forEach { (_ , view) in
+            view?.remove()
         }
-        
-        // Clear the view index
-        viewIndex.clear()
     }
     
     /// Clear the layout and rebuild it from layoutData
-    public func refresh ()
-    {
+    public func refresh () {
         self.clear()
         
-        if let target = self.target , let viewEnvironment = self.viewEnvironment
-        {
+        if let target = self.target , let viewEnvironment = self.viewEnvironment {
             self.buildLayout(onView: target, viewEnvironment: viewEnvironment)
         }
     }

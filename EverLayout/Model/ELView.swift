@@ -44,14 +44,18 @@ public class ELView: ELRawData
     public var isNewElement : Bool {
         return self.viewParser.isNewElement(source: self.rawData)
     }
-    public var subviews : [Any]? {
+    public var subviews : [ELView?]? {
         return self.viewParser.subviews(source: self.rawData)
     }
     public var templateLayouts : [String]? {
         return self.viewParser.templateLayout(source: self.rawData)
     }
     
+    // Actual constraints that are created when this view is built on a view
     public var appliedConstraints : [NSLayoutConstraint] = []
+    
+    // We cache view properties when EverLayout writes new ones, so that they can be reversed if the layout is unloaded
+    public var cachedProperties : [String : Any] = [:]
     
     // The view this model renders to
     public var target : UIView?
@@ -62,16 +66,31 @@ public class ELView: ELRawData
     // The view is at the root of a layout file
     public var isRoot : Bool = false
     
+    // When a view is removed during a layout update, we mark it inactive so it won't show but its state will be preserved
+    public var isActive : Bool = true
+    
     public init (rawData : Any , parser : LayoutViewParser) {
         super.init(rawData: rawData)
         
         self.viewParser = parser
     }
     
-    /// Uninstall all the constraints that were added by this layout
-    public func unloadConstraints () {
-        for constraint in self.appliedConstraints {
-            self.target?.removeConstraint(constraint)
+    public func update (rawdata : Any) {
+        // Set new data
+        self.rawData = rawData
+        
+        // Mark as active again
+        self.isActive = true
+    }
+    
+    public func remove () {
+        if !self.isRoot {
+            self.target?.removeFromSuperview()
+        } else {
+            self.target?.removeConstraints(self.appliedConstraints)
         }
+        
+        // Mark as inactive
+        self.isActive = false
     }
 }

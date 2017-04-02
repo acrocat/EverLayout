@@ -22,8 +22,7 @@
 
 import UIKit
 
-public class ELViewProperty: ELRawData
-{
+public class ELViewProperty: ELRawData {
     public var propertyParser : LayoutPropertyParser!
     
     public var name : String? {
@@ -33,17 +32,28 @@ public class ELViewProperty: ELRawData
         return self.propertyParser.propertyValue(source: self.rawData)
     }
     
-    public init (rawData : Any , parser : LayoutPropertyParser)
-    {
+    public init (rawData : Any , parser : LayoutPropertyParser) {
         super.init(rawData: rawData)
         
         self.propertyParser = parser
     }
     
-    public func applyToView (viewModel : ELView)
-    {
+    public func applyToView (viewModel : ELView) {
         guard let target = viewModel.target else { return }
         
         target.applyViewProperty(viewProperty: self)
+        self.cacheProperty(forView: viewModel)
+    }
+    
+    private func cacheProperty (forView view : ELView) {
+        guard let name = self.name , let target = view.target else { return }
+        
+        // If there is already a cached property with this name then we move on
+        if view.cachedProperties[name] == nil {
+            // Attempt to retrieve the property from the view
+            if let value = target.retrieveViewProperty(viewProperty: self) {
+                view.cachedProperties[name] = value
+            }
+        }
     }
 }

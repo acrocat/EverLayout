@@ -23,7 +23,7 @@
 import UIKit
 
 public class PropertyResolver
-{
+{    
     // ---------------------------------------------------------------------------
     // MARK: - Enum Mapping
     // ---------------------------------------------------------------------------
@@ -56,7 +56,7 @@ public class PropertyResolver
         self.view = view
     }
     
-    open var exposedProperties : [String : (String) -> Void] {
+    open var settableProperties : [String : (String) -> Void] {
         return [
             "backgroundColor": {(source) in
                 self.view?.backgroundColor = PropertyResolver.color(value: source)
@@ -82,22 +82,50 @@ public class PropertyResolver
         ]
     }
     
-    open func apply (viewProperty : ELViewProperty)
-    {
+    open var retrievableProperties : [String : () -> Any?] {
+        return [
+            "backgroundColor": {
+                return self.view?.backgroundColor
+            },
+            "cornerRadius": {
+                return self.view?.layer.cornerRadius
+            },
+            "borderWidth": {
+                return self.view?.layer.borderWidth
+            },
+            "borderColor": {
+                return self.view?.layer.borderColor
+            },
+            "alpha": {
+                return self.view?.alpha
+            },
+            "clipToBounds":{
+                return self.view?.clipsToBounds
+            },
+            "contentMode":{
+                return self.view?.contentMode
+            }
+        ]
+    }
+    
+    open func apply (viewProperty : ELViewProperty) {
         guard let name = viewProperty.name , let value = viewProperty.value else { return }
         
-        if let operation = self.exposedProperties[name]
-        {
+        if let operation = self.settableProperties[name] {
             operation(value)
-        }
-        else
-        {
+        } else {
             // Unrecognised property
             // Would be nice to report this, but it doesn't cause crashes so 
             // not a priority
             
             return
         }
+    }
+    
+    open func retrieve (viewProperty : ELViewProperty) -> Any? {
+        guard let name = viewProperty.name else { return nil }
+        
+        return self.retrievableProperties[name]?()
     }
     
     public static func number (value : String) -> CGFloat?
@@ -157,9 +185,12 @@ public class PropertyResolver
 
 extension UIView
 {
-    open func applyViewProperty (viewProperty : ELViewProperty)
-    {   
+    open func applyViewProperty (viewProperty : ELViewProperty) {
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
+    }
+    
+    open func retrieveViewProperty (viewProperty : ELViewProperty) -> Any? {
+        return PropertyResolver(view: self).retrieve(viewProperty: viewProperty)
     }
 }
 

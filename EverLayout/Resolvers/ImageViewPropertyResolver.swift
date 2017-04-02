@@ -24,8 +24,8 @@ import UIKit
 
 public class ImageViewPropertyResolver: PropertyResolver
 {
-    override public var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override public var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
         props["image"] = {(source) in
             if let imageView = self.view as? UIImageView

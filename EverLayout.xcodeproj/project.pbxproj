@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D25780E1E4B719E0005BDA0 /* EverLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */; };
 		2D2E378B1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */; };
+		2D3586321E8FC4E2001A71F2 /* PropertyMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3586311E8FC4E2001A71F2 /* PropertyMappable.swift */; };
 		2D57FA461E46171F0043B897 /* EverLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D57FA441E46171F0043B897 /* EverLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D57FA551E4617BB0043B897 /* UIColor+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA521E4617BB0043B897 /* UIColor+EverLayout.swift */; };
 		2D57FA561E4617BB0043B897 /* NSObject+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA531E4617BB0043B897 /* NSObject+EverLayout.swift */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutDelegate.swift; sourceTree = "<group>"; };
 		2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTemplateJSONParser.swift; sourceTree = "<group>"; };
+		2D3586311E8FC4E2001A71F2 /* PropertyMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyMappable.swift; sourceTree = "<group>"; };
 		2D57FA411E46171F0043B897 /* EverLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EverLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D57FA441E46171F0043B897 /* EverLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EverLayout.h; sourceTree = "<group>"; };
 		2D57FA451E46171F0043B897 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				2D57FA821E46182E0043B897 /* ScrollViewPropertyResolver.swift */,
 				2D57FA831E46182E0043B897 /* LabelPropertyResolver.swift */,
 				2D57FA841E46182E0043B897 /* ButtonPropertyResolver.swift */,
+				2D3586311E8FC4E2001A71F2 /* PropertyMappable.swift */,
 			);
 			path = Resolvers;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				2D57FA7D1E46181C0043B897 /* LayoutViewParser.swift in Sources */,
 				2D57FA6D1E4617C80043B897 /* ELReporter.swift in Sources */,
 				2D57FA871E46182E0043B897 /* ScrollViewPropertyResolver.swift in Sources */,
+				2D3586321E8FC4E2001A71F2 /* PropertyMappable.swift in Sources */,
 				2D57FA651E4617C80043B897 /* ELRawData.swift in Sources */,
 				2D57FA661E4617C80043B897 /* ELView.swift in Sources */,
 				2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */,

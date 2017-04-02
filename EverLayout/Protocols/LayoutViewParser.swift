@@ -38,7 +38,7 @@ public protocol LayoutViewParser : LayoutParser
     
     func viewConstraints (source : Any) -> [ELConstraint?]?
     
-    func subviews (source : Any) -> [Any]?
+    func subviews (source : Any) -> [ELView?]?
     
     func templateLayout (source : Any) -> [String]?
 }

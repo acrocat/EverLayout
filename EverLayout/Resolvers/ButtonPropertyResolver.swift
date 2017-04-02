@@ -10,8 +10,8 @@ import UIKit
 
 class ButtonPropertyResolver: PropertyResolver
 {
-    override open var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override open var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
         props["text"] = {source in
             if let button = self.view as? UIButton
