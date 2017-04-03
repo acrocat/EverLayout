@@ -63,25 +63,31 @@ open class EverLayout: ELRawData
     
     public func updateViewIndex () {
         func _process (_ view : ELView , parentView : ELView? = nil) {
+            var viewModel : ELView! = view
+            
             if view.isRoot {
                 if let existingRoot = self.viewIndex.rootViewModel() {
                     existingRoot.update(newData: view.rawData)
+                    
+                    viewModel = existingRoot
                 } else {
                     _add(view)
                 }
             } else if let viewId = view.id {
                 if let existingView = self.viewIndex.viewModel(forKey: viewId) {
                     existingView.update(newData: view.rawData)
+                    
+                    viewModel = existingView
                 } else {
                     _add(view , parentView: parentView)
                 }
             }
             
-            if let subviews = view.subviews {
+            if let subviews = viewModel.subviews {
                 for subview in subviews {
                     guard let subview = subview else { continue }
                     
-                    _process(subview , parentView: view)
+                    _process(subview , parentView: viewModel)
                 }
             }
         }
@@ -100,15 +106,6 @@ open class EverLayout: ELRawData
             rootView.isRoot = true
             
             _process(rootView)
-            
-            // We need to find views that no longer exist
-            print("After the update")
-            self.viewIndex.contents.forEach({ (name , item) in
-                item?.properties?.forEach({ (prop) in
-                    print(prop?.name)
-                    print(prop?.value)
-                })
-            })
         }
     }
     
@@ -128,7 +125,7 @@ open class EverLayout: ELRawData
         
         // Create target views
         for (viewId , viewModel) in self.viewIndex.contents {
-            guard let viewModel = viewModel else { continue }
+            guard let viewModel = viewModel , viewModel.isActive else { continue }
             
             if viewModel.isRoot {
                 viewModel.target = view
@@ -165,14 +162,14 @@ open class EverLayout: ELRawData
         }
         
         for viewModel in sortedIndex {
-            guard let viewModel = viewModel , let target = viewModel.target , let parentTarget = viewModel.parentModel?.target else { continue }
+            guard let viewModel = viewModel , let target = viewModel.target , let parentTarget = viewModel.parentModel?.target , viewModel.isActive else { continue }
             
             parentTarget.addSubview(target)
         }
         
         // Adding constraints and properties
         for (_ , viewModel) in self.viewIndex.contents {
-            guard let viewModel = viewModel else { continue }
+            guard let viewModel = viewModel , viewModel.isActive else { continue }
             
             viewModel.constraints?.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: self.viewIndex)})
             viewModel.properties?.forEach({$0?.applyToView(viewModel: viewModel)})
@@ -254,8 +251,9 @@ open class EverLayout: ELRawData
         if let layoutData = notification.object as? Data {
             self.rawData = layoutData
             
+            self.clear()
             self.updateViewIndex()
-            self.refresh()
+            self.reload()
         }
     }
     
@@ -271,9 +269,7 @@ open class EverLayout: ELRawData
     }
     
     /// Clear the layout and rebuild it from layoutData
-    public func refresh () {
-        self.clear()
-        
+    public func reload () {
         if let target = self.target , let viewEnvironment = self.viewEnvironment {
             self.buildLayout(onView: target, viewEnvironment: viewEnvironment)
         }

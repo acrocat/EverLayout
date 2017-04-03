@@ -90,6 +90,9 @@ public class ELView: ELRawData
             self.target?.removeConstraints(self.appliedConstraints)
         }
         
+        // Empty the applied constraints
+        self.appliedConstraints = []
+        
         // Mark as inactive
         self.isActive = false
     }
