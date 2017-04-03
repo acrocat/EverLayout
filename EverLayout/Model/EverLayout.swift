@@ -98,9 +98,6 @@ open class EverLayout: ELRawData
                 self.viewIndex.addViewModel(forKey: viewId, viewModel: view)
             }
         }
-        func _reset (_ view : ELView) {
-            if let viewId = view.id {}
-        }
         
         if let rootView = self.rootView {
             rootView.isRoot = true

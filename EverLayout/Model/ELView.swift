@@ -55,7 +55,7 @@ public class ELView: ELRawData
     public var appliedConstraints : [NSLayoutConstraint] = []
     
     // We cache view properties when EverLayout writes new ones, so that they can be reversed if the layout is unloaded
-    public var cachedProperties : [String : Any] = [:]
+    public var cachedProperties : [String : String] = [:]
     
     // The view this model renders to
     public var target : UIView?
@@ -95,5 +95,12 @@ public class ELView: ELRawData
         
         // Mark as inactive
         self.isActive = false
+        
+        // Reset the view properties to those that were cached
+        self.cachedProperties.forEach { (propName , propValue) in
+            let prop = ELViewProperty(rawData: (propName , propValue), parser: LayoutPropertyJSONParser())
+            
+            self.target?.applyViewProperty(viewProperty: prop)
+        }
     }
 }

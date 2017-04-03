@@ -59,51 +59,51 @@ public class PropertyResolver
     open var settableProperties : [String : (String) -> Void] {
         return [
             "backgroundColor": {(source) in
-                self.view?.backgroundColor = PropertyResolver.color(value: source)
+                self.view?.mapBackgroundColor(source)
             },
             "cornerRadius": {(source) in
-                self.view?.layer.cornerRadius = PropertyResolver.number(value: source) ?? 0
+                self.view?.mapCornerRadius(source)
             },
             "borderWidth": {source in
-                self.view?.layer.borderWidth = PropertyResolver.number(value: source) ?? 0
+                self.view?.mapBorderWidth(source)
             },
             "borderColor": {source in
-                self.view?.layer.borderColor = PropertyResolver.color(value: source)?.cgColor
+                self.view?.mapBorderColor(source)
             },
             "alpha": {source in
-                self.view?.alpha = PropertyResolver.number(value: source) ?? 1
+                self.view?.mapAlpha(source)
             },
             "clipToBounds": {source in
-                self.view?.clipsToBounds = PropertyResolver.bool(value: source)
+                self.view?.mapClipToBounds(source)
             },
             "contentMode": {source in
-                self.view?.contentMode = PropertyResolver.contentMode(source: source) ?? .scaleToFill
+                self.view?.mapContentMode(source)
             }
         ]
     }
     
-    open var retrievableProperties : [String : () -> Any?] {
+    open var retrievableProperties : [String : () -> String?] {
         return [
             "backgroundColor": {
-                return self.view?.backgroundColor
+                return self.view?.getMappedBackgroundColor()
             },
             "cornerRadius": {
-                return self.view?.layer.cornerRadius
+                return self.view?.getMappedCornerRadius()
             },
             "borderWidth": {
-                return self.view?.layer.borderWidth
+                return self.view?.getMappedBorderWidth()
             },
             "borderColor": {
-                return self.view?.layer.borderColor
+                return self.view?.getMappedBorderColor()
             },
             "alpha": {
-                return self.view?.alpha
+                return self.view?.getMappedAlpha()
             },
             "clipToBounds":{
-                return self.view?.clipsToBounds
+                return self.view?.getMappedClipToBounds()
             },
             "contentMode":{
-                return self.view?.contentMode
+                return self.view?.getMappedContentMode()
             }
         ]
     }
@@ -122,7 +122,7 @@ public class PropertyResolver
         }
     }
     
-    open func retrieve (viewProperty : ELViewProperty) -> Any? {
+    open func retrieve (viewProperty : ELViewProperty) -> String? {
         guard let name = viewProperty.name else { return nil }
         
         return self.retrievableProperties[name]?()
@@ -189,7 +189,7 @@ extension UIView
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
     
-    open func retrieveViewProperty (viewProperty : ELViewProperty) -> Any? {
+    open func retrieveViewProperty (viewProperty : ELViewProperty) -> String? {
         return PropertyResolver(view: self).retrieve(viewProperty: viewProperty)
     }
 }

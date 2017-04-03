@@ -62,7 +62,7 @@ protocol AlphaMappable {
 protocol ClipBoundsMappable {
     func mapClipToBounds (_ clipToBounds : String)
     
-    func getMappedCliptToBounds () -> String?
+    func getMappedClipToBounds () -> String?
 }
 
 protocol ContentModeMappable {
@@ -124,7 +124,7 @@ extension UIView : ClipBoundsMappable {
         self.clipsToBounds = (clipToBounds.lowercased() == "true")
     }
     
-    func getMappedCliptToBounds() -> String? {
+    func getMappedClipToBounds() -> String? {
         return  self.clipsToBounds ? "true" : "false"
     }
 }
