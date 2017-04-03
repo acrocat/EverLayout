@@ -65,15 +65,23 @@ open class EverLayout: ELRawData
         func _process (_ view : ELView , parentView : ELView? = nil) {
             if view.isRoot {
                 if let existingRoot = self.viewIndex.rootViewModel() {
-                    existingRoot.update(rawdata: view.rawData)
+                    existingRoot.update(newData: view.rawData)
                 } else {
                     _add(view)
                 }
             } else if let viewId = view.id {
                 if let existingView = self.viewIndex.viewModel(forKey: viewId) {
-                    existingView.update(rawdata: view.rawData)
+                    existingView.update(newData: view.rawData)
                 } else {
                     _add(view , parentView: parentView)
+                }
+            }
+            
+            if let subviews = view.subviews {
+                for subview in subviews {
+                    guard let subview = subview else { continue }
+                    
+                    _process(subview , parentView: view)
                 }
             }
         }
@@ -82,14 +90,6 @@ open class EverLayout: ELRawData
                 view.parentModel = parentView
                 
                 self.viewIndex.addViewModel(forKey: viewId, viewModel: view)
-                
-                if let subviews = view.subviews {
-                    for subview in subviews {
-                        guard let subview = subview else { continue }
-                        
-                        _process(subview , parentView: view)
-                    }
-                }
             }
         }
         func _reset (_ view : ELView) {
@@ -102,7 +102,13 @@ open class EverLayout: ELRawData
             _process(rootView)
             
             // We need to find views that no longer exist
-            
+            print("After the update")
+            self.viewIndex.contents.forEach({ (name , item) in
+                item?.properties?.forEach({ (prop) in
+                    print(prop?.name)
+                    print(prop?.value)
+                })
+            })
         }
     }
     

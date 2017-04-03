@@ -75,9 +75,9 @@ public class ELView: ELRawData
         self.viewParser = parser
     }
     
-    public func update (rawdata : Any) {
+    public func update (newData : Any) {
         // Set new data
-        self.rawData = rawData
+        self.rawData = newData
         
         // Mark as active again
         self.isActive = true
