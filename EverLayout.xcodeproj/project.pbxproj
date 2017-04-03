@@ -46,6 +46,7 @@
 		2DB7F2801E7C762300175CCB /* ELLayoutTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB7F27F1E7C762300175CCB /* ELLayoutTemplate.swift */; };
 		2DB7F2821E7C765300175CCB /* LayoutTemplateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB7F2811E7C765300175CCB /* LayoutTemplateParser.swift */; };
 		2DBAE95C1E5DCE9200677D98 /* ELJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */; };
+		2DC9BFD71E928A5800BE1999 /* UIImage+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC9BFD61E928A5800BE1999 /* UIImage+Swift.swift */; };
 		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		2DB7F27F1E7C762300175CCB /* ELLayoutTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELLayoutTemplate.swift; sourceTree = "<group>"; };
 		2DB7F2811E7C765300175CCB /* LayoutTemplateParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTemplateParser.swift; sourceTree = "<group>"; };
 		2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELJSON.swift; sourceTree = "<group>"; };
+		2DC9BFD61E928A5800BE1999 /* UIImage+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Swift.swift"; sourceTree = "<group>"; };
 		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,6 +147,7 @@
 				2D57FA531E4617BB0043B897 /* NSObject+EverLayout.swift */,
 				2D57FA541E4617BB0043B897 /* String+EverLayout.swift */,
 				2D659AA81E54990900D11E20 /* UIView+EverLayout.swift */,
+				2DC9BFD61E928A5800BE1999 /* UIImage+Swift.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				2D57FA881E46182E0043B897 /* LabelPropertyResolver.swift in Sources */,
 				2D57FA7D1E46181C0043B897 /* LayoutViewParser.swift in Sources */,
 				2D57FA6D1E4617C80043B897 /* ELReporter.swift in Sources */,
+				2DC9BFD71E928A5800BE1999 /* UIImage+Swift.swift in Sources */,
 				2D57FA871E46182E0043B897 /* ScrollViewPropertyResolver.swift in Sources */,
 				2D3586321E8FC4E2001A71F2 /* PropertyMappable.swift in Sources */,
 				2D57FA651E4617C80043B897 /* ELRawData.swift in Sources */,

@@ -58,52 +58,52 @@ public class PropertyResolver
     
     open var settableProperties : [String : (String) -> Void] {
         return [
-            "backgroundColor": {(source) in
-                self.view?.mapBackgroundColor(source)
+            "backgroundColor": {[weak self] (source) in
+                self?.view?.mapBackgroundColor(source)
             },
-            "cornerRadius": {(source) in
-                self.view?.mapCornerRadius(source)
+            "cornerRadius": {[weak self] (source) in
+                self?.view?.mapCornerRadius(source)
             },
-            "borderWidth": {source in
-                self.view?.mapBorderWidth(source)
+            "borderWidth": {[weak self] source in
+                self?.view?.mapBorderWidth(source)
             },
-            "borderColor": {source in
-                self.view?.mapBorderColor(source)
+            "borderColor": {[weak self] source in
+                self?.view?.mapBorderColor(source)
             },
-            "alpha": {source in
-                self.view?.mapAlpha(source)
+            "alpha": {[weak self] source in
+                self?.view?.mapAlpha(source)
             },
-            "clipToBounds": {source in
-                self.view?.mapClipToBounds(source)
+            "clipToBounds": {[weak self] source in
+                self?.view?.mapClipToBounds(source)
             },
-            "contentMode": {source in
-                self.view?.mapContentMode(source)
+            "contentMode": {[weak self] source in
+                self?.view?.mapContentMode(source)
             }
         ]
     }
     
     open var retrievableProperties : [String : () -> String?] {
         return [
-            "backgroundColor": {
-                return self.view?.getMappedBackgroundColor()
+            "backgroundColor": {[weak self] in
+                return self?.view?.getMappedBackgroundColor()
             },
-            "cornerRadius": {
-                return self.view?.getMappedCornerRadius()
+            "cornerRadius": {[weak self] in
+                return self?.view?.getMappedCornerRadius()
             },
-            "borderWidth": {
-                return self.view?.getMappedBorderWidth()
+            "borderWidth": {[weak self] in
+                return self?.view?.getMappedBorderWidth()
             },
-            "borderColor": {
-                return self.view?.getMappedBorderColor()
+            "borderColor": {[weak self] in
+                return self?.view?.getMappedBorderColor()
             },
-            "alpha": {
-                return self.view?.getMappedAlpha()
+            "alpha": {[weak self] in
+                return self?.view?.getMappedAlpha()
             },
-            "clipToBounds":{
-                return self.view?.getMappedClipToBounds()
+            "clipToBounds":{[weak self] in
+                return self?.view?.getMappedClipToBounds()
             },
-            "contentMode":{
-                return self.view?.getMappedContentMode()
+            "contentMode":{[weak self] in
+                return self?.view?.getMappedContentMode()
             }
         ]
     }
@@ -127,64 +127,10 @@ public class PropertyResolver
         
         return self.retrievableProperties[name]?()
     }
-    
-    public static func number (value : String) -> CGFloat?
-    {
-        return value.toCGFloat()
-    }
-    
-    public static func string (value : String) -> String?
-    {
-        return value
-    }
-    
-    public static func color (value : String) -> UIColor?
-    {
-        return UIColor.color(fromName: value) ?? UIColor(hex: value)
-    }
-    
-    public static func bool (value : String) -> Bool
-    {
-        return value == "true"
-    }
-    
-    static func contentMode (source : String) -> UIViewContentMode?
-    {
-        guard let index = self.CONTENT_MODE_KEYS.index(of: source) else { return nil }
-        
-        return UIViewContentMode(rawValue: index)
-    }
-    
-    /// Uses CGPointFromString to parse a CGPoint from the property value
-    ///
-    /// - Parameter source: Property value as String
-    /// - Returns: CGPoint
-    static func point (source: String) -> CGPoint?
-    {
-        return CGPointFromString(source)
-    }
-    
-    /// Uses UIEdgeInsetFromString to parse UIEdgeInset from property value
-    ///
-    /// - Parameter source: Property value as String
-    /// - Returns: UIEdgeInset
-    static func edgeInset (source : String) -> UIEdgeInsets?
-    {
-        return UIEdgeInsetsFromString(source)
-    }
-    
-    /// Uses CGSizeFromString to parse CGSize from property value
-    ///
-    /// - Parameter source: Property value as String
-    /// - Returns: CGSize
-    static func size (source : String) -> CGSize?
-    {
-        return CGSizeFromString(source)
-    }
 }
 
 extension UIView
-{
+{   
     open func applyViewProperty (viewProperty : ELViewProperty) {
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
     }

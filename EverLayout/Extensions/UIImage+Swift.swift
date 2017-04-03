@@ -22,27 +22,19 @@
 
 import UIKit
 
-public class ImageViewPropertyResolver: PropertyResolver
-{
-    override public var settableProperties: [String : (String) -> Void] {
-        var props = super.settableProperties
-        
-        props["image"] = {[weak self] (source) in
-            if let view = self?.view as? ImageMappable {
-                view.mapImage(source)
+extension UIImage {
+    /// Attempt to initialise UIImage with a remote image
+    ///
+    /// - Parameter address: URL in String
+    internal convenience init? (address : String) {
+        if let imageUrl = URL(string: address) {
+            if let imageData = NSData(contentsOf: imageUrl) {
+                self.init(data: imageData as Data)
+                
+                return
             }
         }
         
-        return props
-    }
-}
-
-extension UIImageView
-{
-    override open func applyViewProperty(viewProperty: ELViewProperty)
-    {
-        super.applyViewProperty(viewProperty: viewProperty)
-        
-        ImageViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
+        self.init()
     }
 }
