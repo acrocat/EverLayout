@@ -168,14 +168,14 @@ open class EverLayout: ELRawData
         for (_ , viewModel) in self.viewIndex.contents {
             guard let viewModel = viewModel , viewModel.isActive else { continue }
             
-            viewModel.constraints?.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: self.viewIndex)})
+            viewModel.constraints?.forEach({$0?.establishConstraints(onView: viewModel, withViewIndex: self.viewIndex)})
             viewModel.properties?.forEach({$0?.applyToView(viewModel: viewModel)})
             
             // Add constraints and properties from a template
             viewModel.templateLayouts?.forEach({ [unowned self] (layoutName) in
                 if let template = self.getTemplateLayout(layoutName) {
                     if let constraints = template.constraints {
-                        constraints.forEach({$0?.establisConstaints(onView: viewModel, withViewIndex: self.viewIndex)})
+                        constraints.forEach({$0?.establishConstraints(onView: viewModel, withViewIndex: self.viewIndex)})
                     }
                     if let properties = template.properties {
                         properties.forEach({$0?.applyToView(viewModel: viewModel)})

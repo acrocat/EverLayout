@@ -197,14 +197,12 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
         guard let source = self.parseSource(source: source) else { return nil }
         guard let subviewData = source.viewData[LayoutViewJSONParser.KEY_SUBVIEWS]?.dictionary else { return nil }
         
-//        var subviews : [(String , [String : JSON])] = []
         var subviews : [ELView?] = []
         
         for subview in subviewData
         {
             if let validData = subview.value.dictionary
             {
-//                subviews.append((subview.key , validData))
                 subviews.append(ELView(rawData: (subview.key , validData), parser: LayoutViewJSONParser()))
             }
         }

@@ -30,6 +30,12 @@ protocol BackgroundColorMappable {
     func getMappedBackgroundColor () -> String?
 }
 
+protocol HiddenMappable {
+    func mapHidden (_ hidden : String)
+    
+    func getMappedHidden () -> String?
+}
+
 protocol CornerRadiusMappable {
     func mapCornerRadius (_ cornerRadius : String)
     
@@ -122,6 +128,12 @@ protocol ContentOffsetMappable {
     func getMappedContentOffset () -> String?
 }
 
+protocol PlaceholderMappable {
+    func mapPlaceholder (_ placeholder : String)
+    
+    func getMappedPlaceholder () -> String?
+}
+
 // MARK: - UIView Implementations
 extension UIView : BackgroundColorMappable {
     func mapBackgroundColor(_ color: String) {
@@ -130,6 +142,15 @@ extension UIView : BackgroundColorMappable {
     
     func getMappedBackgroundColor() -> String? {
         return UIColor.name(ofColor: self.backgroundColor ?? .black)
+    }
+}
+extension UIView : HiddenMappable {
+    func mapHidden(_ hidden: String) {
+        self.isHidden = (hidden.lowercased() == "true")
+    }
+    
+    func getMappedHidden() -> String? {
+        return self.isHidden ? "true" : "false"
     }
 }
 extension UIView : CornerRadiusMappable {
@@ -376,4 +397,17 @@ extension UIScrollView : ContentOffsetMappable {
         return NSStringFromCGPoint(self.contentOffset) as String
     }
 }
+
+// MARK: - UITextField Implementations
+
+extension UITextField : PlaceholderMappable {
+    func mapPlaceholder(_ placeholder: String) {
+        self.placeholder = placeholder
+    }
+    
+    func getMappedPlaceholder() -> String? {
+        return self.placeholder
+    }
+}
+
 

@@ -9,13 +9,25 @@
 import UIKit
 
 class TextFieldPropertyResolver: PropertyResolver {
-    override public var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override public var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
-        props["placeholder"] = {(source) in
-            if let textField = self.view as? UITextField {
-                textField.placeholder = PropertyResolver.string(value: source) ?? ""
+        props["placeholder"] = {[weak self] (source) in
+            if let view = self?.view as? PlaceholderMappable {
+                view.mapPlaceholder(source)
             }
+        }
+        
+        return props
+    }
+    
+    override var retrievableProperties: [String : () -> String?] {
+        var props = super.retrievableProperties
+        
+        props["placeholder"] = {[weak self] in
+            guard let view = self?.view as? PlaceholderMappable else { return nil }
+            
+            return view.getMappedPlaceholder()
         }
         
         return props
