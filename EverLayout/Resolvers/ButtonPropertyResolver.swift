@@ -10,42 +10,53 @@ import UIKit
 
 class ButtonPropertyResolver: PropertyResolver
 {
-    override open var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override open var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
-        props["text"] = {source in
-            if let button = self.view as? UIButton
-            {
-                button.setTitle(PropertyResolver.string(value: source) ?? "", for: .normal)
+        props["text"] = {[weak self] source in
+            if let view = self?.view as? TextMappable {
+                view.mapText(source)
             }
         }
-        props["textColor"] = {source in
-            if let button = self.view as? UIButton
-            {
-                button.setTitleColor(PropertyResolver.color(value: source) ?? .black, for: .normal)
+        props["textColor"] = {[weak self] source in
+            if let view = self?.view as? TextColorMappable {
+                view.mapTextColor(source)
             }
         }
-        props["backgroundImage"] = {source in
-            if let button = self.view as? UIButton
-            {
-                button.setBackgroundImage(ImageViewPropertyResolver.image(source: source), for: .normal)
+        props["backgroundImage"] = {[weak self] source in
+            if let view = self?.view as? BackgroundImageMappable {
+                view.mapBackgroundImage(source)
             }
         }
-        props["image"] = {source in
-            if let button = self.view as? UIButton
-            {
-                button.setImage(ImageViewPropertyResolver.image(source: source), for: .normal)
+        props["image"] = {[weak self] source in
+            if let view = self?.view as? ImageMappable {
+                view.mapImage(source)
             }
+        }
+        
+        return props
+    }
+    
+    override var retrievableProperties: [String : () -> String?] {
+        var props = super.retrievableProperties
+        
+        props["text"] = {[weak self] in
+            guard let view = self?.view as? TextMappable else { return nil }
+            
+            return view.getMappedText()
+        }
+        props["textColor"] = {[weak self] in
+            guard let view = self?.view as? TextColorMappable else { return nil }
+            
+            return view.getMappedTextColor()
         }
         
         return props
     }
 }
 
-extension UIButton
-{
-    override open func applyViewProperty(viewProperty: ELViewProperty)
-    {
+extension UIButton {
+    override open func applyViewProperty(viewProperty: ELViewProperty){
         super.applyViewProperty(viewProperty: viewProperty)
         
         ButtonPropertyResolver(view: self).apply(viewProperty: viewProperty)

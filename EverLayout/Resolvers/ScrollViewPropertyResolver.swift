@@ -24,30 +24,43 @@ import UIKit
 
 public class ScrollViewPropertyResolver: PropertyResolver
 {
-    override public var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override public var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
-        props["contentInset"] = {source in
-            if let scrollView = self.view as? UIScrollView
-            {
-                scrollView.contentInset = PropertyResolver.edgeInset(source: source) ?? .zero
+        props["contentInset"] = {[weak self] source in
+            if let view = self?.view as? ContentInsetMappable {
+                view.mapContentInset(source)
             }
         }
-        props["contentOffset"] = {source in
-            if let scrollView = self.view as? UIScrollView
-            {
-                scrollView.contentOffset = PropertyResolver.point(source: source) ?? .zero
+        props["contentOffset"] = {[weak self]source in
+            if let view = self?.view as? ContentOffsetMappable {
+                view.mapContentOffset(source)
             }
+        }
+        
+        return props
+    }
+    
+    override public var retrievableProperties: [String : () -> String?] {
+        var props = super.retrievableProperties
+        
+        props["contentInset"] = {[weak self] in
+            guard let view = self?.view as? ContentInsetMappable else { return nil }
+            
+            return view.getMappedContentInset()
+        }
+        props["contentOffset"] = { [weak self] in
+            guard let view = self?.view as? ContentOffsetMappable else { return nil }
+            
+            return view.getMappedContentOffset()
         }
         
         return props
     }
 }
 
-extension UIScrollView
-{
-    override open func applyViewProperty(viewProperty: ELViewProperty)
-    {
+extension UIScrollView {
+    override open func applyViewProperty(viewProperty: ELViewProperty) {
         super.applyViewProperty(viewProperty: viewProperty)
         
         ScrollViewPropertyResolver(view: self).apply(viewProperty: viewProperty)

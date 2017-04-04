@@ -23,78 +23,82 @@
 import UIKit
 
 public class PropertyResolver
-{
-    // ---------------------------------------------------------------------------
-    // MARK: - Enum Mapping
-    // ---------------------------------------------------------------------------
-    
-    private static let CONTENT_MODE_KEYS : [String] = [
-        "scaleToFit",
-        "scaleAspectFit",
-        "scaleAspectFill",
-        "redraw",
-        "center",
-        "top",
-        "bottom",
-        "left",
-        "right",
-        "topLeft",
-        "topRight",
-        "bottomLeft",
-        "bottomRight"
-    ]
-    
+{   
     // ---------------------------------------------------------------------------
     // ---------------------------------------------------------------------------
     
     public weak var view : UIView?
     
-    convenience init (view : UIView)
-    {
+    convenience init (view : UIView) {
         self.init()
         
         self.view = view
     }
     
-    open var exposedProperties : [String : (String) -> Void] {
+    open var settableProperties : [String : (String) -> Void] {
         return [
-            "backgroundColor": {(source) in
-                self.view?.backgroundColor = PropertyResolver.color(value: source)
+            "backgroundColor": {[weak self] (source) in
+                self?.view?.mapBackgroundColor(source)
             },
-            "cornerRadius": {(source) in
-                self.view?.layer.cornerRadius = PropertyResolver.number(value: source) ?? 0
+            "cornerRadius": {[weak self] (source) in
+                self?.view?.mapCornerRadius(source)
             },
-            "borderWidth": {source in
-                self.view?.layer.borderWidth = PropertyResolver.number(value: source) ?? 0
+            "borderWidth": {[weak self] source in
+                self?.view?.mapBorderWidth(source)
             },
-            "borderColor": {source in
-                self.view?.layer.borderColor = PropertyResolver.color(value: source)?.cgColor
+            "borderColor": {[weak self] source in
+                self?.view?.mapBorderColor(source)
             },
-            "alpha": {source in
-                self.view?.alpha = PropertyResolver.number(value: source) ?? 1
+            "alpha": {[weak self] source in
+                self?.view?.mapAlpha(source)
             },
-            "clipToBounds": {source in
-                self.view?.clipsToBounds = PropertyResolver.bool(value: source)
+            "clipToBounds": {[weak self] source in
+                self?.view?.mapClipToBounds(source)
             },
-            "contentMode": {source in
-                self.view?.contentMode = PropertyResolver.contentMode(source: source) ?? .scaleToFill
+            "contentMode": {[weak self] source in
+                self?.view?.mapContentMode(source)
             },
-            "hidden": {source in
-                self.view?.isHidden = PropertyResolver.bool(value: source)
+            "hidden": {[weak self] source in
+                self?.view?.mapHidden(source)
             }
         ]
     }
     
-    open func apply (viewProperty : ELViewProperty)
-    {
+    open var retrievableProperties : [String : () -> String?] {
+        return [
+            "backgroundColor": {[weak self] in
+                return self?.view?.getMappedBackgroundColor()
+            },
+            "cornerRadius": {[weak self] in
+                return self?.view?.getMappedCornerRadius()
+            },
+            "borderWidth": {[weak self] in
+                return self?.view?.getMappedBorderWidth()
+            },
+            "borderColor": {[weak self] in
+                return self?.view?.getMappedBorderColor()
+            },
+            "alpha": {[weak self] in
+                return self?.view?.getMappedAlpha()
+            },
+            "clipToBounds":{[weak self] in
+                return self?.view?.getMappedClipToBounds()
+            },
+            "contentMode":{[weak self] in
+                return self?.view?.getMappedContentMode()
+            },
+            "hidden": {[weak self] in 
+                return self?.view?.getMappedHidden()
+            }
+        ]
+    }
+    
+    open func apply (viewProperty : ELViewProperty) {
         guard let name = viewProperty.name , let value = viewProperty.value else { return }
         
-        if let operation = self.exposedProperties[name]
-        {
+        if let operation = self.settableProperties[name] {
             operation(value)
-        }
-        else
-        {
+        } else {
             // Unrecognised property
             // Would be nice to report this, but it doesn't cause crashes so 
             // not a priority
@@ -103,66 +107,21 @@ public class PropertyResolver
         }
     }
     
-    public static func number (value : String) -> CGFloat?
-    {
-        return value.toCGFloat()
-    }
-    
-    public static func string (value : String) -> String?
-    {
-        return value
-    }
-    
-    public static func color (value : String) -> UIColor?
-    {
-        return UIColor.color(fromName: value) ?? UIColor(hex: value)
-    }
-    
-    public static func bool (value : String) -> Bool
-    {
-        return value == "true"
-    }
-    
-    static func contentMode (source : String) -> UIViewContentMode?
-    {
-        guard let index = self.CONTENT_MODE_KEYS.index(of: source) else { return nil }
+    open func retrieve (viewProperty : ELViewProperty) -> String? {
+        guard let name = viewProperty.name else { return nil }
         
-        return UIViewContentMode(rawValue: index)
-    }
-    
-    /// Uses CGPointFromString to parse a CGPoint from the property value
-    ///
-    /// - Parameter source: Property value as String
-    /// - Returns: CGPoint
-    static func point (source: String) -> CGPoint?
-    {
-        return CGPointFromString(source)
-    }
-    
-    /// Uses UIEdgeInsetFromString to parse UIEdgeInset from property value
-    ///
-    /// - Parameter source: Property value as String
-    /// - Returns: UIEdgeInset
-    static func edgeInset (source : String) -> UIEdgeInsets?
-    {
-        return UIEdgeInsetsFromString(source)
-    }
-    
-    /// Uses CGSizeFromString to parse CGSize from property value
-    ///
-    /// - Parameter source: Property value as String
-    /// - Returns: CGSize
-    static func size (source : String) -> CGSize?
-    {
-        return CGSizeFromString(source)
+        return self.retrievableProperties[name]?()
     }
 }
 
 extension UIView
-{
-    open func applyViewProperty (viewProperty : ELViewProperty)
-    {   
+{   
+    open func applyViewProperty (viewProperty : ELViewProperty) {
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
+    }
+    
+    open func retrieveViewProperty (viewProperty : ELViewProperty) -> String? {
+        return PropertyResolver(view: self).retrieve(viewProperty: viewProperty)
     }
 }
 

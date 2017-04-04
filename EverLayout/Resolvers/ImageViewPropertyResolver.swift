@@ -24,34 +24,16 @@ import UIKit
 
 public class ImageViewPropertyResolver: PropertyResolver
 {
-    override public var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override public var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
-        props["image"] = {(source) in
-            if let imageView = self.view as? UIImageView
-            {
-                imageView.image = ImageViewPropertyResolver.image(source: source)
+        props["image"] = {[weak self] (source) in
+            if let view = self?.view as? ImageMappable {
+                view.mapImage(source)
             }
         }
         
         return props
-    }
-    
-    static func image (source : String) -> UIImage?
-    {
-        // Try loading the image from an asset
-        var image = UIImage(named: source)
-        
-        if image == nil {
-            // Attempt to load this image as a url
-            if let imageUrl = URL(string: source) {
-                if let imageData = NSData(contentsOf: imageUrl) {
-                    image = UIImage(data: imageData as Data)
-                }
-            }
-        }
-        
-        return image
     }
 }
 

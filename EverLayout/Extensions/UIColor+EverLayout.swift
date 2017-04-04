@@ -53,6 +53,43 @@ extension UIColor
         }
     }
     
+    internal static func name (ofColor color : UIColor) -> String {
+        switch color {
+            case UIColor.black:
+                return "black"
+            case UIColor.blue:
+                return "blue"
+            case UIColor.brown:
+                return "brown"
+            case UIColor.clear:
+                return "clear"
+            case UIColor.cyan:
+                return "cyan"
+            case UIColor.darkGray:
+                return "darkGray"
+            case UIColor.gray:
+                return "gray"
+            case UIColor.green:
+                return "green"
+            case UIColor.lightGray:
+                return "lightGray"
+            case UIColor.magenta:	
+                return "magenta"
+            case UIColor.orange:
+                return "orange"
+            case UIColor.purple:
+                return "purple"
+            case UIColor.red:
+                return "red"
+            case UIColor.white:
+                return "white"
+            case UIColor.yellow:
+                return "yellow"
+            default:
+                return "black"
+            }
+    }
+    
     /// Get UIColor instance from the hex string
     ///
     /// - Parameter name: Hex String EG #333333

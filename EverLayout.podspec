@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
 
   s.source_files  = "EverLayout", "EverLayout/**/*.{swift}"
 
-  s.dependency "Socket.IO-Client-Swift" , "8.2.0"
+  s.dependency "Socket.IO-Client-Swift" , "8.3.3"
 end

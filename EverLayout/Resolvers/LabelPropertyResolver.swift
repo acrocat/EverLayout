@@ -33,68 +33,83 @@ class LabelPropertyResolver: PropertyResolver
     // ---------------------------------------------------------------------------
     // ---------------------------------------------------------------------------
     
-    override var exposedProperties: [String : (String) -> Void] {
-        var props = super.exposedProperties
+    override var settableProperties: [String : (String) -> Void] {
+        var props = super.settableProperties
         
-        props["text"] = {source in
-            if let label = self.view as? UILabel
-            {
-                label.text = PropertyResolver.string(value: source)
+        props["text"] = {[weak self] source in
+            if let view = self?.view as? TextMappable {
+                view.mapText(source)
             }
         }
-        props["textColor"] = {source in
-            if let label = self.view as? UILabel
-            {
-                label.textColor = PropertyResolver.color(value: source)
+        props["textColor"] = {[weak self] source in
+            if let view = self?.view as? TextColorMappable {
+                view.mapTextColor(source)
             }
         }
-        props["lineBreakMode"] = {source in
-            if let label = self.view as? UILabel
-            {
-                label.lineBreakMode = LabelPropertyResolver.lineBreakMode(source: source) ?? .byTruncatingTail
+        props["lineBreakMode"] = {[weak self] source in
+            if let view = self?.view as? LineBreakModeMappable {
+                view.mapLineBreakMode(source)
             }
         }
-        props["textAlignment"] = {source in
-            if let label = self.view as? UILabel
-            {
-                label.textAlignment = LabelPropertyResolver.textAlignment(source: source) ?? .left
+        props["textAlignment"] = {[weak self] source in
+            if let view = self?.view as? TextAlignmentMappable {
+                view.mapTextAlignment(source)
             }
         }
-        props["numberOfLines"] = {source in
-            if let label = self.view as? UILabel
-            {
-                label.numberOfLines = Int(PropertyResolver.number(value: source) ?? 1)
+        props["numberOfLines"] = {[weak self] source in
+            if let view = self?.view as? NumberOfLinesMappable {
+                view.mapNumberOfLines(source)
             }
         }
-        props["fontSize"] = {source in
-            if let label = self.view as? UILabel
-            {
-                label.font = label.font.withSize(PropertyResolver.number(value: source) ?? UIFont.systemFontSize)
+        props["fontSize"] = {[weak self] source in
+            if let view = self?.view as? FontSizeMappable {
+                view.mapFontSize(source)
             }
         }
         
         return props
     }
     
-    static func lineBreakMode (source : String) -> NSLineBreakMode?
-    {
-        guard let index = self.LINE_BREAK_MODE_KEYS.index(of: source) else { return nil }
+    override var retrievableProperties: [String : () -> String?] {
+        var props = super.retrievableProperties
         
-        return NSLineBreakMode(rawValue: index)
-    }
-    
-    static func textAlignment (source : String) -> NSTextAlignment?
-    {
-        guard let index = self.TEXT_ALIGNMENT_KEYS.index(of: source) else { return nil }
+        props["tetx"] = {[weak self] in
+            guard let view  = self?.view as? TextMappable else { return nil }
+            
+            return view.getMappedText()
+        }
+        props["textColor"] = {[weak self] in
+            guard let view = self?.view as? TextColorMappable else { return nil }
+            
+            return view.getMappedTextColor()
+        }
+        props["lineBreakMode"] = {[weak self] in
+            guard let view = self?.view as? LineBreakModeMappable else { return nil }
+            
+            return view.getMappedLineBreakMode()
+        }
+        props["textAlignment"] = {[weak self] in
+            guard let view = self?.view as? TextAlignmentMappable else { return nil }
+            
+            return view.getMappedTextAlignment()
+        }
+        props["numberOfLines"] = {[weak self] in
+            guard let view = self?.view as? NumberOfLinesMappable else { return nil }
+            
+            return view.getMappedNumberOfLines()
+        }
+        props["fontSize"] = {[weak self] in
+            guard let view = self?.view as? FontSizeMappable else { return nil }
+            
+            return view.getMappedFontSize()
+        }
         
-        return NSTextAlignment(rawValue: index)
+        return props
     }
 }
 
-extension UILabel
-{
-    override open func applyViewProperty(viewProperty: ELViewProperty)
-    {
+extension UILabel {
+    override open func applyViewProperty(viewProperty: ELViewProperty) {
         super.applyViewProperty(viewProperty: viewProperty)
         
         LabelPropertyResolver(view: self).apply(viewProperty: viewProperty)

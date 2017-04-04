@@ -44,12 +44,18 @@ public class ELView: ELRawData
     public var isNewElement : Bool {
         return self.viewParser.isNewElement(source: self.rawData)
     }
-    public var subviews : [Any]? {
+    public var subviews : [ELView?]? {
         return self.viewParser.subviews(source: self.rawData)
     }
     public var templateLayouts : [String]? {
         return self.viewParser.templateLayout(source: self.rawData)
     }
+    
+    // Actual constraints that are created when this view is built on a view
+    public var appliedConstraints : [NSLayoutConstraint] = []
+    
+    // We cache view properties when EverLayout writes new ones, so that they can be reversed if the layout is unloaded
+    public var cachedProperties : [String : String] = [:]
     
     // The view this model renders to
     public var target : UIView?
@@ -60,10 +66,41 @@ public class ELView: ELRawData
     // The view is at the root of a layout file
     public var isRoot : Bool = false
     
-    public init (rawData : Any , parser : LayoutViewParser)
-    {
+    // When a view is removed during a layout update, we mark it inactive so it won't show but its state will be preserved
+    public var isActive : Bool = true
+    
+    public init (rawData : Any , parser : LayoutViewParser) {
         super.init(rawData: rawData)
         
         self.viewParser = parser
+    }
+    
+    public func update (newData : Any) {
+        // Set new data
+        self.rawData = newData
+        
+        // Mark as active again
+        self.isActive = true
+    }
+    
+    public func remove () {
+        if !self.isRoot {
+            self.target?.removeFromSuperview()
+        } else {
+            self.target?.removeConstraints(self.appliedConstraints)
+        }
+        
+        // Empty the applied constraints
+        self.appliedConstraints = []
+        
+        // Mark as inactive
+        self.isActive = false
+        
+        // Reset the view properties to those that were cached
+        self.cachedProperties.forEach { (propName , propValue) in
+            let prop = ELViewProperty(rawData: (propName , propValue), parser: LayoutPropertyJSONParser())
+            
+            self.target?.applyViewProperty(viewProperty: prop)
+        }
     }
 }

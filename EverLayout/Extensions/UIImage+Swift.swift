@@ -22,23 +22,19 @@
 
 import UIKit
 
-public protocol LayoutViewParser : LayoutParser
-{
-    func view (source : Any) -> ELView?
-    
-    func viewId (source : Any?) -> String?
-    
-    func viewSuperClass (source : Any?) -> UIView.Type?
-    
-    func isNewElement (source : Any?) -> Bool
-    
-    func viewProperties (source : Any) -> [ELViewProperty?]?
-    
-    func viewZIndex (source : Any) -> Int
-    
-    func viewConstraints (source : Any) -> [ELConstraint?]?
-    
-    func subviews (source : Any) -> [ELView?]?
-    
-    func templateLayout (source : Any) -> [String]?
+extension UIImage {
+    /// Attempt to initialise UIImage with a remote image
+    ///
+    /// - Parameter address: URL in String
+    internal convenience init? (address : String) {
+        if let imageUrl = URL(string: address) {
+            if let imageData = NSData(contentsOf: imageUrl) {
+                self.init(data: imageData as Data)
+                
+                return
+            }
+        }
+        
+        self.init()
+    }
 }
