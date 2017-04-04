@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/acrocat/EverLayout.git", :tag => "#{s.version}" }
 
-  s.source_files  = "EverLayout", "EverLayout/**/*.{swift}"
+  s.source_files = "Classes/**/*.{h,swift}"
 
-  s.dependency "Socket.IO-Client-Swift" , "8.2.0"
+  s.dependency "Socket.IO-Client-Swift" , "8.3.3"
 end

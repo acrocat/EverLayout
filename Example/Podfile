@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'EverLayout_Example' do
+  pod 'EverLayout', :path => '../'
+
+  target 'EverLayout_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

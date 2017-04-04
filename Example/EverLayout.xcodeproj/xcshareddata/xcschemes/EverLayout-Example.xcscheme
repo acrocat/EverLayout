@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D57FA401E46171E0043B897"
-               BuildableName = "EverLayout.framework"
-               BlueprintName = "EverLayout"
+               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+               BuildableName = "EverLayout_Example.app"
+               BlueprintName = "EverLayout_Example"
+               ReferencedContainer = "container:EverLayout.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BuildableName = "EverLayout_Tests.xctest"
+               BlueprintName = "EverLayout_Tests"
                ReferencedContainer = "container:EverLayout.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,7 +42,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BuildableName = "EverLayout_Tests.xctest"
+               BlueprintName = "EverLayout_Tests"
+               ReferencedContainer = "container:EverLayout.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "EverLayout_Example.app"
+            BlueprintName = "EverLayout_Example"
+            ReferencedContainer = "container:EverLayout.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -42,15 +75,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D57FA401E46171E0043B897"
-            BuildableName = "EverLayout.framework"
-            BlueprintName = "EverLayout"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "EverLayout_Example.app"
+            BlueprintName = "EverLayout_Example"
             ReferencedContainer = "container:EverLayout.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -60,15 +94,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D57FA401E46171E0043B897"
-            BuildableName = "EverLayout.framework"
-            BlueprintName = "EverLayout"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "EverLayout_Example.app"
+            BlueprintName = "EverLayout_Example"
             ReferencedContainer = "container:EverLayout.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
