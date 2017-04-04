@@ -11,6 +11,7 @@
 		2D06048A1E93E111007A30A2 /* UIImage+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0604891E93E111007A30A2 /* UIImage+Swift.swift */; };
 		2D25780E1E4B719E0005BDA0 /* EverLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */; };
 		2D2E378B1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */; };
+		2D494ABA1E83EB34007C96BE /* LayoutConstraintJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D494AB91E83EB34007C96BE /* LayoutConstraintJSONParser.swift */; };
 		2D57FA461E46171F0043B897 /* EverLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D57FA441E46171F0043B897 /* EverLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D57FA551E4617BB0043B897 /* UIColor+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA521E4617BB0043B897 /* UIColor+EverLayout.swift */; };
 		2D57FA561E4617BB0043B897 /* NSObject+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA531E4617BB0043B897 /* NSObject+EverLayout.swift */; };
@@ -28,7 +29,7 @@
 		2D57FA6D1E4617C80043B897 /* ELReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA621E4617C80043B897 /* ELReporter.swift */; };
 		2D57FA721E4617D40043B897 /* LayoutIndexJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA6E1E4617D40043B897 /* LayoutIndexJSONParser.swift */; };
 		2D57FA731E4617D40043B897 /* LayoutViewJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA6F1E4617D40043B897 /* LayoutViewJSONParser.swift */; };
-		2D57FA741E4617D40043B897 /* LayoutConstraintJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA701E4617D40043B897 /* LayoutConstraintJSONParser.swift */; };
+		2D57FA741E4617D40043B897 /* LayoutConstraintJSONShorthandParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA701E4617D40043B897 /* LayoutConstraintJSONShorthandParser.swift */; };
 		2D57FA751E4617D40043B897 /* LayoutPropertyJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA711E4617D40043B897 /* LayoutPropertyJSONParser.swift */; };
 		2D57FA7B1E46181C0043B897 /* LayoutParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA761E46181C0043B897 /* LayoutParser.swift */; };
 		2D57FA7C1E46181C0043B897 /* LayoutIndexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA771E46181C0043B897 /* LayoutIndexParser.swift */; };
@@ -56,6 +57,7 @@
 		2D0604891E93E111007A30A2 /* UIImage+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Swift.swift"; sourceTree = "<group>"; };
 		2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutDelegate.swift; sourceTree = "<group>"; };
 		2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTemplateJSONParser.swift; sourceTree = "<group>"; };
+		2D494AB91E83EB34007C96BE /* LayoutConstraintJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraintJSONParser.swift; sourceTree = "<group>"; };
 		2D57FA411E46171F0043B897 /* EverLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EverLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D57FA441E46171F0043B897 /* EverLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EverLayout.h; sourceTree = "<group>"; };
 		2D57FA451E46171F0043B897 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,7 +77,7 @@
 		2D57FA621E4617C80043B897 /* ELReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELReporter.swift; sourceTree = "<group>"; };
 		2D57FA6E1E4617D40043B897 /* LayoutIndexJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutIndexJSONParser.swift; sourceTree = "<group>"; };
 		2D57FA6F1E4617D40043B897 /* LayoutViewJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutViewJSONParser.swift; sourceTree = "<group>"; };
-		2D57FA701E4617D40043B897 /* LayoutConstraintJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraintJSONParser.swift; sourceTree = "<group>"; };
+		2D57FA701E4617D40043B897 /* LayoutConstraintJSONShorthandParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraintJSONShorthandParser.swift; sourceTree = "<group>"; };
 		2D57FA711E4617D40043B897 /* LayoutPropertyJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPropertyJSONParser.swift; sourceTree = "<group>"; };
 		2D57FA761E46181C0043B897 /* LayoutParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutParser.swift; sourceTree = "<group>"; };
 		2D57FA771E46181C0043B897 /* LayoutIndexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutIndexParser.swift; sourceTree = "<group>"; };
@@ -180,10 +182,11 @@
 				2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */,
 				2D57FA6E1E4617D40043B897 /* LayoutIndexJSONParser.swift */,
 				2D57FA6F1E4617D40043B897 /* LayoutViewJSONParser.swift */,
-				2D57FA701E4617D40043B897 /* LayoutConstraintJSONParser.swift */,
+				2D57FA701E4617D40043B897 /* LayoutConstraintJSONShorthandParser.swift */,
 				2D57FA711E4617D40043B897 /* LayoutPropertyJSONParser.swift */,
 				2D8B07AB1E7A9F2600C71ED9 /* LayoutConstraintJSONComprehensiveParser.swift */,
 				2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */,
+				2D494AB91E83EB34007C96BE /* LayoutConstraintJSONParser.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -313,7 +316,8 @@
 				2D57FA661E4617C80043B897 /* ELView.swift in Sources */,
 				2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */,
 				2D57FA671E4617C80043B897 /* ELConstraint.swift in Sources */,
-				2D57FA741E4617D40043B897 /* LayoutConstraintJSONParser.swift in Sources */,
+				2D57FA741E4617D40043B897 /* LayoutConstraintJSONShorthandParser.swift in Sources */,
+				2D494ABA1E83EB34007C96BE /* LayoutConstraintJSONParser.swift in Sources */,
 				2DD03C301E82B606006A65A7 /* TextFieldPropertyResolver.swift in Sources */,
 				2D57FA891E46182E0043B897 /* ButtonPropertyResolver.swift in Sources */,
 				2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */,

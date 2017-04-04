@@ -50,6 +50,12 @@ public class ELConstraint: ELRawData
     public var identifier : String? {
         return self.constraintParser.identifier(source: self.rawData)
     }
+    public var verticalSizeClass : UIUserInterfaceSizeClass? {
+        return self.constraintParser.verticalSizeClass(source: self.rawData)
+    }
+    public var horizontalSizeClass : UIUserInterfaceSizeClass? {
+        return self.constraintParser.horizontalSizeClass(source: self.rawData)
+    }
     
     public init (rawData : Any , parser : LayoutConstraintParser)
     {
@@ -96,10 +102,24 @@ public class ELConstraint: ELRawData
             // adding the constraint as this will cause a crash
             if target.sharesAncestry(withView: context.comparableView ?? target)
             {
-                constraintTarget.addConstraint(constraint)
-                
                 // Add this constraint to the applied constraints of the ELView
                 view.appliedConstraints.append(constraint)
+                
+                if let vertical = self.verticalSizeClass , let horizontal = self.horizontalSizeClass {
+                    if target.traitCollection.horizontalSizeClass == horizontal && target.traitCollection.verticalSizeClass == vertical {
+                        constraintTarget.addConstraint(constraint)
+                    }
+                } else if let vertical = self.verticalSizeClass {
+                    if target.traitCollection.verticalSizeClass == vertical {
+                        constraintTarget.addConstraint(constraint)
+                    }
+                } else if let horizontal = self.horizontalSizeClass {
+                    if target.traitCollection.horizontalSizeClass == horizontal {
+                        constraintTarget.addConstraint(constraint)
+                    }
+                } else if self.verticalSizeClass == nil && self.horizontalSizeClass == nil {
+                    constraintTarget.addConstraint(constraint)
+                }
             }
             else
             {
