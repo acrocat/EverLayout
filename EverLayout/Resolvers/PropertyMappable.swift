@@ -137,7 +137,7 @@ protocol PlaceholderMappable {
 // MARK: - UIView Implementations
 extension UIView : BackgroundColorMappable {
     func mapBackgroundColor(_ color: String) {
-        self.backgroundColor = UIColor.color(fromName: color)
+        self.backgroundColor = UIColor.color(fromName: color) ?? UIColor(hex: color) ?? .clear
     }
     
     func getMappedBackgroundColor() -> String? {
@@ -173,7 +173,7 @@ extension UIView : BorderWidthMappable {
 }
 extension UIView : BorderColorMappable {
     func mapBorderColor(_ borderColor: String) {
-        self.layer.borderColor = UIColor.color(fromName: borderColor)?.cgColor
+        self.layer.borderColor = UIColor.color(fromName: borderColor)?.cgColor ?? UIColor(hex: borderColor)?.cgColor
     }
     
     func getMappedBorderColor() -> String? {
@@ -244,7 +244,7 @@ extension UILabel : TextMappable {
 }
 extension UILabel : TextColorMappable {
     func mapTextColor(_ color: String) {
-        self.textColor = UIColor.color(fromName: color)
+        self.textColor = UIColor.color(fromName: color) ?? UIColor(hex: color)
     }
     
     func getMappedTextColor() -> String? {
@@ -333,7 +333,7 @@ extension UIButton : TextMappable {
 }
 extension UIButton : TextColorMappable {
     func mapTextColor(_ color: String) {
-        self.setTitleColor(UIColor.color(fromName: color), for: .normal)
+        self.setTitleColor(UIColor.color(fromName: color) ?? UIColor(hex: color), for: .normal)
     }
     
     func getMappedTextColor() -> String? {
