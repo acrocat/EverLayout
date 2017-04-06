@@ -86,7 +86,7 @@ extension UIColor
             case UIColor.yellow:
                 return "yellow"
             default:
-                return "black"
+                return "clear"
             }
     }
     

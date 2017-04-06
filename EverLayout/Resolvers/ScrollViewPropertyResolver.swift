@@ -65,4 +65,8 @@ extension UIScrollView {
         
         ScrollViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
+    
+    open override func retrieveViewProperty(viewProperty: ELViewProperty) -> String? {
+        return ScrollViewPropertyResolver(view: self).retrieve(viewProperty: viewProperty)
+    }
 }

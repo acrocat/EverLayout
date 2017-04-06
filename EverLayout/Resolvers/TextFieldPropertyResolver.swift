@@ -40,4 +40,8 @@ extension UITextField {
         
         TextFieldPropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
+    
+    open override func retrieveViewProperty(viewProperty: ELViewProperty) -> String? {
+        return TextFieldPropertyResolver(view: self).retrieve(viewProperty: viewProperty)
+    }
 }

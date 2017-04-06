@@ -37,12 +37,14 @@ public class ImageViewPropertyResolver: PropertyResolver
     }
 }
 
-extension UIImageView
-{
-    override open func applyViewProperty(viewProperty: ELViewProperty)
-    {
+extension UIImageView {
+    override open func applyViewProperty(viewProperty: ELViewProperty) {
         super.applyViewProperty(viewProperty: viewProperty)
         
         ImageViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
+    }
+    
+    open override func retrieveViewProperty(viewProperty: ELViewProperty) -> String? {
+        return TextFieldPropertyResolver(view: self).retrieve(viewProperty: viewProperty)
     }
 }

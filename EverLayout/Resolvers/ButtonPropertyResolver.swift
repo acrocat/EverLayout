@@ -61,4 +61,8 @@ extension UIButton {
         
         ButtonPropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
+    
+    open override func retrieveViewProperty(viewProperty: ELViewProperty) -> String? {
+        return ButtonPropertyResolver(view: self).retrieve(viewProperty:viewProperty)
+    }
 }

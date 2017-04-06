@@ -141,7 +141,7 @@ extension UIView : BackgroundColorMappable {
     }
     
     func getMappedBackgroundColor() -> String? {
-        return UIColor.name(ofColor: self.backgroundColor ?? .black)
+        return UIColor.name(ofColor: self.backgroundColor ?? .clear)
     }
 }
 extension UIView : HiddenMappable {
@@ -239,7 +239,7 @@ extension UILabel : TextMappable {
     }
     
     func getMappedText() -> String? {
-        return self.text
+        return self.text ?? ""
     }
 }
 extension UILabel : TextColorMappable {
@@ -328,7 +328,7 @@ extension UIButton : TextMappable {
     }
     
     func getMappedText() -> String? {
-        return self.title(for: .normal)
+        return self.title(for: .normal) ?? ""
     }
 }
 extension UIButton : TextColorMappable {
@@ -406,7 +406,7 @@ extension UITextField : PlaceholderMappable {
     }
     
     func getMappedPlaceholder() -> String? {
-        return self.placeholder
+        return self.placeholder ?? ""
     }
 }
 
