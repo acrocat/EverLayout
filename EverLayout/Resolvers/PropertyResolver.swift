@@ -37,6 +37,9 @@ public class PropertyResolver
     
     open var settableProperties : [String : (String) -> Void] {
         return [
+            "frame": {[weak self] (source) in
+                self?.view?.mapFrame(source)
+            },
             "backgroundColor": {[weak self] (source) in
                 self?.view?.mapBackgroundColor(source)
             },
@@ -66,6 +69,9 @@ public class PropertyResolver
     
     open var retrievableProperties : [String : () -> String?] {
         return [
+            "frame": {[weak self] in
+                return self?.view?.getMappedFrame()
+            },
             "backgroundColor": {[weak self] in
                 return self?.view?.getMappedBackgroundColor()
             },

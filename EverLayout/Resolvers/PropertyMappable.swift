@@ -24,6 +24,12 @@ import UIKit
 
 // MARK: - Mappable Protocols
 
+protocol FrameMappable {
+    func mapFrame (_ frame : String)
+    
+    func getMappedFrame () -> String?
+}
+
 protocol BackgroundColorMappable {
     func mapBackgroundColor (_ color : String)
     
@@ -135,6 +141,16 @@ protocol PlaceholderMappable {
 }
 
 // MARK: - UIView Implementations
+extension UIView : FrameMappable {
+    func mapFrame(_ frame: String) {
+        self.frame = CGRectFromString(frame)
+    }
+    
+    func getMappedFrame() -> String? {
+        return NSStringFromCGRect(self.frame) as String
+    }
+}
+
 extension UIView : BackgroundColorMappable {
     func mapBackgroundColor(_ color: String) {
         self.backgroundColor = UIColor.color(fromName: color) ?? UIColor(hex: color) ?? .clear
