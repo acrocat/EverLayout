@@ -50,7 +50,6 @@
 		2DB7F2821E7C765300175CCB /* LayoutTemplateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB7F2811E7C765300175CCB /* LayoutTemplateParser.swift */; };
 		2DBAE95C1E5DCE9200677D98 /* ELJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */; };
 		2DD03C301E82B606006A65A7 /* TextFieldPropertyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD03C2F1E82B606006A65A7 /* TextFieldPropertyResolver.swift */; };
-		2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,7 +98,6 @@
 		2DB7F2811E7C765300175CCB /* LayoutTemplateParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTemplateParser.swift; sourceTree = "<group>"; };
 		2DBAE95B1E5DCE9200677D98 /* ELJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELJSON.swift; sourceTree = "<group>"; };
 		2DD03C2F1E82B606006A65A7 /* TextFieldPropertyResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldPropertyResolver.swift; sourceTree = "<group>"; };
-		2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +160,6 @@
 		2D57FA4D1E46173A0043B897 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2DD12DAC1E4C9B2300F2057B /* EverLayoutBuilder.swift */,
 				2D57FA581E4617C80043B897 /* EverLayout.swift */,
 				2D57FA591E4617C80043B897 /* EverLayoutConfiguration.swift */,
 				2D57FA5A1E4617C80043B897 /* ELRawData.swift */,
@@ -323,7 +320,6 @@
 				2D494ABA1E83EB34007C96BE /* LayoutConstraintJSONParser.swift in Sources */,
 				2DD03C301E82B606006A65A7 /* TextFieldPropertyResolver.swift in Sources */,
 				2D57FA891E46182E0043B897 /* ButtonPropertyResolver.swift in Sources */,
-				2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */,
 				2D57FA8F1E4618610043B897 /* EverLayoutBridge.swift in Sources */,
 				2D57FA691E4617C80043B897 /* ViewIndex.swift in Sources */,
 				2D33C3511E9659CE001E1B16 /* ELConstraint.swift in Sources */,
