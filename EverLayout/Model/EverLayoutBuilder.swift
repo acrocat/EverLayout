@@ -95,7 +95,7 @@ class EverLayoutBuilder: NSObject
                     for subview in subviews
                     {
                         // Parse the view
-                        if let subview = self.configuration.viewParser.view(source: subview)
+                        if let subview = self.configuration.viewParser.view(source: subview as Any)
                         {
                             _addViewToViewIndex(viewModel: subview, parentModel: viewModel, viewIndex: &viewIndex)
                         }

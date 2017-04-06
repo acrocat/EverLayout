@@ -272,7 +272,7 @@ class LayoutConstraintJSONShorthandParser: LayoutConstraintJSONParser , LayoutCo
     }
     
     func verticalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
-        guard let source = self.parseSource(source: source) else { return nil }
+//        guard let source = self.parseSource(source: source) else { return nil }
         
         return nil
     }
