@@ -11,6 +11,7 @@
 		2D06048A1E93E111007A30A2 /* UIImage+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0604891E93E111007A30A2 /* UIImage+Swift.swift */; };
 		2D25780E1E4B719E0005BDA0 /* EverLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */; };
 		2D2E378B1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */; };
+		2D33C3511E9659CE001E1B16 /* ELConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D33C3501E9659CE001E1B16 /* ELConstraint.swift */; };
 		2D494ABA1E83EB34007C96BE /* LayoutConstraintJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D494AB91E83EB34007C96BE /* LayoutConstraintJSONParser.swift */; };
 		2D57FA461E46171F0043B897 /* EverLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D57FA441E46171F0043B897 /* EverLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D57FA551E4617BB0043B897 /* UIColor+EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA521E4617BB0043B897 /* UIColor+EverLayout.swift */; };
@@ -19,8 +20,8 @@
 		2D57FA631E4617C80043B897 /* EverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA581E4617C80043B897 /* EverLayout.swift */; };
 		2D57FA641E4617C80043B897 /* EverLayoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA591E4617C80043B897 /* EverLayoutConfiguration.swift */; };
 		2D57FA651E4617C80043B897 /* ELRawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5A1E4617C80043B897 /* ELRawData.swift */; };
-		2D57FA661E4617C80043B897 /* ELView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5B1E4617C80043B897 /* ELView.swift */; };
-		2D57FA671E4617C80043B897 /* ELConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5C1E4617C80043B897 /* ELConstraint.swift */; };
+		2D57FA661E4617C80043B897 /* ELViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5B1E4617C80043B897 /* ELViewModel.swift */; };
+		2D57FA671E4617C80043B897 /* ELConstraintModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5C1E4617C80043B897 /* ELConstraintModel.swift */; };
 		2D57FA681E4617C80043B897 /* ELViewProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5D1E4617C80043B897 /* ELViewProperty.swift */; };
 		2D57FA691E4617C80043B897 /* ViewIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5E1E4617C80043B897 /* ViewIndex.swift */; };
 		2D57FA6A1E4617C80043B897 /* ELConstraintConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57FA5F1E4617C80043B897 /* ELConstraintConstant.swift */; };
@@ -57,6 +58,7 @@
 		2D0604891E93E111007A30A2 /* UIImage+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Swift.swift"; sourceTree = "<group>"; };
 		2D25780D1E4B719E0005BDA0 /* EverLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutDelegate.swift; sourceTree = "<group>"; };
 		2D2E378A1E7D77DC00815A17 /* LayoutTemplateJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTemplateJSONParser.swift; sourceTree = "<group>"; };
+		2D33C3501E9659CE001E1B16 /* ELConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELConstraint.swift; sourceTree = "<group>"; };
 		2D494AB91E83EB34007C96BE /* LayoutConstraintJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraintJSONParser.swift; sourceTree = "<group>"; };
 		2D57FA411E46171F0043B897 /* EverLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EverLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D57FA441E46171F0043B897 /* EverLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EverLayout.h; sourceTree = "<group>"; };
@@ -67,8 +69,8 @@
 		2D57FA581E4617C80043B897 /* EverLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayout.swift; sourceTree = "<group>"; };
 		2D57FA591E4617C80043B897 /* EverLayoutConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EverLayoutConfiguration.swift; sourceTree = "<group>"; };
 		2D57FA5A1E4617C80043B897 /* ELRawData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELRawData.swift; sourceTree = "<group>"; };
-		2D57FA5B1E4617C80043B897 /* ELView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELView.swift; sourceTree = "<group>"; };
-		2D57FA5C1E4617C80043B897 /* ELConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELConstraint.swift; sourceTree = "<group>"; };
+		2D57FA5B1E4617C80043B897 /* ELViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELViewModel.swift; sourceTree = "<group>"; };
+		2D57FA5C1E4617C80043B897 /* ELConstraintModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELConstraintModel.swift; sourceTree = "<group>"; };
 		2D57FA5D1E4617C80043B897 /* ELViewProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELViewProperty.swift; sourceTree = "<group>"; };
 		2D57FA5E1E4617C80043B897 /* ViewIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewIndex.swift; sourceTree = "<group>"; };
 		2D57FA5F1E4617C80043B897 /* ELConstraintConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ELConstraintConstant.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				2D57FA441E46171F0043B897 /* EverLayout.h */,
 				2D57FA451E46171F0043B897 /* Info.plist */,
 				2D57FA8E1E4618610043B897 /* EverLayoutBridge.swift */,
+				2D33C3501E9659CE001E1B16 /* ELConstraint.swift */,
 			);
 			path = EverLayout;
 			sourceTree = "<group>";
@@ -163,8 +166,8 @@
 				2D57FA581E4617C80043B897 /* EverLayout.swift */,
 				2D57FA591E4617C80043B897 /* EverLayoutConfiguration.swift */,
 				2D57FA5A1E4617C80043B897 /* ELRawData.swift */,
-				2D57FA5B1E4617C80043B897 /* ELView.swift */,
-				2D57FA5C1E4617C80043B897 /* ELConstraint.swift */,
+				2D57FA5B1E4617C80043B897 /* ELViewModel.swift */,
+				2D57FA5C1E4617C80043B897 /* ELConstraintModel.swift */,
 				2D57FA5D1E4617C80043B897 /* ELViewProperty.swift */,
 				2D57FA5E1E4617C80043B897 /* ViewIndex.swift */,
 				2D57FA5F1E4617C80043B897 /* ELConstraintConstant.swift */,
@@ -313,9 +316,9 @@
 				2D57FA6D1E4617C80043B897 /* ELReporter.swift in Sources */,
 				2D57FA871E46182E0043B897 /* ScrollViewPropertyResolver.swift in Sources */,
 				2D57FA651E4617C80043B897 /* ELRawData.swift in Sources */,
-				2D57FA661E4617C80043B897 /* ELView.swift in Sources */,
+				2D57FA661E4617C80043B897 /* ELViewModel.swift in Sources */,
 				2D659AA91E54990900D11E20 /* UIView+EverLayout.swift in Sources */,
-				2D57FA671E4617C80043B897 /* ELConstraint.swift in Sources */,
+				2D57FA671E4617C80043B897 /* ELConstraintModel.swift in Sources */,
 				2D57FA741E4617D40043B897 /* LayoutConstraintJSONShorthandParser.swift in Sources */,
 				2D494ABA1E83EB34007C96BE /* LayoutConstraintJSONParser.swift in Sources */,
 				2DD03C301E82B606006A65A7 /* TextFieldPropertyResolver.swift in Sources */,
@@ -323,6 +326,7 @@
 				2DD12DAD1E4C9B2300F2057B /* EverLayoutBuilder.swift in Sources */,
 				2D57FA8F1E4618610043B897 /* EverLayoutBridge.swift in Sources */,
 				2D57FA691E4617C80043B897 /* ViewIndex.swift in Sources */,
+				2D33C3511E9659CE001E1B16 /* ELConstraint.swift in Sources */,
 				2D57FA6B1E4617C80043B897 /* ELConstraintMultiplier.swift in Sources */,
 				2D06048A1E93E111007A30A2 /* UIImage+Swift.swift in Sources */,
 				2D57FA641E4617C80043B897 /* EverLayoutConfiguration.swift in Sources */,

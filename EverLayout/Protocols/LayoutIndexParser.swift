@@ -26,7 +26,7 @@ public protocol LayoutIndexParser : LayoutParser
 {
     func layoutName (source : Any) -> String?
     
-    func rootView (source : Any) -> ELView?
+    func rootView (source : Any) -> ELViewModel?
     
     func layoutTemplates (source : Any) -> [ELLayoutTemplate?]?
 }

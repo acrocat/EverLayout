@@ -22,7 +22,7 @@ class LayoutTemplateJSONParser: NSObject , LayoutTemplateParser {
         return source.templateId
     }
     
-    func constraints(source: Any) -> [ELConstraint?]? {
+    func constraints(source: Any) -> [ELConstraintModel?]? {
         guard let source = self.parseSource(source: source) else { return nil }
         
         return LayoutViewJSONParser().viewConstraints(source: (source.0 , source.1))

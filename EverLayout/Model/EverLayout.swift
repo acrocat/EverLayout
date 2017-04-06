@@ -35,7 +35,7 @@ open class EverLayout: ELRawData
     public var layoutName : String? {
         return self.indexParser.layoutName(source: self.rawData)
     }
-    public var rootView : ELView? {
+    public var rootView : ELViewModel? {
         return self.indexParser.rootView(source: self.rawData)
     }
     public var layoutTemplates : [ELLayoutTemplate?]? {
@@ -62,8 +62,8 @@ open class EverLayout: ELRawData
     }
     
     public func updateViewIndex () {
-        func _process (_ view : ELView , parentView : ELView? = nil) {
-            var viewModel : ELView! = view
+        func _process (_ view : ELViewModel , parentView : ELViewModel? = nil) {
+            var viewModel : ELViewModel! = view
             
             if view.isRoot {
                 if let existingRoot = self.viewIndex.rootViewModel() {
@@ -91,7 +91,7 @@ open class EverLayout: ELRawData
                 }
             }
         }
-        func _add (_ view : ELView , parentView : ELView? = nil) {
+        func _add (_ view : ELViewModel , parentView : ELViewModel? = nil) {
             if let viewId = view.id {
                 view.parentModel = parentView
                 
@@ -112,7 +112,17 @@ open class EverLayout: ELRawData
     ///   - view: root view
     ///   - viewEnvironment: object containing UIView properties which are referenced in the layout
     public func buildLayout (onView view : UIView , viewEnvironment: NSObject? = nil) {
+        // If a target has already been set, it will have an observer we should remove
+        if let target = self.target {
+            target.removeObserver(self, forKeyPath: #keyPath(UIView.traitCollection))
+        }
+        
         self.target = view
+        
+        // Add observer to the view's trait collection
+//        view.addObserver(self, forKeyPath: #keyPath(UIView.frame), options: [.new], context: nil)
+        view.addObserver(self, forKeyPath: #keyPath(UIView.traitCollection), options: [.new], context: nil)
+        
         self.viewEnvironment = viewEnvironment ?? view
         
         // Inject data into layout
@@ -184,6 +194,7 @@ open class EverLayout: ELRawData
             })
         }
         
+        self.update(withTraitColelction: view.traitCollection)
         self.delegate?.layout(self, didLoadOnView: view)
     }
     
@@ -206,30 +217,37 @@ open class EverLayout: ELRawData
     /// Set data to be injected when the layout is built
     ///
     /// - Parameter data: Dictionary of key-values for variables in the layout
-    public func injectDataIntoLayout (data : [String : String])
-    {
+    public func injectDataIntoLayout (data : [String : String]) {
         // Store this data so that it can be applied when the layout in created
-        for (name , val) in data
-        {
+        for (name , val) in data {
             self.injectedData[name] = val
         }
     }
     
     /// Replacing variable placeholders in the layout data with the values supplied
-    private func _injectDataIntoLayout (data : [String : String] , layoutData : Data) -> Data?
-    {
+    private func _injectDataIntoLayout (data : [String : String] , layoutData : Data) -> Data? {
         var dataAsString = String(data: layoutData, encoding: .utf8)
         
-        for (varName , value) in data
-        {
+        for (varName , value) in data {
             dataAsString = dataAsString?.replacingOccurrences(of: "#{\(varName)}", with: value)
         }
         
         return dataAsString?.data(using: .utf8)
     }
     
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if let traitCollection = object as? UITraitCollection {
+//            self.update(withTraitColelction: view.traitCollection)
+            
+            print("View horizontal is regular: \(traitCollection.horizontalSizeClass == .regular)")
+            print("View vertical is regular: \(traitCollection.verticalSizeClass == .regular)")
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
+        
+        self.target?.removeObserver(self, forKeyPath: #keyPath(UIView.frame))
     }
     
     // ---------------------------------------------------------------------------
@@ -262,6 +280,12 @@ open class EverLayout: ELRawData
     public func clear () {
         self.viewIndex.contents.forEach { (_ , view) in
             view?.remove()
+        }
+    }
+    
+    public func update (withTraitColelction traitCollection : UITraitCollection) {
+        self.viewIndex.contents.forEach { (_ , viewModel) in
+            viewModel?.updateConstraints(withTraitCollection: traitCollection)
         }
     }
     

@@ -66,11 +66,11 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
     ///
     /// - Parameter source: raw data of the layout
     /// - Returns: EverLayoutView model of the root view
-    public func rootView(source: Any) -> ELView?
+    public func rootView(source: Any) -> ELViewModel?
     {
         guard let source = self.parseData(source: source) else { return nil }
         guard let viewData = source[LayoutIndexJSONParser.KEY_LAYOUT_ROOT]?.dictionary else { return nil }
         
-        return ELView(rawData: ("root" , viewData), parser: LayoutViewJSONParser())
+        return ELViewModel(rawData: ("root" , viewData), parser: LayoutViewJSONParser())
     }
 }

@@ -28,7 +28,7 @@ public class ELLayoutTemplate: ELRawData {
     public var templateId : String? {
         return self.templateParser.templateId(source: self.rawData)
     }
-    public var constraints : [ELConstraint?]? {
+    public var constraints : [ELConstraintModel?]? {
         return self.templateParser.constraints(source: self.rawData)
     }
     public var properties : [ELViewProperty?]? {

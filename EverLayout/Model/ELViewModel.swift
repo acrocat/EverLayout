@@ -22,7 +22,7 @@
 
 import UIKit
 
-public class ELView: ELRawData
+public class ELViewModel: ELRawData
 {
     public var viewParser : LayoutViewParser!
     
@@ -32,7 +32,7 @@ public class ELView: ELRawData
     public var templateClass : UIView.Type? {
         return self.viewParser.viewSuperClass(source: self.rawData)
     }
-    public var constraints : [ELConstraint?]? {
+    public var constraints : [ELConstraintModel?]? {
         return self.viewParser.viewConstraints(source: self.rawData)
     }
     public var properties : [ELViewProperty?]? {
@@ -44,7 +44,7 @@ public class ELView: ELRawData
     public var isNewElement : Bool {
         return self.viewParser.isNewElement(source: self.rawData)
     }
-    public var subviews : [ELView?]? {
+    public var subviews : [ELViewModel?]? {
         return self.viewParser.subviews(source: self.rawData)
     }
     public var templateLayouts : [String]? {
@@ -52,7 +52,7 @@ public class ELView: ELRawData
     }
     
     // Actual constraints that are created when this view is built on a view
-    public var appliedConstraints : [NSLayoutConstraint] = []
+    public var appliedConstraints : [ELConstraint] = []
     
     // We cache view properties when EverLayout writes new ones, so that they can be reversed if the layout is unloaded
     public var cachedProperties : [String : String] = [:]
@@ -61,7 +61,7 @@ public class ELView: ELRawData
     public var target : UIView?
     
     // The model that this view is a child of in the index
-    public var parentModel : ELView?
+    public var parentModel : ELViewModel?
     
     // The view is at the root of a layout file
     public var isRoot : Bool = false
@@ -81,6 +81,12 @@ public class ELView: ELRawData
         
         // Mark as active again
         self.isActive = true
+    }
+    
+    public func updateConstraints (withTraitCollection traitCollection : UITraitCollection) {
+        self.appliedConstraints.forEach { (constraint) in
+            constraint.setActiveForTraitCollection(traitCollection)
+        }
     }
     
     public func remove () {

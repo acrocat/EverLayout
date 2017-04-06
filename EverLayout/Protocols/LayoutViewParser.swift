@@ -24,7 +24,7 @@ import UIKit
 
 public protocol LayoutViewParser : LayoutParser
 {
-    func view (source : Any) -> ELView?
+    func view (source : Any) -> ELViewModel?
     
     func viewId (source : Any?) -> String?
     
@@ -36,9 +36,9 @@ public protocol LayoutViewParser : LayoutParser
     
     func viewZIndex (source : Any) -> Int
     
-    func viewConstraints (source : Any) -> [ELConstraint?]?
+    func viewConstraints (source : Any) -> [ELConstraintModel?]?
     
-    func subviews (source : Any) -> [ELView?]?
+    func subviews (source : Any) -> [ELViewModel?]?
     
     func templateLayout (source : Any) -> [String]?
 }

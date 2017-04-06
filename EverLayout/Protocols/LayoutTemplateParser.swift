@@ -26,7 +26,7 @@ public protocol LayoutTemplateParser: LayoutParser {
     
     func templateId (source : Any) -> String?
     
-    func constraints (source : Any) -> [ELConstraint?]?
+    func constraints (source : Any) -> [ELConstraintModel?]?
     
     func properties (source : Any) -> [ELViewProperty?]?
     

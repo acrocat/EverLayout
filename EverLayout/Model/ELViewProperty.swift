@@ -38,7 +38,7 @@ public class ELViewProperty: ELRawData {
         self.propertyParser = parser
     }
     
-    public func applyToView (viewModel : ELView) {
+    public func applyToView (viewModel : ELViewModel) {
         guard let target = viewModel.target else { return }
         
         self.cacheExistingProperty(forView: viewModel)
@@ -46,7 +46,7 @@ public class ELViewProperty: ELRawData {
         target.applyViewProperty(viewProperty: self)
     }
     
-    private func cacheExistingProperty (forView view : ELView) {
+    private func cacheExistingProperty (forView view : ELViewModel) {
         guard let name = self.name , let target = view.target else { return }
         
         // If there is already a cached property with this name then we move on

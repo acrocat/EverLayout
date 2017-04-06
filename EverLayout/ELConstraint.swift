@@ -22,49 +22,15 @@
 
 import UIKit
 
-public class ViewIndex: NSObject
-{
-    private(set) public var contents : [String : ELViewModel?] = [:]
+public class ELConstraint: NSLayoutConstraint {
+    public var horizontalSizeClass : UIUserInterfaceSizeClass?
+    public var verticalSizeClass : UIUserInterfaceSizeClass?
     
-    public func rootViewModel () -> ELViewModel?
-    {
-        return self.contents.first?.value
-    }
-    
-    public func rootView () -> UIView?
-    {
-        return self.rootViewModel()?.target
-    }
-    
-    public func view (forKey key : String) -> UIView?
-    {
-        return self.contents[key]??.target
-    }
-    
-    public func viewModel (forKey key : String) -> ELViewModel?
-    {
-        if let viewModel = self.contents[key]
-        {
-            return viewModel
+    internal func setActiveForTraitCollection (_ traitCollection : UITraitCollection) {
+        func _checkSizeClasses (s1 : UIUserInterfaceSizeClass? , s2 : UIUserInterfaceSizeClass?) -> Bool {
+            return (s1 == s2) || s1 == .unspecified
         }
         
-        return nil
-    }
-    
-    public func addViewModel (forKey key : String , viewModel : ELViewModel)
-    {
-        if self.contents.keys.contains(key)
-        {
-            // Element with this key already exists in the contents
-        }
-        else
-        {
-            self.contents[key] = viewModel
-        }
-    }
-    
-    public func clear ()
-    {
-        self.contents = [:]
+        self.isActive = (_checkSizeClasses(s1: self.horizontalSizeClass, s2: traitCollection.horizontalSizeClass) && _checkSizeClasses(s1: self.verticalSizeClass, s2: traitCollection.verticalSizeClass))
     }
 }

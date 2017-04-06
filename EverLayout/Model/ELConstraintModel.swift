@@ -22,7 +22,7 @@
 
 import UIKit
 
-public class ELConstraint: ELRawData
+public class ELConstraintModel: ELRawData
 {
     public var constraintParser : LayoutConstraintParser!
     
@@ -51,10 +51,10 @@ public class ELConstraint: ELRawData
         return self.constraintParser.identifier(source: self.rawData)
     }
     public var verticalSizeClass : UIUserInterfaceSizeClass? {
-        return self.constraintParser.verticalSizeClass(source: self.rawData)
+        return self.constraintParser.verticalSizeClass(source: self.rawData) ?? .unspecified
     }
     public var horizontalSizeClass : UIUserInterfaceSizeClass? {
-        return self.constraintParser.horizontalSizeClass(source: self.rawData)
+        return self.constraintParser.horizontalSizeClass(source: self.rawData) ?? .unspecified
     }
     
     public init (rawData : Any , parser : LayoutConstraintParser)
@@ -64,12 +64,10 @@ public class ELConstraint: ELRawData
         self.constraintParser = parser
     }
     
-    public func establishConstraints (onView view : ELView , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil)
-    {
+    public func establishConstraints (onView view : ELViewModel , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
         guard let target = view.target else { return }
         
-        for attr in self.leftSideAttributes ?? []
-        {
+        for attr in self.leftSideAttributes ?? [] {
             guard let attr = attr else { continue }
             
             // Properties of the constraints can be changed or inferred to make writing them easier. For this we
@@ -84,13 +82,19 @@ public class ELConstraint: ELRawData
                 _multiplier: self.multiplier)
             
             // Create the constraint from the context
-            let constraint : NSLayoutConstraint = NSLayoutConstraint(item: context.target, attribute: context.leftSideAttribute, relatedBy: context.relation, toItem: context.comparableView, attribute: context.rightSideAttribute ?? context.leftSideAttribute, multiplier: context.multiplier.value, constant: context.constant.value)
+            let constraint : ELConstraint = ELConstraint(item: context.target, attribute: context.leftSideAttribute, relatedBy: context.relation, toItem: context.comparableView, attribute: context.rightSideAttribute ?? context.leftSideAttribute, multiplier: context.multiplier.value, constant: context.constant.value)
             
             // Constraint priority
-            if let priority = self.priority
-            {
+            if let priority = self.priority {
                 constraint.priority = UILayoutPriority(priority)
             }
+            
+            // SizeClasses
+            constraint.horizontalSizeClass = self.horizontalSizeClass
+            constraint.verticalSizeClass = self.verticalSizeClass
+            
+            // Set active / inactive
+            constraint.setActiveForTraitCollection(target.traitCollection)
             
             // Add an identifier to the constraint
             constraint.identifier = self.identifier
@@ -100,35 +104,14 @@ public class ELConstraint: ELRawData
             
             // Check that these the view and comparable view are in the same hierarchy before
             // adding the constraint as this will cause a crash
-            if target.sharesAncestry(withView: context.comparableView ?? target)
-            {
+            if target.sharesAncestry(withView: context.comparableView ?? target) {
                 // Add this constraint to the applied constraints of the ELView
                 view.appliedConstraints.append(constraint)
-                
-                if let vertical = self.verticalSizeClass , let horizontal = self.horizontalSizeClass {
-                    if target.traitCollection.horizontalSizeClass == horizontal && target.traitCollection.verticalSizeClass == vertical {
-                        constraintTarget.addConstraint(constraint)
-                    }
-                } else if let vertical = self.verticalSizeClass {
-                    if target.traitCollection.verticalSizeClass == vertical {
-                        constraintTarget.addConstraint(constraint)
-                    }
-                } else if let horizontal = self.horizontalSizeClass {
-                    if target.traitCollection.horizontalSizeClass == horizontal {
-                        constraintTarget.addConstraint(constraint)
-                    }
-                } else if self.verticalSizeClass == nil && self.horizontalSizeClass == nil {
-                    constraintTarget.addConstraint(constraint)
-                }
-            }
-            else
-            {
-                if let identifier = self.identifier
-                {
+                constraintTarget.addConstraint(constraint)
+            } else {
+                if let identifier = self.identifier {
                     ELReporter.default.error(message: "Some views do not share a view ancestry and so this constraint cannot be made. Constraint: \(identifier)")
-                }
-                else
-                {
+                } else {
                     ELReporter.default.error(message: "Some views do not share a view ancestry and so this constraint cannot be made. Use constraint identifiers to determine which constraint is causing the problem.")
                 }
             }

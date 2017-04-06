@@ -70,11 +70,11 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
         return source.viewId
     }
     
-    func view (source: Any) -> ELView?
+    func view (source: Any) -> ELViewModel?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        return ELView(rawData: (source.viewId , source.viewData), parser: LayoutViewJSONParser())
+        return ELViewModel(rawData: (source.viewId , source.viewData), parser: LayoutViewJSONParser())
     }
     
     /// Parses only the view name from the view id in the view model
@@ -144,12 +144,12 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
     ///
     /// - Parameter source: raw view model data
     /// - Returns: Array of EverLayoutConstraints
-    func viewConstraints (source: Any) -> [ELConstraint?]?
+    func viewConstraints (source: Any) -> [ELConstraintModel?]?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         guard let jsonData = source.viewData[LayoutViewJSONParser.KEY_CONSTRAINTS]?.dictionary else { return nil }
 
-        var constraints : [ELConstraint?] = []
+        var constraints : [ELConstraintModel?] = []
         
         for (lhs , rhs) in jsonData {
             // rhs can either be a string, for a shorthand arugment, a dictionary for a comprehensive
@@ -158,18 +158,18 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
                 for argument in rhs {
                     if let argument = argument.string {
                         // Use shorthand parser
-                        constraints.append(ELConstraint(rawData: (lhs , argument), parser: LayoutConstraintJSONShorthandParser()))
+                        constraints.append(ELConstraintModel(rawData: (lhs , argument), parser: LayoutConstraintJSONShorthandParser()))
                     } else if let argument = argument.dictionary {
                         // Use comprehensive parser
-                        constraints.append(ELConstraint(rawData: (lhs , argument), parser: LayoutConstraintJSONComprehensiveParser()))
+                        constraints.append(ELConstraintModel(rawData: (lhs , argument), parser: LayoutConstraintJSONComprehensiveParser()))
                     }
                 }
             } else if let rhs = rhs.string {
                 // Use shorthand parser
-                constraints.append(ELConstraint(rawData: (lhs , rhs), parser: LayoutConstraintJSONShorthandParser()))
+                constraints.append(ELConstraintModel(rawData: (lhs , rhs), parser: LayoutConstraintJSONShorthandParser()))
             } else if let rhs = rhs.dictionary {
                 // Use comprehensive parser
-                constraints.append(ELConstraint(rawData: (lhs , rhs), parser: LayoutConstraintJSONComprehensiveParser()))
+                constraints.append(ELConstraintModel(rawData: (lhs , rhs), parser: LayoutConstraintJSONComprehensiveParser()))
             }
         }
         
@@ -192,18 +192,18 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
     ///
     /// - Parameter source: raw view model data
     /// - Returns: Dictionary of subviews, with a String key for the view ID and the value is the view data
-    func subviews(source: Any) -> [ELView?]?
+    func subviews(source: Any) -> [ELViewModel?]?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         guard let subviewData = source.viewData[LayoutViewJSONParser.KEY_SUBVIEWS]?.dictionary else { return nil }
         
-        var subviews : [ELView?] = []
+        var subviews : [ELViewModel?] = []
         
         for subview in subviewData
         {
             if let validData = subview.value.dictionary
             {
-                subviews.append(ELView(rawData: (subview.key , validData), parser: LayoutViewJSONParser()))
+                subviews.append(ELViewModel(rawData: (subview.key , validData), parser: LayoutViewJSONParser()))
             }
         }
         

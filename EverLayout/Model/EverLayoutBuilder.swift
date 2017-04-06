@@ -81,7 +81,7 @@ class EverLayoutBuilder: NSObject
     {
         var viewIndex : ViewIndex = ViewIndex()
         
-        func _addViewToViewIndex (viewModel : ELView , parentModel : ELView? = nil , viewIndex : inout ViewIndex)
+        func _addViewToViewIndex (viewModel : ELViewModel , parentModel : ELViewModel? = nil , viewIndex : inout ViewIndex)
         {
             if let viewId = viewModel.id
             {
@@ -179,11 +179,11 @@ class EverLayoutBuilder: NSObject
         }
     }
     
-    private static func applyViewConstraints (_ constraints: [ELConstraint?] , toView view : ELView , viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
+    private static func applyViewConstraints (_ constraints: [ELConstraintModel?] , toView view : ELViewModel , viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
         constraints.forEach({$0?.establishConstraints(onView: view, withViewIndex: viewIndex , viewEnvironment: viewEnvironment)})
     }
     
-    private static func applyViewProperties (_ properties : [ELViewProperty?] , toView view : ELView) {
+    private static func applyViewProperties (_ properties : [ELViewProperty?] , toView view : ELViewModel) {
         properties.forEach({$0?.applyToView(viewModel: view)})
     }
 }
