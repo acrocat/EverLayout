@@ -117,11 +117,6 @@ open class EverLayout: ELRawData
     ///   - view: root view
     ///   - viewEnvironment: object containing UIView properties which are referenced in the layout
     public func buildLayout (onView view : UIView , viewEnvironment: NSObject? = nil) {
-        // If a target has already been set, it will have an observer we should remove
-        if let target = self.target {
-            target.removeObserver(self, forKeyPath: #keyPath(UIView.traitCollection))
-        }
-        
         self.target = view
         
         self.viewEnvironment = viewEnvironment ?? view
@@ -236,8 +231,6 @@ open class EverLayout: ELRawData
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-        
-        self.target?.removeObserver(self, forKeyPath: #keyPath(UIView.frame))
     }
     
     // ---------------------------------------------------------------------------
