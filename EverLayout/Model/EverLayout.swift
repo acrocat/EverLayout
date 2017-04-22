@@ -144,7 +144,7 @@ open class EverLayout: ELRawData
                     target = viewModel.templateClass?.init() ?? UIView()
                 } else {
                     // The target view is supposed to be a property of the view environment.
-                    if let view = viewEnvironment?.property(forKey: viewId) as? UIView {
+                    if let view = self.viewEnvironment?.property(forKey: viewId) as? UIView {
                         target = view
                     } else {
                         ELReporter.default.warning(message: "Unable to find target view:- \(viewId)")

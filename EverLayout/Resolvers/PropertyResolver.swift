@@ -120,8 +120,7 @@ public class PropertyResolver
     }
 }
 
-extension UIView
-{   
+extension UIView {
     open func applyViewProperty (viewProperty : ELViewProperty) {
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
