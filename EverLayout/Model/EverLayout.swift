@@ -62,6 +62,11 @@ open class EverLayout: ELRawData
     }
     
     public func updateViewIndex () {
+        // Inject data into layout
+        if let rawData = self.rawData as? Data {
+            self.rawData = self._injectDataIntoLayout(data: self.injectedData, layoutData: rawData)
+        }
+        
         func _process (_ view : ELViewModel , parentView : ELViewModel? = nil) {
             var viewModel : ELViewModel! = view
             
@@ -124,11 +129,6 @@ open class EverLayout: ELRawData
         view.addObserver(self, forKeyPath: #keyPath(UIView.traitCollection), options: [.new], context: nil)
         
         self.viewEnvironment = viewEnvironment ?? view
-        
-        // Inject data into layout
-        if let rawData = self.rawData as? Data {
-            self.rawData = self._injectDataIntoLayout(data: self.injectedData, layoutData: rawData)
-        }
         
         // Create target views
         for (viewId , viewModel) in self.viewIndex.contents {
@@ -222,6 +222,9 @@ open class EverLayout: ELRawData
         for (name , val) in data {
             self.injectedData[name] = val
         }
+        
+        // Update the view index so this new data is added into the layout
+        self.updateViewIndex()
     }
     
     /// Replacing variable placeholders in the layout data with the values supplied
