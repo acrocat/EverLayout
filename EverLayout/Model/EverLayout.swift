@@ -124,10 +124,6 @@ open class EverLayout: ELRawData
         
         self.target = view
         
-        // Add observer to the view's trait collection
-//        view.addObserver(self, forKeyPath: #keyPath(UIView.frame), options: [.new], context: nil)
-        view.addObserver(self, forKeyPath: #keyPath(UIView.traitCollection), options: [.new], context: nil)
-        
         self.viewEnvironment = viewEnvironment ?? view
         
         // Create target views
@@ -236,15 +232,6 @@ open class EverLayout: ELRawData
         }
         
         return dataAsString?.data(using: .utf8)
-    }
-    
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let traitCollection = object as? UITraitCollection {
-//            self.update(withTraitColelction: view.traitCollection)
-            
-            print("View horizontal is regular: \(traitCollection.horizontalSizeClass == .regular)")
-            print("View vertical is regular: \(traitCollection.verticalSizeClass == .regular)")
-        }
     }
     
     deinit {
