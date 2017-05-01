@@ -46,6 +46,10 @@ public class ELViewProperty: ELRawData {
         target.applyViewProperty(viewProperty: self)
     }
     
+    public func applyToView (view : UIView) {
+        view.applyViewProperty(viewProperty: self)
+    }
+    
     private func cacheExistingProperty (forView view : ELViewModel) {
         guard let name = self.name , let target = view.target else { return }
         

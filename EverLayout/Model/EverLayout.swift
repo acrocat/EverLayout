@@ -41,6 +41,12 @@ open class EverLayout: ELRawData
     public var layoutTemplates : [ELLayoutTemplate?]? {
         return self.indexParser.layoutTemplates(source: self.rawData)
     }
+    public var navigationBarProperties : [ELViewProperty?]? {
+        return self.indexParser.navigationBarProperties(source: self.rawData)
+    }
+    public var controllerTitle : String? {
+        return self.indexParser.controllerTitle(source: self.rawData)
+    }
     
     /// Init with layout data and a parser
     ///
@@ -183,6 +189,19 @@ open class EverLayout: ELRawData
                     }
                 }
             })
+        }
+        
+        // Add properties for navigation bar
+        if let controller = self.viewEnvironment as? UIViewController {
+            if let navigationBar = controller.navigationController?.navigationBar {
+                self.navigationBarProperties?.forEach({ (property) in
+                    property?.applyToView(view: navigationBar)
+                })
+            }
+            
+            if let title = self.controllerTitle {
+                controller.title = title
+            }
         }
         
         self.update(withTraitColelction: view.traitCollection)

@@ -27,6 +27,8 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
     public static let KEY_LAYOUT_NAME : String = "name"
     public static let KEY_LAYOUT_ROOT : String = "root"
     public static let KEY_TEMPLATES : String = "templates"
+    public static let KEY_NAVBAR_PROPERTIES : String = "navigationBar"
+    public static let KEY_TITLE : String = "controllerTitle"
     
     private func parseData (source : Any) -> [String : JSON]?
     {
@@ -72,5 +74,30 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         guard let viewData = source[LayoutIndexJSONParser.KEY_LAYOUT_ROOT]?.dictionary else { return nil }
         
         return ELViewModel(rawData: ("root" , viewData), parser: LayoutViewJSONParser())
+    }
+    
+    /// Parse the rootview for properties to be applied to a navigation bar
+    ///
+    /// - Parameter source: raw data of the layout
+    /// - Returns: Array of ELViewProperties
+    public func navigationBarProperties(source: Any) -> [ELViewProperty?]? {
+        guard let source = self.parseData(source: source) else { return nil }
+        guard let jsonData = source[LayoutIndexJSONParser.KEY_NAVBAR_PROPERTIES]?.dictionary else { return nil }
+        
+        return jsonData.map({ (key , value) -> ELViewProperty? in
+            guard let value = value.string else { return nil }
+            
+            return ELViewProperty(rawData: (key , value), parser: LayoutPropertyJSONParser())
+        })
+    }
+    
+    /// Parse the rootview for a controller title string
+    ///
+    /// - Parameter source: Raw layout data
+    /// - Returns: String
+    public func controllerTitle (source : Any) -> String? {
+        guard let source = self.parseData(source: source) else { return nil }
+        
+        return source[LayoutIndexJSONParser.KEY_TITLE]?.string
     }
 }

@@ -29,4 +29,8 @@ public protocol LayoutIndexParser : LayoutParser
     func rootView (source : Any) -> ELViewModel?
     
     func layoutTemplates (source : Any) -> [ELLayoutTemplate?]?
+    
+    func navigationBarProperties (source : Any) -> [ELViewProperty?]?
+    
+    func controllerTitle (source : Any) -> String?
 }
