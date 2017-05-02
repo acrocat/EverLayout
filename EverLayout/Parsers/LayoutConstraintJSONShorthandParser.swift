@@ -272,13 +272,17 @@ class LayoutConstraintJSONShorthandParser: LayoutConstraintJSONParser , LayoutCo
     }
     
     func verticalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
-//        guard let source = self.parseSource(source: source) else { return nil }
+        guard let source = self.parseSource(source: source) else { return nil }
+        guard let value = self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_VERT_SC, argumentString: source.rhs) else { return nil }
         
-        return nil
+        return LayoutConstraintJSONParser.SHORT_SIZE_CLASS_KEYS[value]
     }
     
     func horizontalSizeClass(source: Any) -> UIUserInterfaceSizeClass? {
-        return nil
+        guard let source = self.parseSource(source: source) else { return nil }
+        guard let value = self.valueForArgument(withModCharacter: LayoutConstraintJSONParser.MOD_HOR_SC, argumentString: source.rhs) else { return nil }
+        
+        return LayoutConstraintJSONParser.SHORT_SIZE_CLASS_KEYS[value]
     }
     
     /// Get the identifier for this constraint

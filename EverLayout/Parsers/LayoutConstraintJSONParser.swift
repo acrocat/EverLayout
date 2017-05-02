@@ -87,4 +87,7 @@ class LayoutConstraintJSONParser: NSObject {
     public static let MOD_DIVIDER : Character = "/"
     public static let MOD_PRIORITY : Character = "$"
     public static let MOD_IDENTIFIER : Character = "!"
+    
+    public static let MOD_VERT_SC : Character = "v"
+    public static let MOD_HOR_SC : Character = "h"
 }
