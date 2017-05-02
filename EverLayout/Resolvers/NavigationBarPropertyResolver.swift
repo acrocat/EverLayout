@@ -31,6 +31,11 @@ class NavigationBarPropertyResolver: PropertyResolver {
                 view.mapTextColor(source)
             }
         }
+        props["translucent"] = {[weak self] source in
+            if let view = self?.view as? TranslucentMappable {
+                view.mapIsTranslucent(source)
+            }
+        }
         
         return props
     }
@@ -42,6 +47,11 @@ class NavigationBarPropertyResolver: PropertyResolver {
             guard let view = self?.view as? TextColorMappable else { return nil }
             
             return view.getMappedTextColor()
+        }
+        props["translucent"] = {[weak self] in
+            guard let view = self?.view as? TranslucentMappable else { return nil }
+            
+            return view.getMappedIsTranslucent()
         }
         
         return props

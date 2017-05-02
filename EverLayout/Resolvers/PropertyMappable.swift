@@ -140,6 +140,12 @@ protocol PlaceholderMappable {
     func getMappedPlaceholder () -> String?
 }
 
+protocol TranslucentMappable {
+    func mapIsTranslucent (_ translucent : String)
+    
+    func getMappedIsTranslucent () -> String?
+}
+
 // MARK: - UIView Implementations
 extension UIView : FrameMappable {
     func mapFrame(_ frame: String) {
@@ -439,6 +445,16 @@ extension UINavigationBar : TextColorMappable {
         guard let color = self.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor else { return nil }
         
         return UIColor.name(ofColor: color)
+    }
+}
+
+extension UINavigationBar : TranslucentMappable {
+    func mapIsTranslucent(_ translucent: String) {
+        self.isTranslucent = translucent.lowercased() == "true"
+    }
+    
+    func getMappedIsTranslucent() -> String? {
+        return self.isTranslucent ? "true" : "false"
     }
 }
 
