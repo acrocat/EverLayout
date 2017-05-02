@@ -146,6 +146,12 @@ protocol TranslucentMappable {
     func getMappedIsTranslucent () -> String?
 }
 
+protocol TintColorMappable {
+    func mapTintColor (_ tintColor : String)
+    
+    func getMappedTintColor () -> String?
+}
+
 // MARK: - UIView Implementations
 extension UIView : FrameMappable {
     func mapFrame(_ frame: String) {
@@ -467,6 +473,16 @@ extension UINavigationBar {
         guard let color = self.barTintColor else { return nil }
         
         return UIColor.name(ofColor: color)
+    }
+}
+
+extension UINavigationBar : TintColorMappable {
+    func mapTintColor(_ tintColor: String) {
+        self.tintColor = UIColor.color(fromName: tintColor) ?? UIColor(hex: tintColor)
+    }
+    
+    func getMappedTintColor() -> String? {
+        return UIColor.name(ofColor: self.tintColor)
     }
 }
 
