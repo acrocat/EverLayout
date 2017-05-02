@@ -48,6 +48,7 @@ class LayoutConstraintJSONParser: NSObject {
     ]
     public static let COMPOUND_ATTRIBUTE_KEYS : [String : [NSLayoutAttribute]] = [
         "edges": [.top, .left, .bottom, .right],
+        "margins": [.leftMargin , .rightMargin],
         "center": [.centerX, .centerY]
     ]
     public static let ATTRIBUTE_SEPARATOR : Character = " "
