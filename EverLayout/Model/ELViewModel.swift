@@ -83,10 +83,53 @@ public class ELViewModel: ELRawData
         self.isActive = true
     }
     
+    /// Toggle 'isActive' for each applied constraint depending on the new screen size
+    ///
+    /// - Parameter traitCollection: Trait collection to adjust constraints for
     public func updateConstraints (withTraitCollection traitCollection : UITraitCollection) {
         self.appliedConstraints.forEach { (constraint) in
             constraint.setActiveForTraitCollection(traitCollection)
         }
+    }
+    
+    /// Get the constraints that are applied to the attribute
+    ///
+    /// - Parameter attribute: NSLayoutAttribute to match
+    /// - Returns: Array of ELConstraints
+    public func getConstraints (forAttribute attribute : NSLayoutAttribute) -> [ELConstraint] {
+        return self.appliedConstraints.filter({ (constraint) -> Bool in
+            return constraint.firstAttribute == attribute
+        })
+    }
+    
+    /// Get the constraints with the specified identifier
+    ///
+    /// - Parameter identifier: String identifier to match
+    /// - Returns: Array of ELConstraints
+    public func getConstraints (forIdentifier identifier : String) -> [ELConstraint] {
+        return self.appliedConstraints.filter({ (constraint) -> Bool in
+            return constraint.identifier == identifier
+        })
+    }
+    
+    /// Gets the constraints that are applied to atleast one of the set of attributes
+    ///
+    /// - Parameter attributes: Array of attributes to search
+    /// - Returns: Array of ELConstraints that match
+    public func getConstraints (forAttributes attributes : [NSLayoutAttribute]) -> [ELConstraint] {
+        return self.appliedConstraints.filter({ (constraint) -> Bool in
+            return attributes.contains(constraint.firstAttribute)
+        })
+    }
+    
+    /// Get the constraints that use at least oneo of the specified identifiers
+    ///
+    /// - Parameter identifiers: Array of String identifiers
+    /// - Returns: Array of ELConstraints that match
+    public func getConstraints (forIdentifiers identifiers : [String]) -> [ELConstraint] {
+        return self.appliedConstraints.filter({ (constraint) -> Bool in
+            return identifiers.contains(constraint.identifier ?? "")
+        })
     }
     
     public func remove () {

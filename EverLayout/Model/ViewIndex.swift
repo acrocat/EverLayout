@@ -26,23 +26,19 @@ public class ViewIndex: NSObject
 {
     private(set) public var contents : [String : ELViewModel?] = [:]
     
-    public func rootViewModel () -> ELViewModel?
-    {
+    public func rootViewModel () -> ELViewModel? {
         return self.contents.first?.value
     }
     
-    public func rootView () -> UIView?
-    {
+    public func rootView () -> UIView? {
         return self.rootViewModel()?.target
     }
     
-    public func view (forKey key : String) -> UIView?
-    {
+    public func view (forKey key : String) -> UIView? {
         return self.contents[key]??.target
     }
     
-    public func viewModel (forKey key : String) -> ELViewModel?
-    {
+    public func viewModel (forKey key : String) -> ELViewModel? {
         if let viewModel = self.contents[key]
         {
             return viewModel
@@ -51,8 +47,7 @@ public class ViewIndex: NSObject
         return nil
     }
     
-    public func addViewModel (forKey key : String , viewModel : ELViewModel)
-    {
+    public func addViewModel (forKey key : String , viewModel : ELViewModel) {
         if self.contents.keys.contains(key)
         {
             // Element with this key already exists in the contents
@@ -63,8 +58,7 @@ public class ViewIndex: NSObject
         }
     }
     
-    public func clear ()
-    {
+    public func clear () {
         self.contents = [:]
     }
 }
