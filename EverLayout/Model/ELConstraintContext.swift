@@ -28,7 +28,7 @@ struct ELConstraintContext
         .width , .height
     ]
     private static let PERSPECTIVE_INSET_ATTRIBUTES : [NSLayoutAttribute] = [
-        .right , .bottom , .width , .height
+        .right , .bottom , .width , .height , .rightMargin
     ]
     private static let PERSPECTIVE_OFFSET_ATTRIBUTES : [NSLayoutAttribute] = [
         .left , .top , .width , .height

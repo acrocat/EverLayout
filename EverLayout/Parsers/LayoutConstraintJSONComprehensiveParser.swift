@@ -66,10 +66,10 @@ class LayoutConstraintJSONComprehensiveParser: LayoutConstraintJSONParser , Layo
     func constant(source: Any) -> ELConstraintConstant? {
         guard let source = self.parseSource(source: source) else { return nil }
         
-        if let constant = source.rhs["constant"]?.float {
+        if let constant = source.rhs["constant"]?.float ?? source.rhs["constant"]?.string?.toCGFloat() {
             return ELConstraintConstant(value: constant, sign: .positive)
-        } else if let constant = source.rhs["constant"]?.string?.toCGFloat() {
-            return ELConstraintConstant(value: constant, sign: .positive)
+        } else if let inset = source.rhs["inset"]?.float ?? source.rhs["inset"]?.string?.toCGFloat() {
+            return ELConstraintConstant(value: inset, sign: .inset)
         }
         
         return nil
