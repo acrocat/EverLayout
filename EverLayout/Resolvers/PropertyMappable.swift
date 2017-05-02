@@ -140,6 +140,18 @@ protocol PlaceholderMappable {
     func getMappedPlaceholder () -> String?
 }
 
+protocol TranslucentMappable {
+    func mapIsTranslucent (_ translucent : String)
+    
+    func getMappedIsTranslucent () -> String?
+}
+
+protocol TintColorMappable {
+    func mapTintColor (_ tintColor : String)
+    
+    func getMappedTintColor () -> String?
+}
+
 // MARK: - UIView Implementations
 extension UIView : FrameMappable {
     func mapFrame(_ frame: String) {
@@ -415,7 +427,6 @@ extension UIScrollView : ContentOffsetMappable {
 }
 
 // MARK: - UITextField Implementations
-
 extension UITextField : PlaceholderMappable {
     func mapPlaceholder(_ placeholder: String) {
         self.placeholder = placeholder
@@ -423,6 +434,55 @@ extension UITextField : PlaceholderMappable {
     
     func getMappedPlaceholder() -> String? {
         return self.placeholder ?? ""
+    }
+}
+
+// MARK: - UINavigationController Implementations
+extension UINavigationBar : TextColorMappable {
+    func mapTextColor(_ color: String) {
+        guard let color = UIColor.color(fromName: color) ?? UIColor(hex: color) else { return }
+        
+        self.titleTextAttributes = [
+            NSForegroundColorAttributeName : color as Any
+        ]
+    }
+    
+    func getMappedTextColor() -> String? {
+        guard let color = self.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor else { return nil }
+        
+        return UIColor.name(ofColor: color)
+    }
+}
+
+extension UINavigationBar : TranslucentMappable {
+    func mapIsTranslucent(_ translucent: String) {
+        self.isTranslucent = translucent.lowercased() == "true"
+    }
+    
+    func getMappedIsTranslucent() -> String? {
+        return self.isTranslucent ? "true" : "false"
+    }
+}
+
+extension UINavigationBar {
+    override func mapBackgroundColor(_ color: String) {
+        self.barTintColor = UIColor.color(fromName: color) ?? UIColor(hex: color)
+    }
+    
+    override func getMappedBackgroundColor() -> String? {
+        guard let color = self.barTintColor else { return nil }
+        
+        return UIColor.name(ofColor: color)
+    }
+}
+
+extension UINavigationBar : TintColorMappable {
+    func mapTintColor(_ tintColor: String) {
+        self.tintColor = UIColor.color(fromName: tintColor) ?? UIColor(hex: tintColor)
+    }
+    
+    func getMappedTintColor() -> String? {
+        return UIColor.name(ofColor: self.tintColor)
     }
 }
 
