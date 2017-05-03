@@ -192,11 +192,11 @@ extension UIView : CornerRadiusMappable {
 }
 extension UIView : BorderWidthMappable {
     func mapBorderWidth(_ borderWidth: String) {
-        self.layer.cornerRadius = borderWidth.toCGFloat() ?? 0
+        self.layer.borderWidth = borderWidth.toCGFloat() ?? 0
     }
     
     func getMappedBorderWidth() -> String? {
-        return self.layer.cornerRadius.description
+        return self.layer.borderWidth.description
     }
 }
 extension UIView : BorderColorMappable {
