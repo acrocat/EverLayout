@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DEB45C41EB9E0A400B0C99A /* Layouts in Resources */ = {isa = PBXBuildFile; fileRef = 2DEB45C31EB9E0A400B0C99A /* Layouts */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -28,10 +29,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		236AFC62EC4A4667F3B0F219 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		236AFC62EC4A4667F3B0F219 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		2DEB45C31EB9E0A400B0C99A /* Layouts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Layouts; sourceTree = "<group>"; };
 		39415B08C6D00D7C9C70E97C /* Pods_EverLayout_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA14713EB37B785EE6DB287 /* Pods-EverLayout_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example/Pods-EverLayout_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		5C10409A83DEBAD8092C88D3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		5C10409A83DEBAD8092C88D3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* EverLayout_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EverLayout_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +47,7 @@
 		6C816DDE82F1A6E24711E5D6 /* Pods-EverLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6FBF717F3D779EE53B60BB94 /* Pods_EverLayout_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84330371EDA12CB8D9059F2B /* Pods-EverLayout_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example/Pods-EverLayout_Example.release.xcconfig"; sourceTree = "<group>"; };
-		E8DE5AF42CAD2294178D05CA /* EverLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = EverLayout.podspec; path = ../EverLayout.podspec; sourceTree = "<group>"; };
+		E8DE5AF42CAD2294178D05CA /* EverLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = EverLayout.podspec; path = ../EverLayout.podspec; sourceTree = "<group>"; };
 		EAE7F957D64545DBA9550C6D /* Pods-EverLayout_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 		607FACD21AFB9204008FA782 /* Example for EverLayout */ = {
 			isa = PBXGroup;
 			children = (
+				2DEB45C31EB9E0A400B0C99A /* Layouts */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -248,6 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DEB45C41EB9E0A400B0C99A /* Layouts in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,

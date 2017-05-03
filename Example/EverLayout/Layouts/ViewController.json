@@ -1,0 +1,25 @@
+{
+	"name":"ViewController",
+	"controllerTitle": "Test Controller",
+	"root":{
+		"views":{
+			"!blueSquare": {
+				"properties":{
+					"backgroundColor":"blue",
+					"borderColor":"red",
+					"borderWidth":"3"
+				},
+				"constraints":{
+					"width height":"+120",
+					"leftMarign":"@super",
+					"top":"@super"
+				}
+			}
+		}
+	},
+	"navigationBar": {
+		"backgroundColor":"red",
+		"textColor":"white",
+		"translucent":"false"
+	}
+}
