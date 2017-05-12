@@ -87,6 +87,7 @@ open class EverLayout: ELRawData
             } else if let viewId = view.id {
                 if let existingView = self.viewIndex.viewModel(forKey: viewId) {
                     existingView.update(newData: view.rawData)
+                    existingView.parentModel = parentView
                     
                     viewModel = existingView
                 } else {
