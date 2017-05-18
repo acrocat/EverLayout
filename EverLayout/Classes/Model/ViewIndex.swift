@@ -22,42 +22,89 @@
 
 import UIKit
 
-public class ViewIndex: NSObject
-{
+public class ViewIndex: NSObject {
+    /// Dictionary of every ELViewModel in the layout, with its ID as the key
     private(set) public var contents : [String : ELViewModel?] = [:]
     
+    /// An array of the ELViewModels in the layout, but ordered by the Z Index
+    public var contentsByZIndex : [ELViewModel?] {
+        return self.contents.values.sorted { (modelA, modelB) -> Bool in
+            guard let parentA = modelA?.parentModel?.id , let parentB = modelB?.parentModel?.id else { return false }
+            
+            if parentA == parentB {
+                return (modelA?.zIndex ?? 0) < (modelB?.zIndex ?? 0)
+            } else {
+                return parentA < parentB
+            }
+        }
+    }
+    
+    /// The view on which everything in this layout is built
+    ///
+    /// - Returns: Root View model
     public func rootViewModel () -> ELViewModel? {
         return self.contents.first?.value
     }
     
+    /// The root view's actual UIView
+    ///
+    /// - Returns: Root View
     public func rootView () -> UIView? {
         return self.rootViewModel()?.target
     }
     
+    /// Get a view by its ID in this layout
+    ///
+    /// - Parameter key: ID
+    /// - Returns: UIView for this key
     public func view (forKey key : String) -> UIView? {
         return self.contents[key]??.target
     }
     
+    /// Get view model by its ID in this layout
+    ///
+    /// - Parameter key: ID
+    /// - Returns: ELViewModel
     public func viewModel (forKey key : String) -> ELViewModel? {
-        if let viewModel = self.contents[key]
-        {
+        if let viewModel = self.contents[key] {
             return viewModel
         }
         
         return nil
     }
     
-    public func addViewModel (forKey key : String , viewModel : ELViewModel) {
-        if self.contents.keys.contains(key)
-        {
-            // Element with this key already exists in the contents
+    /// Get array of all constraints that are described by the views in this index
+    ///
+    /// - Returns: [ELConstraintModel]
+    public func getAllConstraints () -> [ELConstraintModel] {
+        var allConstraints : [ELConstraintModel] = []
+        
+        for (_ , viewModel) in self.contents {
+            let toAdd = viewModel?.getAllAffectingLayoutConstraintModels().filter({ (constraintModel) -> Bool in
+                return constraintModel != nil
+            }) as! [ELConstraintModel]
+            
+            allConstraints.append(contentsOf: toAdd)
         }
-        else
-        {
+        
+        return allConstraints
+    }
+    
+    /// Add a new view mode to this index
+    ///
+    /// - Parameters:
+    ///   - key: The ID to uniquely identify this model
+    ///   - viewModel: Model to be added
+    public func addViewModel (forKey key : String , viewModel : ELViewModel) {
+        if self.contents.keys.contains(key) {
+            // Element with this key already exists in the contents
+            // TODO: Throw a warning
+        } else {
             self.contents[key] = viewModel
         }
     }
     
+    /// Remove all models
     public func clear () {
         self.contents = [:]
     }

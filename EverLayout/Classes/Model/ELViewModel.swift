@@ -54,6 +54,9 @@ public class ELViewModel: ELRawData
     // Actual constraints that are created when this view is built on a view
     public var appliedConstraints : [ELConstraint] = []
     
+    /// When the layout is built, the template data that this view requests is stored here
+    public var appliedTemplates : [ELLayoutTemplate] = []
+    
     // We cache view properties when EverLayout writes new ones, so that they can be reversed if the layout is unloaded
     public var cachedProperties : [String : String] = [:]
     
@@ -132,12 +135,47 @@ public class ELViewModel: ELRawData
         })
     }
     
+    /// Affecting constraints include the constraints that are described in this view, and also the constraints that are described
+    /// in the templates that this view inherits from
+    ///
+    /// - Returns: [ELConstraintModel?]
+    public func getAllAffectingLayoutConstraintModels () -> [ELConstraintModel?] {
+        var affectingModels = self.constraints ?? [ELConstraintModel?]()
+        
+        self.appliedTemplates.forEach { (template) in
+            if let constraintModels = template.constraints {
+                affectingModels.append(contentsOf: constraintModels)
+            }
+        }
+        
+        return affectingModels
+    }
+    
+    /// Affecting properties include the properties descibed in this view, and also the properties that are described in the 
+    /// templates that this view inherits from
+    ///
+    /// - Returns: [ELViewProperty?]
+    public func getAllAffectingProperties () -> [ELViewProperty?] {
+        var affectingProperties = self.properties ?? [ELViewProperty?]()
+        
+        self.appliedTemplates.forEach { (template) in
+            if let properties = template.properties {
+                affectingProperties.append(contentsOf: properties)
+            }
+        }
+        
+        return affectingProperties
+    }
+    
     public func remove () {
         if !self.isRoot {
             self.target?.removeFromSuperview()
         } else {
             self.target?.removeConstraints(self.appliedConstraints)
         }
+        
+        // Empty applied templates
+        self.appliedTemplates = []
         
         // Empty the applied constraints
         self.appliedConstraints = []

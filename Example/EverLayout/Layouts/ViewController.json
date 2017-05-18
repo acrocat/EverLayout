@@ -1,24 +1,39 @@
 {
 	"name":"ViewController",
-	"controllerTitle": "Test Controller",
 	"root":{
 		"views":{
-			"!blueSquare": {
-				"properties":{
-					"backgroundColor":"blue",
-					"borderColor":"red",
-					"borderWidth":"3"
-				},
+			"!testView":{
+				"template":"squareColor",
 				"constraints":{
-					"width height":"+120",
-					"leftMarign":"@super",
-					"top":"@super"
+					"center":"@super",
+					"width height":"+300"
+				},
+				"properties":{
+					"borderColor":"red"
+				},
+				"views":{
+
+				}
+			},
+			"!blue":{
+				"template":"squareColor",
+				"constraints":{
+					"top left":"@super",
+					"width height":"+120"
 				}
 			}
 		}
 	},
-	"navigationBar": {
-		"backgroundColor":"red",
+	"controllerTitle":"Okay",
+	"templates":{
+		"squareColor":{
+			"properties":{
+				"backgroundColor":"orange"
+			}
+		}
+	},
+	"navigationBar":{
+		"backgroundColor":"#333333",
 		"textColor":"white",
 		"translucent":"false"
 	}
