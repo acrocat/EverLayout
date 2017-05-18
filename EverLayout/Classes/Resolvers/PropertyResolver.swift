@@ -251,6 +251,10 @@ public class PropertyResolver
         }
     }
     
+    open func apply (propertyName name : String , value : String) {
+        self.settableProperties[name]?(value)
+    }
+    
     open func retrieve (viewProperty : ELViewProperty) -> String? {
         guard let name = viewProperty.name else { return nil }
         
@@ -261,6 +265,10 @@ public class PropertyResolver
 extension UIView {
     open func applyViewProperty (viewProperty : ELViewProperty) {
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
+    }
+    
+    open func applyViewProperty (propertyName name : String , value : String) {
+        PropertyResolver(view: self).apply(propertyName: name, value: value)
     }
     
     open func retrieveViewProperty (viewProperty : ELViewProperty) -> String? {

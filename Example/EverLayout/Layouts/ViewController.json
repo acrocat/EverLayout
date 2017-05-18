@@ -21,6 +21,12 @@
 					"top left":"@super",
 					"width height":"+120"
 				}
+			},
+			"purpleSquare":{
+				"constraints":{
+					"bottom right":"@super",
+					"width height":"+50"
+				}
 			}
 		}
 	},

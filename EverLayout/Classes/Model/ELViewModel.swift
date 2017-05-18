@@ -185,9 +185,7 @@ public class ELViewModel: ELRawData
         
         // Reset the view properties to those that were cached
         self.cachedProperties.forEach { (propName , propValue) in
-            let prop = ELViewProperty(rawData: (propName , propValue), parser: LayoutPropertyJSONParser())
-            
-            self.target?.applyViewProperty(viewProperty: prop)
+            self.target?.applyViewProperty(propertyName: propName, value: propValue)
         }
     }
 }
