@@ -156,7 +156,7 @@ open class EverLayout: ELRawData
         ///
         /// - Parameter viewModel: View Model
         func _locateTargetView (_ viewModel : ELViewModel) {
-            guard let viewId = viewModel.id else { return }
+            guard let viewId = viewModel.id , viewModel.isActive == true else { return }
             
             if viewModel.isRoot {
                 viewModel.target = view
@@ -197,7 +197,7 @@ open class EverLayout: ELRawData
         
         // Apply all constraints
         for (_ , viewModel) in self.viewIndex.contents {
-            guard let viewModel = viewModel else { continue }
+            guard let viewModel = viewModel , viewModel.isActive == true else { continue }
             viewModel.getAllAffectingLayoutConstraintModels().forEach({ (constraint) in
                 constraint?.establishConstraints(onView: viewModel, withViewIndex: self.viewIndex, viewEnvironment: self.viewEnvironment)
             })

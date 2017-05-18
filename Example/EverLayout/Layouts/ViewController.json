@@ -2,19 +2,7 @@
 	"name":"ViewController",
 	"root":{
 		"views":{
-			"!button:UIButton":{
-				"properties":{
-					"text":"Click me!",
-					"textColor":"orange",
-					"borderWidth":"2",
-					"borderColor":"purple",
-					"fontSize":"30"
-				},
-				"constraints":{
-					"center":"@super",
-					"width height":"+150"
-				}
-			}
+			
 		}
 	},
 	"controllerTitle":"Okay",
