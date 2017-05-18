@@ -53,8 +53,7 @@ open class EverLayout: ELRawData
     /// - Parameters:
     ///   - layoutData: Raw data for the entire layout
     ///   - layoutIndexParser: index parser to use
-    public init (layoutData : Data , layoutIndexParser : LayoutIndexParser? = LayoutIndexJSONParser())
-    {
+    public init (layoutData : Data , layoutIndexParser : LayoutIndexParser? = LayoutIndexJSONParser()) {
         super.init(rawData: layoutData)
         self.indexParser = layoutIndexParser
         

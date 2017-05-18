@@ -22,29 +22,45 @@
 
 import UIKit
 
-public class ImageViewPropertyResolver: PropertyResolver
-{
-    override public var settableProperties: [String : (String) -> Void] {
-        var props = super.settableProperties
-        
-        props["image"] = {[weak self] (source) in
-            if let view = self?.view as? ImageMappable {
-                view.mapImage(source)
-            }
-        }
-        
-        return props
-    }
-}
-
-extension UIImageView {
-    override open func applyViewProperty(viewProperty: ELViewProperty) {
-        super.applyViewProperty(viewProperty: viewProperty)
-        
-        ImageViewPropertyResolver(view: self).apply(viewProperty: viewProperty)
+extension UIButton : TextMappable {
+    func mapText(_ text: String) {
+        self.setTitle(text, for: .normal)
     }
     
-    open override func retrieveViewProperty(viewProperty: ELViewProperty) -> String? {
-        return TextFieldPropertyResolver(view: self).retrieve(viewProperty: viewProperty)
+    func getMappedText() -> String? {
+        return self.title(for: .normal) ?? ""
+    }
+}
+extension UIButton : TextColorMappable {
+    func mapTextColor(_ color: String) {
+        self.setTitleColor(UIColor.color(fromName: color) ?? UIColor(hex: color), for: .normal)
+    }
+    
+    func getMappedTextColor() -> String? {
+        guard let color = self.titleColor(for: .normal) else { return nil }
+        
+        return UIColor.name(ofColor: color)
+    }
+}
+extension UIButton : BackgroundImageMappable {
+    func mapBackgroundImage(_ image: String) {
+        var imageInstance = UIImage(named: image)
+        
+        if imageInstance == nil {
+            imageInstance = UIImage(address: image)
+        }
+        
+        self.setBackgroundImage(imageInstance, for: .normal)
+    }
+}
+extension UIButton : ImageMappable {
+    func mapImage(_ image: String) {
+        var imageInstance = UIImage(named: image)
+        
+        if imageInstance == nil {
+            imageInstance = UIImage(address: image)
+        }
+        
+        self.setImage(imageInstance, for: .normal)
     }
 }

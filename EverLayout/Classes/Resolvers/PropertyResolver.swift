@@ -63,6 +63,81 @@ public class PropertyResolver
             },
             "hidden": {[weak self] source in
                 self?.view?.mapHidden(source)
+            },
+            
+            // Text properties
+            "text":{[weak self] source in
+                if let view = self?.view as? TextMappable {
+                    view.mapText(source)
+                }
+            },
+            "textColor": {[weak self] source in
+                if let view = self?.view as? TextColorMappable {
+                    view.mapTextColor(source)
+                }
+            },
+            "lineBreakMode": {[weak self] source in
+                if let view = self?.view as? LineBreakModeMappable {
+                    view.mapLineBreakMode(source)
+                }
+            },
+            "textAlignment": {[weak self] source in
+                if let view = self?.view as? TextAlignmentMappable {
+                    view.mapTextAlignment(source)
+                }
+            },
+            "numberOfLines": {[weak self] source in
+                if let view = self?.view as? NumberOfLinesMappable {
+                    view.mapNumberOfLines(source)
+                }
+            },
+            "fontSize":{[weak self] source in
+                if let view = self?.view as? FontSizeMappable {
+                    view.mapFontSize(source)
+                }
+            },
+            
+            // Image properties
+            "image": {[weak self] source in
+                if let view = self?.view as? ImageMappable {
+                    view.mapImage(source)
+                }
+            },
+            "backgroundImage":{[weak self] source in
+                if let view = self?.view as? BackgroundImageMappable {
+                    view.mapBackgroundImage(source)
+                }
+            },
+            
+            // ScrollView properties
+            "contentInset": {[weak self] source in
+                if let view = self?.view as? ContentInsetMappable {
+                    view.mapContentInset(source)
+                }
+            },
+            "contentOffset": {[weak self] source in
+                if let view = self?.view as? ContentOffsetMappable {
+                    view.mapContentOffset(source)
+                }
+            },
+            
+            // TextField properties
+            "placeholder": {[weak self] source in
+                if let view = self?.view as? PlaceholderMappable {
+                    view.mapPlaceholder(source)
+                }
+            },
+            
+            // Navigation Bar properties
+            "translucent": {[weak self] source in
+                if let view = self?.view as? TranslucentMappable {
+                    view.mapIsTranslucent(source)
+                }
+            },
+            "tintColor":{[weak self] source in
+                if let view = self?.view as? TintColorMappable {
+                    view.mapTintColor(source)
+                }
             }
         ]
     }
@@ -95,6 +170,69 @@ public class PropertyResolver
             },
             "hidden": {[weak self] in 
                 return self?.view?.getMappedHidden()
+            },
+            
+            // Text properties
+            "text":{[weak self] in
+                guard let view = self?.view as? TextMappable else { return nil }
+                
+                return view.getMappedText()
+            },
+            "textColor": {[weak self] in
+                guard let view = self?.view as? TextColorMappable else { return nil }
+                
+                return view.getMappedTextColor()
+            },
+            "lineBreakMode": {[weak self] in
+                guard let view = self?.view as? LineBreakModeMappable else { return nil }
+                
+                return view.getMappedLineBreakMode()
+            },
+            "numberOfLines":{[weak self] in
+                guard let view = self?.view as? NumberOfLinesMappable else { return nil }
+                
+                return view.getMappedNumberOfLines()
+            },
+            "textAlignment":{[weak self] in
+                guard let view = self?.view as? TextAlignmentMappable else { return nil }
+                
+                return view.getMappedTextAlignment()
+            },
+            "fontSize":{[weak self] in
+                guard let view = self?.view as? FontSizeMappable else { return nil }
+                
+                return view.getMappedFontSize()
+            },
+            
+            // ScrollView properties
+            "contentInset": {[weak self] in
+                guard let view = self?.view as? ContentInsetMappable else { return nil }
+                
+                return view.getMappedContentInset()
+            },
+            "contentOffset": {[weak self] in
+                guard let view = self?.view as? ContentOffsetMappable else { return nil }
+                
+                return view.getMappedContentOffset()
+            },
+            
+            // TextField properties
+            "placeholder":{[weak self] in
+                guard let view = self?.view as? PlaceholderMappable else { return nil }
+                
+                return view.getMappedPlaceholder()
+            },
+            
+            // Navigation Bar properties
+            "translucent": {[weak self] in
+                guard let view = self?.view as? TranslucentMappable else { return nil }
+                
+                return view.getMappedIsTranslucent()
+            },
+            "tintColor":{[weak self] in
+                guard let view = self?.view as? TintColorMappable else { return nil }
+                
+                return view.getMappedTintColor()
             }
         ]
     }

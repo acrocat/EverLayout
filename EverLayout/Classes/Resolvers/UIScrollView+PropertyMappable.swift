@@ -22,24 +22,21 @@
 
 import UIKit
 
-public struct EverLayoutConfiguration
-{
-    static let `default` = EverLayoutConfiguration(
-        indexParser: LayoutIndexJSONParser(),
-        viewParser: LayoutViewJSONParser(),
-        constraintParser: LayoutConstraintJSONShorthandParser(),
-        propertyParser: LayoutPropertyJSONParser()
-    )
+extension UIScrollView : ContentInsetMappable {
+    func mapContentInset(_ contentInset: String) {
+        self.contentInset = UIEdgeInsetsFromString(contentInset)
+    }
     
-    // ---------------------------------------------------------------------------
-    // MARK: - Parsing
-    // ---------------------------------------------------------------------------
+    func getMappedContentInset() -> String? {
+        return NSStringFromUIEdgeInsets(self.contentInset) as String
+    }
+}
+extension UIScrollView : ContentOffsetMappable {
+    func mapContentOffset(_ contentOffset: String) {
+        self.contentOffset = CGPointFromString(contentOffset)
+    }
     
-    let indexParser : LayoutIndexParser
-    let viewParser : LayoutViewParser
-    let constraintParser : LayoutConstraintParser
-    let propertyParser : LayoutPropertyParser
-    
-    // ---------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------
+    func getMappedContentOffset() -> String? {
+        return NSStringFromCGPoint(self.contentOffset) as String
+    }
 }
