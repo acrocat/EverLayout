@@ -2,30 +2,17 @@
 	"name":"ViewController",
 	"root":{
 		"views":{
-			"!testView":{
-				"template":"squareColor",
+			"!button:UIButton":{
+				"properties":{
+					"text":"Click me!",
+					"textColor":"orange",
+					"borderWidth":"2",
+					"borderColor":"purple",
+					"fontSize":"30"
+				},
 				"constraints":{
 					"center":"@super",
-					"width height":"+300"
-				},
-				"properties":{
-					"borderColor":"red"
-				},
-				"views":{
-
-				}
-			},
-			"!blue":{
-				"template":"squareColor",
-				"constraints":{
-					"top left":"@super",
-					"width height":"+120"
-				}
-			},
-			"purpleSquare":{
-				"constraints":{
-					"bottom right":"@super",
-					"width height":"+50"
+					"width height":"+150"
 				}
 			}
 		}

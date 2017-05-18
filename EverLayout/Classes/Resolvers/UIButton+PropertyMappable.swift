@@ -31,6 +31,15 @@ extension UIButton : TextMappable {
         return self.title(for: .normal) ?? ""
     }
 }
+extension UIButton : FontSizeMappable {
+    func mapFontSize(_ fontSize: String) {
+        self.titleLabel?.font = self.titleLabel?.font.withSize(fontSize.toCGFloat() ?? 16)
+    }
+    
+    func getMappedFontSize() -> String? {
+        return self.titleLabel?.font.pointSize.description
+    }
+}
 extension UIButton : TextColorMappable {
     func mapTextColor(_ color: String) {
         self.setTitleColor(UIColor.color(fromName: color) ?? UIColor(hex: color), for: .normal)
