@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2DC0C8351ECEF1AC0017FFFE /* TestLayout.json in Resources */ = {isa = PBXBuildFile; fileRef = 2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */; };
 		2DC0C8361ECEF47F0017FFFE /* TestLayout.json in Resources */ = {isa = PBXBuildFile; fileRef = 2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */; };
-		2DEB45C41EB9E0A400B0C99A /* Layouts in Resources */ = {isa = PBXBuildFile; fileRef = 2DEB45C31EB9E0A400B0C99A /* Layouts */; };
+		2DC0C8791ECF2F040017FFFE /* Layouts in Resources */ = {isa = PBXBuildFile; fileRef = 2DC0C8781ECF2F040017FFFE /* Layouts */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -34,7 +34,7 @@
 /* Begin PBXFileReference section */
 		236AFC62EC4A4667F3B0F219 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TestLayout.json; sourceTree = "<group>"; };
-		2DEB45C31EB9E0A400B0C99A /* Layouts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Layouts; sourceTree = "<group>"; };
+		2DC0C8781ECF2F040017FFFE /* Layouts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Layouts; sourceTree = "<group>"; };
 		39415B08C6D00D7C9C70E97C /* Pods_EverLayout_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41598E1AD6B87E446F112090 /* Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example-EverLayout_Tests/Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BA14713EB37B785EE6DB287 /* Pods-EverLayout_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example/Pods-EverLayout_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 		607FACD21AFB9204008FA782 /* Example for EverLayout */ = {
 			isa = PBXGroup;
 			children = (
-				2DEB45C31EB9E0A400B0C99A /* Layouts */,
+				2DC0C8781ECF2F040017FFFE /* Layouts */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -263,10 +263,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DEB45C41EB9E0A400B0C99A /* Layouts in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				2DC0C8791ECF2F040017FFFE /* Layouts in Resources */,
 				2DC0C8351ECEF1AC0017FFFE /* TestLayout.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

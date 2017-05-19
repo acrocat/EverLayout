@@ -167,25 +167,53 @@ public class ELViewModel: ELRawData
         return affectingProperties
     }
     
+    public func clearConstraints () {
+        self.target?.removeConstraints(self.appliedConstraints)
+        self.appliedConstraints = []
+    }
+    
+    public func resetViewProperties () {
+        // Reset the view properties to those that were cached
+        self.cachedProperties.forEach { (propName , propValue) in
+            self.target?.applyViewProperty(propertyName: propName, value: propValue)
+        }
+    }
+    
+    public func establishAllConstraints (inLayout layout : EverLayout) {
+        guard let viewEnvironment = layout.viewEnvironment , self.isActive == true else { return }
+        
+        // Clear existing constraints
+        self.clearConstraints()
+        
+        self.getAllAffectingLayoutConstraintModels().forEach { (constraint) in
+            constraint?.establishConstraints(onView: self, withViewIndex: layout.viewIndex, viewEnvironment: viewEnvironment)
+        }
+    }
+    
+    public func applyAllViewProperties () {
+        // Reset the view properties
+        self.resetViewProperties()
+        
+        // Set the properties
+        self.getAllAffectingProperties().forEach { (property) in
+            property?.applyToView(viewModel: self)
+        }
+    }
+    
     public func remove () {
         if !self.isRoot {
             self.target?.removeFromSuperview()
         } else {
-            self.target?.removeConstraints(self.appliedConstraints)
+            self.clearConstraints()
         }
         
         // Empty applied templates
         self.appliedTemplates = []
         
-        // Empty the applied constraints
-        self.appliedConstraints = []
-        
         // Mark as inactive
         self.isActive = false
         
-        // Reset the view properties to those that were cached
-        self.cachedProperties.forEach { (propName , propValue) in
-            self.target?.applyViewProperty(propertyName: propName, value: propValue)
-        }
+        // Reset view properties
+        self.resetViewProperties()
     }
 }

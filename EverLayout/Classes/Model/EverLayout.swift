@@ -125,9 +125,7 @@ open class EverLayout: ELRawData
                 _locateTargetView(viewModel)
                 
                 // Apply this view's properties
-                viewModel.getAllAffectingProperties().forEach({ (property) in
-                    property?.applyToView(viewModel: viewModel)
-                })
+                viewModel.applyAllViewProperties()
             }
             
             // Process all subviews
@@ -197,10 +195,7 @@ open class EverLayout: ELRawData
         
         // Apply all constraints
         for (_ , viewModel) in self.viewIndex.contents {
-            guard let viewModel = viewModel , viewModel.isActive == true else { continue }
-            viewModel.getAllAffectingLayoutConstraintModels().forEach({ (constraint) in
-                constraint?.establishConstraints(onView: viewModel, withViewIndex: self.viewIndex, viewEnvironment: self.viewEnvironment)
-            })
+            viewModel?.establishAllConstraints(inLayout: self)
         }
         
         // Add properties for navigation bar
@@ -296,6 +291,13 @@ open class EverLayout: ELRawData
     public func updateConstraints (withTraitColelction traitCollection : UITraitCollection) {
         self.viewIndex.contents.forEach { (_ , viewModel) in
             viewModel?.updateConstraints(withTraitCollection: traitCollection)
+        }
+    }
+    
+    public func refresh () {
+        for (_ , viewModel) in self.viewIndex.contents {
+            viewModel?.applyAllViewProperties()
+            viewModel?.establishAllConstraints(inLayout: self)
         }
     }
     
