@@ -17,11 +17,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: "ViewController", ofType: "json", inDirectory: "Layouts")!)! as Data
-        self.layout = EverLayout(layoutData: layoutData)
-        self.layout.build(onView: self.view, viewEnvironment: self)
-        
-        self.purpleSquare.backgroundColor = .purple
+//        let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: "ViewController", ofType: "json", inDirectory: "Layouts")!)! as Data
+//        self.layout = EverLayout(layoutData: layoutData)
+//        self.layout.build(onView: self.view, viewEnvironment: self)
+//        
+//        self.purpleSquare.backgroundColor = .purple
     }
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {

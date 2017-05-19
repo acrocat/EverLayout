@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DC0C8351ECEF1AC0017FFFE /* TestLayout.json in Resources */ = {isa = PBXBuildFile; fileRef = 2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */; };
+		2DC0C8361ECEF47F0017FFFE /* TestLayout.json in Resources */ = {isa = PBXBuildFile; fileRef = 2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */; };
 		2DEB45C41EB9E0A400B0C99A /* Layouts in Resources */ = {isa = PBXBuildFile; fileRef = 2DEB45C31EB9E0A400B0C99A /* Layouts */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -16,6 +18,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B888727D59D1A942A19E18FE /* Pods_EverLayout_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FBF717F3D779EE53B60BB94 /* Pods_EverLayout_Tests.framework */; };
 		BE8B582F94CDF106E42BCF0B /* Pods_EverLayout_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39415B08C6D00D7C9C70E97C /* Pods_EverLayout_Example.framework */; };
+		C78A6431F3A7F80B0DA2B288 /* Pods_EverLayout_Example_EverLayout_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED38724217A7381DFD07ED5F /* Pods_EverLayout_Example_EverLayout_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,8 +33,10 @@
 
 /* Begin PBXFileReference section */
 		236AFC62EC4A4667F3B0F219 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TestLayout.json; sourceTree = "<group>"; };
 		2DEB45C31EB9E0A400B0C99A /* Layouts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Layouts; sourceTree = "<group>"; };
 		39415B08C6D00D7C9C70E97C /* Pods_EverLayout_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		41598E1AD6B87E446F112090 /* Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example-EverLayout_Tests/Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BA14713EB37B785EE6DB287 /* Pods-EverLayout_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example/Pods-EverLayout_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5C10409A83DEBAD8092C88D3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* EverLayout_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EverLayout_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,8 +52,10 @@
 		6C816DDE82F1A6E24711E5D6 /* Pods-EverLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6FBF717F3D779EE53B60BB94 /* Pods_EverLayout_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84330371EDA12CB8D9059F2B /* Pods-EverLayout_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example/Pods-EverLayout_Example.release.xcconfig"; sourceTree = "<group>"; };
+		AD172D4C8DDC72C6345A37B9 /* Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example-EverLayout_Tests/Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E8DE5AF42CAD2294178D05CA /* EverLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = EverLayout.podspec; path = ../EverLayout.podspec; sourceTree = "<group>"; };
 		EAE7F957D64545DBA9550C6D /* Pods-EverLayout_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		ED38724217A7381DFD07ED5F /* Pods_EverLayout_Example_EverLayout_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Example_EverLayout_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B888727D59D1A942A19E18FE /* Pods_EverLayout_Tests.framework in Frameworks */,
+				C78A6431F3A7F80B0DA2B288 /* Pods_EverLayout_Example_EverLayout_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +84,7 @@
 			children = (
 				39415B08C6D00D7C9C70E97C /* Pods_EverLayout_Example.framework */,
 				6FBF717F3D779EE53B60BB94 /* Pods_EverLayout_Tests.framework */,
+				ED38724217A7381DFD07ED5F /* Pods_EverLayout_Example_EverLayout_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,6 +96,8 @@
 				84330371EDA12CB8D9059F2B /* Pods-EverLayout_Example.release.xcconfig */,
 				6C816DDE82F1A6E24711E5D6 /* Pods-EverLayout_Tests.debug.xcconfig */,
 				EAE7F957D64545DBA9550C6D /* Pods-EverLayout_Tests.release.xcconfig */,
+				41598E1AD6B87E446F112090 /* Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig */,
+				AD172D4C8DDC72C6345A37B9 /* Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -140,6 +151,7 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				2DC0C8341ECEF1AC0017FFFE /* TestLayout.json */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -255,6 +267,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				2DC0C8351ECEF1AC0017FFFE /* TestLayout.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DC0C8361ECEF47F0017FFFE /* TestLayout.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,7 +309,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EverLayout_Example-EverLayout_Tests/Pods-EverLayout_Example-EverLayout_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBBFF999C8110ABBB63B854 /* [CP] Embed Pods Frameworks */ = {
@@ -310,7 +324,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EverLayout_Example-EverLayout_Tests/Pods-EverLayout_Example-EverLayout_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		87AEF6DAA80320277E891FBB /* [CP] Check Pods Manifest.lock */ = {
@@ -525,7 +539,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C816DDE82F1A6E24711E5D6 /* Pods-EverLayout_Tests.debug.xcconfig */;
+			baseConfigurationReference = 41598E1AD6B87E446F112090 /* Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -540,12 +554,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EverLayout_Example.app/EverLayout_Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAE7F957D64545DBA9550C6D /* Pods-EverLayout_Tests.release.xcconfig */;
+			baseConfigurationReference = AD172D4C8DDC72C6345A37B9 /* Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -556,6 +571,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EverLayout_Example.app/EverLayout_Example";
 			};
 			name = Release;
 		};

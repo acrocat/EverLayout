@@ -4,8 +4,6 @@ target 'EverLayout_Example' do
   pod 'EverLayout', :path => '../'
 
   target 'EverLayout_Tests' do
-    inherit! :search_paths
-
-    
+    pod "EverLayout" , :path => '../'
   end
 end

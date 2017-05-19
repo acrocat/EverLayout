@@ -1,0 +1,54 @@
+{
+	"name":"TestLayout",
+	"root":{
+		"views":{
+			"!testImage:UIImageView":{
+				"constraints":{
+					"top right":"@super",
+					"width height":"+20"
+				}
+			},
+			"!redSquare":{
+				"template":"squares",
+				"constraints":{
+					"top left":"@super",
+					"width height":"+120"
+				}
+			},
+			"!blueSquare":{
+				"template":"squares",
+				"constraints":{
+					"center":"@super",
+					"width height":"@super /4"
+				},
+				"views":{
+					"environmentTestView":{
+						"template":"halfSuper",
+						"constraints":{
+							"center":"@super"
+						},
+						"properties":{
+							"backgroundColor":"red",
+							"alpha":"0.5",
+							"hidden":"true",
+							"borderWidth":"3",
+							"borderColor":"green"
+						}
+					}
+				}
+			}
+		}
+	},
+	"templates":{
+		"squares":{
+			"properties":{
+				"backgroundColor":"blue"
+			}
+		},
+		"halfSuper":{
+			"constraints":{
+				"width height":"@super /2"
+			}
+		}
+	}
+}
