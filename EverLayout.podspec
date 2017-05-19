@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "EverLayout"
-  s.version      = "0.8.2"
+  s.version      = "0.8.3"
   s.summary      = "Reusable, downloadable, up-datable iOS layouts"
 
   s.homepage     = "https://github.com/acrocat/EverLayout"
