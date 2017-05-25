@@ -135,10 +135,6 @@ layouts described with code.
 
 [Building and distributing iOS Layouts with EverLayout](https://hackernoon.com/building-and-distributing-ios-layouts-with-everlayout-c9ea41750f6#.b41s5bsh7)
 
-## Dependencies
-
-At the moment EverLayout uses [Socket.IO](https://github.com/socketio/socket.io-client-swift) for communication with EverLayout Bridge.
-
 ## Contribute
 
 Contributions to EverLayout are welcome! If you have feature requests please raise an issue, or contact me at [sterdefs@gmail.com](mailto:sterdefs@gmail.com), or [@greatirl](http://www.twitter.com/greatirl).

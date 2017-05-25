@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "EverLayout"
-  s.version      = "0.8.3"
+  s.version      = "0.9.0"
   s.summary      = "Reusable, downloadable, up-datable iOS layouts"
 
   s.homepage     = "https://github.com/acrocat/EverLayout"
@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/acrocat/EverLayout.git", :tag => "#{s.version}" }
 
-  s.source_files  = "EverLayout", "EverLayout/Classes/**/*.{swift}"
+  s.source_files  = "EverLayout", "Source/**/*.{swift}"
 end
