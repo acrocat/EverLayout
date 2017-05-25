@@ -57,7 +57,7 @@ public class EverLayoutBridge: NSObject , StreamDelegate {
     
     private static var connectionLoop : Timer?
     
-    private static let DEFAULT_IP : String = "192.168.1.118"
+    private static let DEFAULT_IP : String = "127.0.0.1"
     private static let DEFAULT_PORT : String = "3000"
     
     static var readStream : Unmanaged<CFReadStream>?
@@ -83,7 +83,7 @@ public class EverLayoutBridge: NSObject , StreamDelegate {
     
     @objc private static func attemptConnectionToLayoutServer () {
         guard self.connected  == false , self.attemptingConnection == false , let connectedHost = self.connectedHost , let connectedPort = self.connectedPort else { return }
-        print("Attempting connection")
+        
         self.attemptingConnection = true
         
         self.inputStream?.close()
