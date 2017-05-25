@@ -21,14 +21,47 @@
 //  THE SOFTWARE.
 
 import UIKit
-import SocketIO
 
-public class EverLayoutBridge: NSObject
-{
-    static var socket : SocketIOClient?
+// MARK: - A special function to easily read data from an InputStream
+internal extension Data {
+    /// Read the data received in an input stream
+    ///
+    /// - Parameter input: InputStream to read
+    init(reading input: InputStream) {
+        self.init()
+        input.open()
+        
+        let bufferSize = 2048
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+        while input.hasBytesAvailable {
+            let read = input.read(buffer, maxLength: bufferSize)
+            if (read == 0) {
+                break  // added
+            }
+            self.append(buffer, count: read)
+        }
+        buffer.deallocate(capacity: bufferSize)
+    }
+}
+
+public class EverLayoutBridge: NSObject , StreamDelegate {
+    static let shared : EverLayoutBridge = EverLayoutBridge()
     
-    private static let DEFAULT_IP : String = "http://localhost"
+    public static var connectedHost : CFString?
+    public static var connectedPort : UInt32?
+    public static var connected : Bool = false
+    private static var attemptingConnection : Bool = false
+    
+    private static var inputStream : InputStream?
+    private static var outputStream : OutputStream?
+    
+    private static var connectionLoop : Timer?
+    
+    private static let DEFAULT_IP : String = "192.168.1.118"
     private static let DEFAULT_PORT : String = "3000"
+    
+    static var readStream : Unmanaged<CFReadStream>?
+    static var writeStream : Unmanaged<CFWriteStream>?
     
     /// Try to establish a socket connection with the EverLayout Bridge server app
     ///
@@ -37,37 +70,42 @@ public class EverLayoutBridge: NSObject
     ///   - port: Port to connect on
     public static func connectToLayoutServer (withIP IP : String? = nil , port : String? = nil)
     {
-        let address = "\(IP ?? self.DEFAULT_IP):\(port ?? self.DEFAULT_PORT)"
+        let address = (IP ?? self.DEFAULT_IP) as CFString
+        let port : UInt32 = UInt32(port ?? self.DEFAULT_PORT)!
         
-        self.socket = SocketIOClient(socketURL: URL(string: address)!)
+        self.connectedHost = address
+        self.connectedPort = port
         
-        self.socket?.on("connection") { (data, ack) in
-            print("Connected")
-        }
-        
-        self.socket?.on("layout-update") { (data, ack) in
-            let data = self.parseData(data)
-            
-            if let layoutName = data.dictionary?["layoutName"]?.string , let layoutData = data.dictionary?["layout"]
-            {
-                let layoutName : NSString = layoutName as NSString
-                
-                if let rawData = layoutData.rawData as? Data
-                {
-                    self.postLayoutUpdate(layoutName: layoutName.deletingPathExtension, layoutData: rawData)
-                }
-            }
-        }
-        
-        self.socket?.connect()
+        // Schedule the timer
+        self.connectionLoop?.invalidate()
+        self.connectionLoop = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(attemptConnectionToLayoutServer), userInfo: nil, repeats: true)
     }
     
-    /// Get useful info from the data received
-    ///
-    /// - Parameter data: raw data
-    /// - Returns: JSON Data
-    private static func parseData (_ data : [Any]) -> JSON {
-        return JSON(data.first as Any)
+    @objc private static func attemptConnectionToLayoutServer () {
+        guard self.connected  == false , self.attemptingConnection == false , let connectedHost = self.connectedHost , let connectedPort = self.connectedPort else { return }
+        print("Attempting connection")
+        self.attemptingConnection = true
+        
+        self.inputStream?.close()
+        self.outputStream?.close()
+        
+        self.inputStream = nil
+        self.outputStream = nil
+        
+        // Attempt to link the streams to this server
+        CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, connectedHost, connectedPort, &readStream, &writeStream)
+        
+        self.inputStream = readStream!.takeRetainedValue()
+        self.outputStream = writeStream!.takeRetainedValue()
+        
+        self.inputStream?.delegate = self.shared
+        self.outputStream?.delegate = self.shared
+        
+        self.inputStream?.schedule(in: .current, forMode: .defaultRunLoopMode)
+        self.outputStream?.schedule(in: .current, forMode: .defaultRunLoopMode)
+        
+        self.inputStream?.open()
+        self.outputStream?.open()
     }
     
     /// Uses NotificationCenter to send update messages to loaded layouts in the app
@@ -85,8 +123,34 @@ public class EverLayoutBridge: NSObject
     ///
     /// - Parameter message: message to report
     public static func sendReport (message : String) {
-        self.socket?.emit("report", [
-                "message":message
-            ])
+//        self.socket?.emit("report", [
+//                "message":message
+//            ])
+    }
+    
+    public func stream(_ aStream: Stream, handle eventCode: Stream.Event) {
+        EverLayoutBridge.attemptingConnection = false
+        
+        if eventCode == Stream.Event.endEncountered {
+            EverLayoutBridge.connected = false
+            print("Lost connection to the bridge, attemping reconnection...")
+        } else if eventCode == Stream.Event.openCompleted {
+            if EverLayoutBridge.connected == false {
+                EverLayoutBridge.connected = true
+                print("Connected to layout server")
+            }
+        } else if eventCode == Stream.Event.hasBytesAvailable {
+            // Data has been received
+            if let aStream = aStream as? InputStream {
+                let data = Data(reading: aStream)
+                let jsonData = JSON(data: data)
+                
+                if let layoutName = jsonData.dictionary?["name"]?.string {
+                    print(layoutName)
+                    
+                    EverLayoutBridge.postLayoutUpdate(layoutName: layoutName, layoutData: data)
+                }
+            }
+        }
     }
 }

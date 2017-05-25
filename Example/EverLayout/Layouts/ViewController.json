@@ -1,29 +1,6 @@
 {
 	"name":"ViewController",
 	"root":{
-		"views":{
-			"!redSquare":{
-				"properties":{
-					"backgroundColor":"red"
-				},
-				"constraints":{
-					"center":"@super",
-					"width height":"+90"
-				}
-			}
-		}
-	},
-	"controllerTitle":"Okay",
-	"templates":{
-		"squareColor":{
-			"properties":{
-				"backgroundColor":"green"
-			}
-		}
-	},
-	"navigationBar":{
-		"backgroundColor":"#333333",
-		"textColor":"white",
-		"translucent":"false"
+        
 	}
 }

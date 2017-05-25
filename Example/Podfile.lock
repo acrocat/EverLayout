@@ -1,7 +1,5 @@
 PODS:
-  - EverLayout (0.8.2):
-    - Socket.IO-Client-Swift (= 8.3.3)
-  - Socket.IO-Client-Swift (8.3.3)
+  - EverLayout (0.8.3)
 
 DEPENDENCIES:
   - EverLayout (from `../`)
@@ -11,8 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  EverLayout: 88bf2c50aab06857cfebd25df5fcacaf899005b0
-  Socket.IO-Client-Swift: a2faffdbde89c63aebc5d631041530c1068b02b8
+  EverLayout: 7c58a5587b72772801963085a11da4cba51451b8
 
 PODFILE CHECKSUM: 3ad4d29e3ae7babd77c018b416f6c4731d8e4c44
 

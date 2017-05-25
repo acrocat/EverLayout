@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window?.rootViewController = UINavigationController(rootViewController: ViewController())
         
-        EverLayoutBridge.connectToLayoutServer()
+        EverLayoutBridge.connectToLayoutServer(withIP: nil, port: "3333")
         
         return true
     }
