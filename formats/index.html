@@ -139,15 +139,12 @@ conforming to a few protocols.</p>
 <li><code>LayoutTemplateParser</code></li>
 </ul>
 <h2 id="using-these-parsers">Using these parsers</h2>
-<p>EverLayout can be instantiated with a configuration argument which specifies which parsers to
-use.</p>
-<pre><code>self.layout = EverLayout(layoutData: layoutData, parserConfiguration: EverLayoutConfiguration(
-            indexParser: LayoutIndexXMLParser(),
-            viewParser: LayoutViewXMLParser(),
-            constraintParser: LayoutConstraintXMLParser(),
-            propertyParser: LayoutPropertyXMLParser()))
-self.layout.buildLayout(onView: self.view, viewEnvironment: self)
-
+<p>The parsing of a layout always starts with its index, or the <code>LayoutIndexParser</code>.
+When a parser returns a data model, it is responsible for ensuring that the model has
+access to its own appropriate parser.</p>
+<p>To use your own parsers, you can pass an <code>LayoutIndexParser</code> when instantiating 
+EverLayout.</p>
+<pre><code>    self.layout = EverLayout(layoutData: data , indexParser: myYamlIndexParser)
 </code></pre>
 
 <h2 id="notes">Notes</h2>

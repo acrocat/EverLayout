@@ -75,7 +75,11 @@
                 
                     <li><a class="toctree-l4" href="#writing-constraints">Writing Constraints </a></li>
                 
+                    <li><a class="toctree-l4" href="#size-classes">Size Classes </a></li>
+                
                     <li><a class="toctree-l4" href="#view-properties">View Properties </a></li>
+                
+                    <li><a class="toctree-l4" href="#navigation-bar-properties">Navigation Bar Properties </a></li>
                 
                     <li><a class="toctree-l4" href="#z-index">Z-Index </a></li>
                 
@@ -146,7 +150,8 @@
               
                 <h1 id="writing-layouts">Writing Layouts</h1>
 <h2 id="format">Format <a name="format"></a></h2>
-<p>EverLayout uses parsers to translate layouts from JSON data. </p>
+<p>EverLayout uses a collection of parser protocols to retrieve the pertinent layout information from your layout files.
+Theoretically, layouts can be written in any format as long as you can provide working parsers.</p>
 <p>The following documentation demonstrates how to use EverLyout to write layouts for the default
 JSON parsers, however if you're interested
 in writing layouts using a different format or general structure, read <a href="/EverLayout/formats">Layout Formats</a>
@@ -156,21 +161,28 @@ to see how to write your own parsers.</p>
 <pre><code>{
     &quot;name&quot;:&quot;SimpleLayout&quot;,
     &quot;root&quot;:{...},
-    &quot;templates&quot;:{...}
+    &quot;templates&quot;:{...},
+    &quot;controllerTitle&quot;:&quot;My App!&quot;,
+    &quot;navigationBar&quot;:{...}
 }
 </code></pre>
 
-<p>Only 3 properties are currently read in the Layout Index:</p>
+<p>5 properties are currently read in the Layout Index:</p>
 <ul>
 <li><code>name</code> The layout name. So far this is only used 
 to route layout updates when developing with EverLayout Bridge.</li>
 <li><code>root</code> Layouts are built on UIViews, which become the 'root view'
-of the layout I.E This is where the layout begins.</li>
-<li><code>templates</code> EverLayout supports templates which are reusable throughout the entire layout.</li>
+of the layout. This will most typically be your View Controller's view.</li>
+<li><code>templates</code> EverLayout supports templates which are reusable throughout the entire layout.
+Think of these as super-classes for your view models.</li>
+<li><code>controllerTitle</code> If your layout is built on a view contained in a <code>UINavigationController</code>, this
+property will set the title of the <code>UINavigationBar</code>.</li>
+<li><code>navigationBar</code> Responsible for setting other <code>UINavigationBar</code> properties.</li>
 </ul>
-<h2 id="the-view-model">The View Model <a name="view-mmodel"></a></h2>
+<h2 id="the-view-model">The View Model <a name="view-model"></a></h2>
 <p>The view model contains layout data for individual UIViews.</p>
 <pre><code>{
+    &quot;template&quot;:&quot;exampleTemplate&quot;,
     &quot;constraints&quot;:{...},
     &quot;properties&quot;:{...},
     &quot;z-index&quot;:&quot;2&quot;,
@@ -179,6 +191,7 @@ of the layout I.E This is where the layout begins.</li>
 </code></pre>
 
 <ul>
+<li><code>template</code> See <a href="#templates">Templates</a></li>
 <li><code>constraints</code> See <a href="#writing-constraints">Writing Constraints</a></li>
 <li><code>properties</code> See <a href="#view-properties">View Properties</a></li>
 <li><code>z-index</code> See <a href="#z-index">Z-Index</a></li>
@@ -190,24 +203,25 @@ has a name and is expressed as a subview of another view in this layout.</p>
 <pre><code>{
     ...
     &quot;views&quot;:{
-        &quot;subviewName&quot;:{
-            ...
+        &quot;actionButton&quot;:{
+            // View model data
         }
     }
 }
 </code></pre>
 
-<p>The key being the view's name, and the value its <a href="#view-model">view model</a>.</p>
-<p>Given the sample, EverLayout would scan this layout's view environment
-for a property with this name. If it finds one, it will 
+<p>The key in the key-value pair is the view's name, and the value is its <a href="#view-model">view model</a>.</p>
+<p>In the sample, EverLayout would scan this layout's view environment
+for a property with the name 'actionButton'. If it finds one, it will 
 map this view model to that UIView, including adding it as 
 a subview.</p>
-<p>If EverLayout is unable to find the view, it will move on.</p>
+<p>If EverLayout is unable to find the view, it will attempt to find 
+the property in the environment's super-classes, before moving on. </p>
 <h2 id="creating-new-views">Creating New Views <a name="creating-views"></a></h2>
 <p>The default behaviour for EverLayout is to find the view being referenced
 by scanning the properties of its view environment. However in 
 some cases you may wish to create new views from inside the layout 
-file and have them become a part of your layout hierarchy.</p>
+file and have them become a part of your view hierarchy.</p>
 <p>This means:</p>
 <ul>
 <li>You can create basic views to test layout ideas without having to
@@ -218,10 +232,10 @@ no longer need to be described in your code.</li>
 having to update your code and re-submit your app.</li>
 </ul>
 <p>If your view name is prefixed with <code>!</code>, it will be considered a
-'new view' and created during the layout build.</p>
+'new view' and created during the build process.</p>
 <pre><code>{
     &quot;!newWrapperView&quot;:{
-        ...
+        // View model data
     }
 }
 </code></pre>
@@ -246,10 +260,11 @@ specify your application namespace, like so:</p>
 <p>EverLayout uses AutoLayout constraints to position its elements.
 The constraints for each view are generated during the layout
 build based on key-value rules in the view model.</p>
-<p>The constraints are written as key-value pairs; The key denotes which attributes 
-to constrain, and the value is a representation of the layout arguments to apply
-to each of these attributes.</p>
 <p>The constraint arguments can be written in comprehensive and shorthand formats.</p>
+<p>Shorthand constraints are written as key-value pairs; The key denotes which attributes 
+to constrain, and the value is a representation of the layout arguments to apply
+to each of these attributes. The syntax for shorthand constraints may be difficult to read at first,
+but after becoming familiar with this approach, layout design will be a much quicker process.</p>
 <h4 id="comprehensive">Comprehensive</h4>
 <pre><code>{
     &quot;constraints&quot;:{
@@ -299,12 +314,13 @@ their counterparts in the superview.</p>
 right edges to the superview with an 8 unit inset, and then gives this view a height 
 of half the superview height.</p>
 <p>In the attribute declarations (the key), and the shorthand arguments (the value), each argument
-is separated by a " ".</p>
+is space separated.</p>
 <p>For the left-hand statement, any NSLayoutAttribute is valid 
 along with some additional 'compound attributes'.</p>
 <ul>
 <li><code>edges</code> Translates to <code>top</code> <code>left</code> <code>right</code> <code>bottom</code></li>
 <li><code>center</code> Translates to <code>centerX</code> <code>centerY</code></li>
+<li><code>margins</code> Translates to <code>marginLeft</code> <code>marginRight</code></li>
 </ul>
 <p>The right-hand statement can have many arguments, each denoted by
 a modifier character in shorthand.</p>
@@ -313,12 +329,13 @@ a modifier character in shorthand.</p>
 <li><code>attribute</code> / <code>.</code> A dot separator can be added to a target name to specify 
 an NSLayoutAttribute of that view to target (e.g <code>@viewName.right</code>)</li>
 <li><code>constant</code> / <code>+</code> / <code>-</code> A constant (positive or negative)</li>
-<li><code>inset</code> / <code>&lt;</code> An inset constant, which is basically a constant where <code>+</code> and <code>-</code> are inferred from content</li>
+<li><code>inset</code> / <code>&lt;</code> An inset constant, which is basically a constant where <code>+</code> and <code>-</code> are inferred from context</li>
 <li><code>multiplier</code> / <code>*</code> / <code>/</code> A multiplier or convenience divider</li>
 <li><code>identifier</code> / <code>!</code> Constraint identifier (for debugging)</li>
 <li><code>relation</code> / <code>%</code> A relation (e.g <code>%&gt;=</code> creates a 'greater than or equal to' relation). Comprehensive
 values are <code>gte</code> and <code>lte</code>.</li>
 <li><code>priority</code> / <code>$</code> A constraint priority</li>
+<li><code>identifier</code> / <code>!</code> Give the constraints an identifier to more easily identify them in the console</li>
 </ul>
 <p><strong>Note:</strong>
 EverLayout will try to infer missing constraint properties based
@@ -348,14 +365,73 @@ an array of the comprehensive and shorthand arguments described above.</p>
 }
 </code></pre>
 
+<h2 id="size-classes">Size Classes <a name="size-classes"></a></h2>
+<p>A single layout file can support multiple screen sizes/orientations by allowing the activation
+and deactivation of layout constraints dependant on size classes. </p>
+<p>Size classes are applied as regular constraint properties as demonstrated above but will prevent 
+the activation of the constraint unless the view we're working with matches the specified size classes.</p>
+<p>Like the other properties, the size classes have both comprehensive and shorthand syntax.</p>
+<ul>
+<li><code>horizontalSizeClass / h</code></li>
+<li><code>verticalSizeClass / c</code></li>
+</ul>
+<p>with value options:</p>
+<ul>
+<li><code>regular / r</code></li>
+<li><code>compact / c</code></li>
+</ul>
+<pre><code>{
+    &quot;constraints&quot;:{
+        &quot;width height&quot;:[
+            &quot;+50 hc vc&quot;,
+            &quot;+100 hr vc&quot;
+        ]
+    }
+}
+</code></pre>
+
+<pre><code>{
+    &quot;constraints&quot;:{
+        &quot;width height&quot;:{
+            [
+                &quot;constant&quot;:50,
+                &quot;horizontalSizeClass&quot;:&quot;compact&quot;,
+                &quot;verticalSizeClass&quot;:&quot;compact&quot;
+            ],
+            [
+                &quot;constant&quot;:100,
+                &quot;horizontalSizeClass&quot;:&quot;compact&quot;,
+                &quot;verticalSizeClass&quot;:&quot;regular&quot;
+            ]
+        }
+    }
+}
+</code></pre>
+
+<p>The examples above will constrain the view to a width and height of 50 points
+in a horizontal iPhone, and the same view to a width and height of 100 points in a vertical
+iPhone.</p>
+<h3 id="updating-trait-collection-at-runtime">Updating trait collection at runtime</h3>
+<p>If the case of having different constraints for device orientations, you'll want to be able to update
+the layout at runtime when the trait collection updates. You can do this by overriding 
+<code>willTransitionToNewCollection</code>.</p>
+<pre><code>    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+
+        self.layout.updateConstraints(withTraitColelction: newCollection)
+    }
+</code></pre>
+
 <h2 id="view-properties">View Properties <a name="view-properties"></a></h2>
 <p>Some properties of UIView (and its subclasses) have been made settable
 in the layout files. You can set these under <code>properties</code> in the view model.</p>
 <p>These are the properties currently available:</p>
 <p><strong> UIView </strong></p>
 <ul>
+<li><code>frame</code> Value is passed into CGRectFromString</li>
 <li><code>backgroundColor</code> Color can be the name of the color (<code>red</code>) or a hex 
 string (<code>#333333</code>).</li>
+<li><code>hidden</code> (isHidden)</li>
 <li><code>cornerRadius</code> Translates to <code>layer.cornerRadius</code></li>
 <li><code>borderWidth</code> Translates to <code>layer.borderWidth</code></li>
 <li><code>borderColor</code> Translates to <code>layer.borderColor</code></li>
@@ -376,6 +452,7 @@ string (<code>#333333</code>).</li>
 <p><strong> UIButton </strong></p>
 <ul>
 <li><code>text</code> Translates to a call to setTitle(...)</li>
+<li><code>fontSize</code></li>
 <li><code>textColor</code> Translates to a call to setTitleColor(...)</li>
 <li><code>backgroundImage</code> Translates to a call to setBackgroundImage(...)</li>
 <li><code>image</code> Translates to a call to setImage(...)</li>
@@ -394,6 +471,27 @@ for development, but probably not practical for production).</li>
 <p><strong> UITextField </strong></p>
 <ul>
 <li><code>placeholder</code></li>
+</ul>
+<h2 id="navigation-bar-properties">Navigation Bar Properties <a name="navigation-bar"></a></h2>
+<p>If your root view is contained within a <code>UINavigationController</code>, you can set properties
+for the UINavigationBar within your view index, like so:</p>
+<pre><code>{
+    &quot;name&quot;:&quot;layout-name&quot;,
+    &quot;root&quot;:{
+        ...
+    },
+    &quot;navigaitonBar&quot;:{
+        // Properties
+    }
+}
+</code></pre>
+
+<p>These are the available properties:</p>
+<ul>
+<li><code>textColor</code></li>
+<li><code>translucent</code></li>
+<li><code>backgroundColor</code></li>
+<li><code>tintColor</code></li>
 </ul>
 <h2 id="z-index">Z-Index <a name="z-index"></a></h2>
 <p>The order in which EverLayout adds subviews is not always clear. If you
@@ -481,7 +579,7 @@ from the template <code>button</code>. </p>
 
 <h2 id="data-injection">Data Injection <a name="data-injection"></a></h2>
 <p>'Data Injection' is a glorified 'Find and Replace' on your source layout
-data. You can mark 'variables' in your layout files like so:</p>
+data. You can mark 'variables' in your layout files like so: <code>#{propertyName}</code></p>
 <pre><code>{
     &quot;viewName&quot;:{
         &quot;properties&quot;:{

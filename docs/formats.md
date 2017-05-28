@@ -14,17 +14,15 @@ conforming to a few protocols.
 
 ## Using these parsers
 
-EverLayout can be instantiated with a configuration argument which specifies which parsers to
-use.
+The parsing of a layout always starts with its index, or the `LayoutIndexParser`.
+When a parser returns a data model, it is responsible for ensuring that the model has
+access to its own appropriate parser.
+
+To use your own parsers, you can pass an `LayoutIndexParser` when instantiating 
+EverLayout.
 
 ```
-self.layout = EverLayout(layoutData: layoutData, parserConfiguration: EverLayoutConfiguration(
-            indexParser: LayoutIndexXMLParser(),
-            viewParser: LayoutViewXMLParser(),
-            constraintParser: LayoutConstraintXMLParser(),
-            propertyParser: LayoutPropertyXMLParser()))
-self.layout.buildLayout(onView: self.view, viewEnvironment: self)
-
+	self.layout = EverLayout(layoutData: data , indexParser: myYamlIndexParser)
 ```
 
 ## Notes

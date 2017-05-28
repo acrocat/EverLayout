@@ -81,6 +81,9 @@
                 <li class="toctree-l3"><a href="#everlayoutdelegate">EverLayoutDelegate </a></li>
                 
             
+                <li class="toctree-l3"><a href="#updating-constraints">Updating Constraints </a></li>
+                
+            
             </ul>
         
     </li>
@@ -139,14 +142,14 @@
 </code></pre>
 
 <p>A layout is initialized with a <code>Data</code> object. Generally layout 
-data would be stored in a file a loaded in from the Bundle, or the layout
+data would be stored in a file loaded in from the Bundle, or the layout
 can be downloaded from a server.</p>
 <p>The only requirement here is that your layout is correctly formatted for
 the parser. By default, EverLayout uses a <a href="../writing/#format">JSON</a> parser,
 but you can make your own parsers for any language by conforming
 to the different <code>LayoutParser</code> protocols.</p>
 <h1 id="building-layout">Building Layout</h1>
-<pre><code>    self.layout!.buildLayout(onView: self.view, viewEnvironment: self)
+<pre><code>    self.layout!.build(onView: self.view, viewEnvironment: self)
 </code></pre>
 
 <p>Building a layout requires a root view (see <a href="../writing/#layout-index">layout Index</a>)
@@ -160,16 +163,14 @@ If the layout is deallocated, EverLayout Bridge won't be able to update it.</p>
 referenced in the layout file. For instance, in a View Controller, you would
 want the root view of your layout to be the controller's view, but the controller
 itself is the object containing the other views in your layout.</p>
-<pre><code>    class ViewController : UIViewController
-    {
+<pre><code>    class ViewController : UIViewController {
         private var layout : EverLayout(...)
         public let viewInLayout : UIView = UIView()
 
-        override func viewDidLoad ()
-        {
+        override func viewDidLoad () {
             super.viewDidLoad()
 
-            self.layout!.buildLayout(onView: self.view, viewEnvironment: self)
+            self.layout!.build(onView: self.view, viewEnvironment: self)
         }
     }
 </code></pre>
@@ -189,22 +190,22 @@ itself is the object containing the other views in your layout.</p>
 <p>In the above example, EverLayout will use the ViewController as the View Environment
 and find <code>viewInLayout</code> as a property. During the build process it will
 add this view to the root.</p>
+<p>As EverLayout is looking for an NSObject as a View Environment, you can alternatively
+use an NSDictionary to directly pass the views into the layout. This is
+helpful when using loading layouts dynamically.</p>
 <pre><code>    let viewEnvironment : NSDictionary = [
         &quot;viewInLayout&quot;: UIView()
     ]
 
-    self.layout?.buildLayout(onView: self , viewEnvironment: viewEnvironment)
+    self.layout?.build(onView: self , viewEnvironment: viewEnvironment)
 </code></pre>
 
-<p>As EverLayout is looking for an NSObject as a View Environment, you can alternatively
-use an NSDictionary to directly pass the views into the layout. This is
-helpful when using sub-layouts.</p>
 <p><strong> Note </strong>
  - <code>NSDictionary</code> can be used because it is a subclass of NSObject. The Swift
  <code>Dictionary</code> is not and will not work.</p>
 <p><strong> Note </strong>
  - Properties accessed from the View Environment must be <code>public</code>, otherwise
- you will likely face a crash.</p>
+ you will likely crash and the world will come to an end.</p>
 <h1 id="view-index">View Index <a name="view-index"></a></h1>
 <p>A View Index is created by the layout when it builds. The View Index keeps
 track of all the views created in the layout and allows you to access
@@ -220,6 +221,20 @@ creating new views (see <a href="../writing/#creating-views">Creating Views</a>)
 which is called when a layout successfully builds on a view.</p>
 <p><strong> Note </strong> 
  - Make sure you set the <code>delegate</code> before building the layout.</p>
+<h1 id="updating-constraints">Updating Constraints <a name="updating-constraints"></a></h1>
+<p>During runtime you may wish to update the constant or multiplier on a constraint
+created in EverLayout. In <code>layoutDidBuild</code> you can access these constraints in various ways.</p>
+<pre><code>func layout(_ layout: EverLayout, didLoadOnView view: UIView) {
+    if let myView = self.layout.viewIndex.viewModel(forKey: &quot;myView&quot;) {
+        if let heightConstraint = myView.getConstraints(forAttribute: .height).first {
+            heightConstraint.constant = 120
+        }
+    }
+}
+</code></pre>
+
+<p>You can target constraints belonging to a view model by both their attributes
+and their identifiers.</p>
               
             </div>
           </div>

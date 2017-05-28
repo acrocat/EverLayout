@@ -29,7 +29,7 @@ pod 'Everlayout'
 Create a Cartfile that lists the framework and run carthage update.
 
 ```
-github "acrocat/EverLayout
+github "acrocat/EverLayout"
 ```
 
 #### EverLayout Bridge
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         
         let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: "ViewController", ofType: "json", inDirectory: "Layouts")!) as! Data
         self.layout = EverLayout(layoutData: layoutData)
-        self.layout?.buildLayout(onView: self.view, viewEnvironment: self)
+        self.layout?.build(onView: self.view, viewEnvironment: self)
     }
 }
 ```
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
 Here I am running a blank application in the simulator side-by-side
 with a ViewController layout described in JSON, which is loaded by the default
 View Controller. The app has connected to EverLayout Bridge 
-which is serving it layout updates every time I save the layout file.
+which is serving layout updates every time I save the layout file.
 
 Every time I update the JSON, the App clears and rebuilds the 
 layout with the new data.
@@ -126,8 +126,3 @@ layouts described with code.
 ## Further Reading
 
 [Building and distributing iOS Layouts with EverLayout](https://hackernoon.com/building-and-distributing-ios-layouts-with-everlayout-c9ea41750f6#.b41s5bsh7)
-
-## Dependencies
-
- EverLayout currently uses [Socket.IO](https://github.com/socketio/socket.io-client-swift)
- to communicate with the EverLayout Bridge for live update.

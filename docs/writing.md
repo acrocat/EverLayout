@@ -1,6 +1,7 @@
 # Writing Layouts
 ##Format <a name="format"></a>
-EverLayout uses parsers to translate layouts from JSON data. 
+EverLayout uses a collection of parser protocols to retrieve the pertinent layout information from your layout files.
+Theoretically, layouts can be written in any format as long as you can provide working parsers.
 
 The following documentation demonstrates how to use EverLyout to write layouts for the default
 JSON parsers, however if you're interested
@@ -13,23 +14,30 @@ The layout index is the root of every layout model.
 {
 	"name":"SimpleLayout",
 	"root":{...},
-	"templates":{...}
+	"templates":{...},
+	"controllerTitle":"My App!",
+	"navigationBar":{...}
 }
 ```
 
-Only 3 properties are currently read in the Layout Index:
+5 properties are currently read in the Layout Index:
 
 * `name` The layout name. So far this is only used 
 to route layout updates when developing with EverLayout Bridge.
 * `root` Layouts are built on UIViews, which become the 'root view'
-of the layout I.E This is where the layout begins.
+of the layout. This will most typically be your View Controller's view.
 * `templates` EverLayout supports templates which are reusable throughout the entire layout.
+Think of these as super-classes for your view models.
+* `controllerTitle` If your layout is built on a view contained in a `UINavigationController`, this
+property will set the title of the `UINavigationBar`.
+* `navigationBar` Responsible for setting other `UINavigationBar` properties.
 
-## The View Model <a name="view-mmodel"></a>
+## The View Model <a name="view-model"></a>
 
 The view model contains layout data for individual UIViews.
 ```
 {
+	"template":"exampleTemplate",
 	"constraints":{...},
 	"properties":{...},
 	"z-index":"2",
@@ -37,6 +45,7 @@ The view model contains layout data for individual UIViews.
 }
 ```
 
+* `template` See [Templates](#templates)
 * `constraints` See [Writing Constraints](#writing-constraints)
 * `properties` See [View Properties](#view-properties)
 * `z-index` See [Z-Index](#z-index)
@@ -51,28 +60,29 @@ has a name and is expressed as a subview of another view in this layout.
 {
 	...
 	"views":{
-		"subviewName":{
-			...
+		"actionButton":{
+			// View model data
 		}
 	}
 }
 ```
 
-The key being the view's name, and the value its [view model](#view-model).
+The key in the key-value pair is the view's name, and the value is its [view model](#view-model).
 
-Given the sample, EverLayout would scan this layout's view environment
-for a property with this name. If it finds one, it will 
+In the sample, EverLayout would scan this layout's view environment
+for a property with the name 'actionButton'. If it finds one, it will 
 map this view model to that UIView, including adding it as 
 a subview.
 
-If EverLayout is unable to find the view, it will move on.
+If EverLayout is unable to find the view, it will attempt to find 
+the property in the environment's super-classes, before moving on. 
 
 ## Creating New Views <a name="creating-views"></a>
 
 The default behaviour for EverLayout is to find the view being referenced
 by scanning the properties of its view environment. However in 
 some cases you may wish to create new views from inside the layout 
-file and have them become a part of your layout hierarchy.
+file and have them become a part of your view hierarchy.
 
 This means:
 
@@ -84,12 +94,12 @@ no longer need to be described in your code.
 having to update your code and re-submit your app.
 
 If your view name is prefixed with `!`, it will be considered a
-'new view' and created during the layout build.
+'new view' and created during the build process.
 
 ```
 {
 	"!newWrapperView":{
-		...
+		// View model data
 	}
 }
 ```
@@ -122,11 +132,13 @@ EverLayout uses AutoLayout constraints to position its elements.
 The constraints for each view are generated during the layout
 build based on key-value rules in the view model.
 
-The constraints are written as key-value pairs; The key denotes which attributes 
-to constrain, and the value is a representation of the layout arguments to apply
-to each of these attributes.
-
 The constraint arguments can be written in comprehensive and shorthand formats.
+
+Shorthand constraints are written as key-value pairs; The key denotes which attributes 
+to constrain, and the value is a representation of the layout arguments to apply
+to each of these attributes. The syntax for shorthand constraints may be difficult to read at first,
+but after becoming familiar with this approach, layout design will be a much quicker process.
+
 
 #### Comprehensive
 
@@ -187,13 +199,14 @@ right edges to the superview with an 8 unit inset, and then gives this view a he
 of half the superview height.
 
 In the attribute declarations (the key), and the shorthand arguments (the value), each argument
-is separated by a " ".
+is space separated.
 
 For the left-hand statement, any NSLayoutAttribute is valid 
 along with some additional 'compound attributes'.
 
 * `edges` Translates to `top` `left` `right` `bottom`
 * `center` Translates to `centerX` `centerY`
+* `margins` Translates to `marginLeft` `marginRight`
 
 The right-hand statement can have many arguments, each denoted by
 a modifier character in shorthand.
@@ -202,12 +215,13 @@ a modifier character in shorthand.
 * `attribute` / `.` A dot separator can be added to a target name to specify 
 an NSLayoutAttribute of that view to target (e.g `@viewName.right`)
 * `constant` / `+` / `-` A constant (positive or negative)
-* `inset` / `<` An inset constant, which is basically a constant where `+` and `-` are inferred from content
+* `inset` / `<` An inset constant, which is basically a constant where `+` and `-` are inferred from context
 * `multiplier` / `*` / `/` A multiplier or convenience divider
 * `identifier` / `!` Constraint identifier (for debugging)
 * `relation` / `%` A relation (e.g `%>=` creates a 'greater than or equal to' relation). Comprehensive
 values are `gte` and `lte`.
 * `priority` / `$` A constraint priority
+* `identifier` / `!` Give the constraints an identifier to more easily identify them in the console
 
 **Note:**
 EverLayout will try to infer missing constraint properties based
@@ -243,6 +257,71 @@ an array of the comprehensive and shorthand arguments described above.
 }
 ```
 
+## Size Classes <a name="size-classes"></a>
+
+A single layout file can support multiple screen sizes/orientations by allowing the activation
+and deactivation of layout constraints dependant on size classes. 
+
+Size classes are applied as regular constraint properties as demonstrated above but will prevent 
+the activation of the constraint unless the view we're working with matches the specified size classes.
+
+Like the other properties, the size classes have both comprehensive and shorthand syntax.
+
+* `horizontalSizeClass / h`
+* `verticalSizeClass / c`
+
+with value options:
+
+* `regular / r`
+* `compact / c`
+
+```
+{
+	"constraints":{
+		"width height":[
+			"+50 hc vc",
+			"+100 hr vc"
+		]
+	}
+}
+```
+```
+{
+	"constraints":{
+		"width height":{
+			[
+				"constant":50,
+				"horizontalSizeClass":"compact",
+				"verticalSizeClass":"compact"
+			],
+			[
+				"constant":100,
+				"horizontalSizeClass":"compact",
+				"verticalSizeClass":"regular"
+			]
+		}
+	}
+}
+```
+
+The examples above will constrain the view to a width and height of 50 points
+in a horizontal iPhone, and the same view to a width and height of 100 points in a vertical
+iPhone.
+
+### Updating trait collection at runtime
+
+If the case of having different constraints for device orientations, you'll want to be able to update
+the layout at runtime when the trait collection updates. You can do this by overriding 
+`willTransitionToNewCollection`.
+
+```
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        self.layout.updateConstraints(withTraitColelction: newCollection)
+    }
+```
+
 ## View Properties <a name="view-properties"></a>
 
 Some properties of UIView (and its subclasses) have been made settable
@@ -252,8 +331,10 @@ These are the properties currently available:
 
 ** UIView **
 
+* `frame` Value is passed into CGRectFromString
 * `backgroundColor` Color can be the name of the color (`red`) or a hex 
 string (`#333333`).
+* `hidden` (isHidden)
 * `cornerRadius` Translates to `layer.cornerRadius`
 * `borderWidth` Translates to `layer.borderWidth`
 * `borderColor` Translates to `layer.borderColor`
@@ -274,6 +355,7 @@ string (`#333333`).
 ** UIButton **
 
 * `text` Translates to a call to setTitle(...)
+* `fontSize`
 * `textColor` Translates to a call to setTitleColor(...)
 * `backgroundImage` Translates to a call to setBackgroundImage(...)
 * `image` Translates to a call to setImage(...)
@@ -292,6 +374,30 @@ for development, but probably not practical for production).
 ** UITextField **
 
 * `placeholder`
+
+## Navigation Bar Properties <a name="navigation-bar"></a>
+
+If your root view is contained within a `UINavigationController`, you can set properties
+for the UINavigationBar within your view index, like so:
+
+```
+{
+	"name":"layout-name",
+	"root":{
+		...
+	},
+	"navigaitonBar":{
+		// Properties
+	}
+}
+```
+
+These are the available properties:
+
+* `textColor`
+* `translucent`
+* `backgroundColor`
+* `tintColor`
 
 ## Z-Index <a name="z-index"></a>
 
@@ -394,7 +500,7 @@ A view can inherit from multiple templates by passing the names into an array.
 ## Data Injection <a name="data-injection"></a>
 
 'Data Injection' is a glorified 'Find and Replace' on your source layout
-data. You can mark 'variables' in your layout files like so:
+data. You can mark 'variables' in your layout files like so: `#{propertyName}`
 
 ```
 {

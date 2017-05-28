@@ -66,8 +66,6 @@
                 
                     <li><a class="toctree-l4" href="#further-reading">Further Reading</a></li>
                 
-                    <li><a class="toctree-l4" href="#dependencies">Dependencies</a></li>
-                
             
             </ul>
         
@@ -157,7 +155,7 @@ pod 'Everlayout'
 
 <h4 id="carthage">Carthage</h4>
 <p>Create a Cartfile that lists the framework and run carthage update.</p>
-<pre><code>github &quot;acrocat/EverLayout
+<pre><code>github &quot;acrocat/EverLayout&quot;
 </code></pre>
 
 <h4 id="everlayout-bridge">EverLayout Bridge</h4>
@@ -200,7 +198,7 @@ class ViewController: UIViewController {
 
         let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: &quot;ViewController&quot;, ofType: &quot;json&quot;, inDirectory: &quot;Layouts&quot;)!) as! Data
         self.layout = EverLayout(layoutData: layoutData)
-        self.layout?.buildLayout(onView: self.view, viewEnvironment: self)
+        self.layout?.build(onView: self.view, viewEnvironment: self)
     }
 }
 </code></pre>
@@ -228,7 +226,7 @@ class ViewController: UIViewController {
 <p>Here I am running a blank application in the simulator side-by-side
 with a ViewController layout described in JSON, which is loaded by the default
 View Controller. The app has connected to EverLayout Bridge 
-which is serving it layout updates every time I save the layout file.</p>
+which is serving layout updates every time I save the layout file.</p>
 <p>Every time I update the JSON, the App clears and rebuilds the 
 layout with the new data.</p>
 <p>In the example I am just changing the properties of a UIView 
@@ -243,9 +241,6 @@ and the existing alternative of clunky layout code.</p>
 layouts described with code.</p>
 <h2 id="further-reading">Further Reading</h2>
 <p><a href="https://hackernoon.com/building-and-distributing-ios-layouts-with-everlayout-c9ea41750f6#.b41s5bsh7">Building and distributing iOS Layouts with EverLayout</a></p>
-<h2 id="dependencies">Dependencies</h2>
-<p>EverLayout currently uses <a href="https://github.com/socketio/socket.io-client-swift">Socket.IO</a>
- to communicate with the EverLayout Bridge for live update.</p>
               
             </div>
           </div>
@@ -292,5 +287,5 @@ layouts described with code.</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-03-22 17:25:59
+Build Date UTC : 2017-05-28 14:12:10
 -->
