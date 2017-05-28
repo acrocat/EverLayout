@@ -13,6 +13,12 @@ EverLayout translates JSON/XML data into iOS layouts which can be downloaded, re
 * Build layouts with real-time update using a simple HTTP server (or EverLayout Bridge).
 * A/B Testing - Testing multiple UIs with your users is easy when building a layout is just loading a file.
 
+## Docs
+
+More detailed documentation [here](https://acrocat.github.io/EverLayout/).
+
+The documentation was most recently updated for version 0.9.3.
+
 ## Requirements
 
 * iOS 8.0+
@@ -36,7 +42,7 @@ pod 'Everlayout'
 Create a Cartfile that lists the framework and run carthage update.
 
 ```
-github "acrocat/EverLayout
+github "acrocat/EverLayout"
 ```
 
 #### EverLayout Bridge
@@ -82,7 +88,7 @@ class ViewController: UIViewController {
         
         let layoutData = NSData(contentsOfFile: Bundle.main.path(forResource: "ViewController", ofType: "json", inDirectory: "Layouts")!) as! Data
         self.layout = EverLayout(layoutData: layoutData)
-        self.layout?.buildLayout(onView: self.view, viewEnvironment: self)
+        self.layout?.build(onView: self.view, viewEnvironment: self)
     }
 }
 ```
@@ -117,10 +123,6 @@ which is serving it layout updates ever time I save the layout file.
 In the example I am just changing the properties of a UIView 
 to show how layouts can be designed/built without having to re-compile
 the app.
-
-## Docs
-
-More detailed documentation [here](https://acrocat.github.io/EverLayout/).
 
 ## Discussion
 At the moment EverLayout is more of an experiment than a solution.
