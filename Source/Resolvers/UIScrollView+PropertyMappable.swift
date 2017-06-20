@@ -23,20 +23,20 @@
 import UIKit
 
 extension UIScrollView : ContentInsetMappable {
-    func mapContentInset(_ contentInset: String) {
+    @objc func mapContentInset(_ contentInset: String) {
         self.contentInset = UIEdgeInsetsFromString(contentInset)
     }
     
-    func getMappedContentInset() -> String? {
+    @objc func getMappedContentInset() -> String? {
         return NSStringFromUIEdgeInsets(self.contentInset) as String
     }
 }
 extension UIScrollView : ContentOffsetMappable {
-    func mapContentOffset(_ contentOffset: String) {
+    @objc func mapContentOffset(_ contentOffset: String) {
         self.contentOffset = CGPointFromString(contentOffset)
     }
     
-    func getMappedContentOffset() -> String? {
+    @objc func getMappedContentOffset() -> String? {
         return NSStringFromCGPoint(self.contentOffset) as String
     }
 }

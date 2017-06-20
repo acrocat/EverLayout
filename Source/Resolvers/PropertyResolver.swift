@@ -263,15 +263,15 @@ public class PropertyResolver
 }
 
 extension UIView {
-    open func applyViewProperty (viewProperty : ELViewProperty) {
+    @objc open func applyViewProperty (viewProperty : ELViewProperty) {
         PropertyResolver(view: self).apply(viewProperty: viewProperty)
     }
     
-    open func applyViewProperty (propertyName name : String , value : String) {
+    @objc open func applyViewProperty (propertyName name : String , value : String) {
         PropertyResolver(view: self).apply(propertyName: name, value: value)
     }
     
-    open func retrieveViewProperty (viewProperty : ELViewProperty) -> String? {
+    @objc open func retrieveViewProperty (viewProperty : ELViewProperty) -> String? {
         return PropertyResolver(view: self).retrieve(viewProperty: viewProperty)
     }
 }

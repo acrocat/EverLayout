@@ -27,77 +27,77 @@ import UIKit
 */
 
 extension UIView : FrameMappable {
-    func mapFrame(_ frame: String) {
+    @objc func mapFrame(_ frame: String) {
         self.frame = CGRectFromString(frame)
     }
     
-    func getMappedFrame() -> String? {
+    @objc func getMappedFrame() -> String? {
         return NSStringFromCGRect(self.frame) as String
     }
 }
 
 extension UIView : BackgroundColorMappable {
-    func mapBackgroundColor(_ color: String) {
+    @objc func mapBackgroundColor(_ color: String) {
         self.backgroundColor = UIColor.color(fromName: color) ?? UIColor(hex: color) ?? .clear
     }
     
-    func getMappedBackgroundColor() -> String? {
+    @objc func getMappedBackgroundColor() -> String? {
         return UIColor.name(ofColor: self.backgroundColor ?? .clear)
     }
 }
 extension UIView : HiddenMappable {
-    func mapHidden(_ hidden: String) {
+    @objc func mapHidden(_ hidden: String) {
         self.isHidden = (hidden.lowercased() == "true")
     }
     
-    func getMappedHidden() -> String? {
+    @objc func getMappedHidden() -> String? {
         return self.isHidden ? "true" : "false"
     }
 }
 extension UIView : CornerRadiusMappable {
-    func mapCornerRadius(_ cornerRadius: String) {
+    @objc func mapCornerRadius(_ cornerRadius: String) {
         self.layer.cornerRadius = cornerRadius.toCGFloat() ?? 0
     }
     
-    func getMappedCornerRadius() -> String? {
+    @objc func getMappedCornerRadius() -> String? {
         return self.layer.cornerRadius.description
     }
 }
 extension UIView : BorderWidthMappable {
-    func mapBorderWidth(_ borderWidth: String) {
+    @objc func mapBorderWidth(_ borderWidth: String) {
         self.layer.borderWidth = borderWidth.toCGFloat() ?? 0
     }
     
-    func getMappedBorderWidth() -> String? {
+    @objc func getMappedBorderWidth() -> String? {
         return self.layer.borderWidth.description
     }
 }
 extension UIView : BorderColorMappable {
-    func mapBorderColor(_ borderColor: String) {
+    @objc func mapBorderColor(_ borderColor: String) {
         self.layer.borderColor = UIColor.color(fromName: borderColor)?.cgColor ?? UIColor(hex: borderColor)?.cgColor
     }
     
-    func getMappedBorderColor() -> String? {
+    @objc func getMappedBorderColor() -> String? {
         guard let borderColor = self.layer.borderColor else { return nil }
         
         return UIColor.name(ofColor: UIColor(cgColor: borderColor))
     }
 }
 extension UIView : AlphaMappable {
-    func mapAlpha(_ alpha: String) {
+    @objc func mapAlpha(_ alpha: String) {
         self.alpha = alpha.toCGFloat() ?? 1
     }
     
-    func getMappedAlpha() -> String? {
+    @objc func getMappedAlpha() -> String? {
         return self.alpha.description
     }
 }
 extension UIView : ClipBoundsMappable {
-    func mapClipToBounds(_ clipToBounds: String) {
+    @objc func mapClipToBounds(_ clipToBounds: String) {
         self.clipsToBounds = (clipToBounds.lowercased() == "true")
     }
     
-    func getMappedClipToBounds() -> String? {
+    @objc func getMappedClipToBounds() -> String? {
         return  self.clipsToBounds ? "true" : "false"
     }
 }
@@ -120,14 +120,16 @@ extension UIView : ContentModeMappable {
         ]
     }
     
-    func mapContentMode(_ contentMode: String) {
+    @objc func mapContentMode(_ contentMode: String) {
         if let contentMode = self.contentModes[contentMode] {
             self.contentMode = contentMode
         }
     }
     
-    func getMappedContentMode() -> String? {
-        return self.contentModes.filter { (key , value) -> Bool in
+    @objc func getMappedContentMode() -> String? {
+        return self.contentModes.filter { (arg) -> Bool in
+            
+            let (key, value) = arg
             return value == self.contentMode
             }.first?.key
     }

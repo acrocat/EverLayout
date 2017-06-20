@@ -25,10 +25,10 @@ import UIKit
 public class ELViewProperty: ELRawData {
     public var propertyParser : LayoutPropertyParser!
     
-    public var name : String? {
+    @objc public var name : String? {
         return self.propertyParser.propertyName(source: self.rawData)
     }
-    public var value : String? {
+    @objc public var value : String? {
         return self.propertyParser.propertyValue(source: self.rawData)
     }
     
@@ -38,7 +38,7 @@ public class ELViewProperty: ELRawData {
         self.propertyParser = parser
     }
     
-    public func applyToView (viewModel : ELViewModel) {
+    @objc public func applyToView (viewModel : ELViewModel) {
         guard let target = viewModel.target else { return }
         
         self.cacheExistingProperty(forView: viewModel)
@@ -46,7 +46,7 @@ public class ELViewProperty: ELRawData {
         target.applyViewProperty(viewProperty: self)
     }
     
-    public func applyToView (view : UIView) {
+    @objc public func applyToView (view : UIView) {
         view.applyViewProperty(viewProperty: self)
     }
     

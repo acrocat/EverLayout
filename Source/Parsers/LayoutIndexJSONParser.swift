@@ -34,7 +34,7 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
     {
         guard let source = source as? Data else { return nil }
         
-        return JSON(data: source).dictionary
+        return JSON(source).dictionary
     }
     
     /// Parse the name of the layout
@@ -84,10 +84,11 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
         guard let source = self.parseData(source: source) else { return nil }
         guard let jsonData = source[LayoutIndexJSONParser.KEY_NAVBAR_PROPERTIES]?.dictionary else { return nil }
         
-        return jsonData.map({ (key , value) -> ELViewProperty? in
-            guard let value = value.string else { return nil }
+        return jsonData.map({ (arg) -> ELViewProperty? in
+            let (key , value) = arg
+            guard let stringValue = value.string else { return nil }
             
-            return ELViewProperty(rawData: (key , value), parser: LayoutPropertyJSONParser())
+            return ELViewProperty(rawData: (key , stringValue), parser: LayoutPropertyJSONParser())
         })
     }
     

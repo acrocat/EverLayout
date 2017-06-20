@@ -26,7 +26,7 @@ public class ELConstraint: NSLayoutConstraint {
     public var horizontalSizeClass : UIUserInterfaceSizeClass?
     public var verticalSizeClass : UIUserInterfaceSizeClass?
     
-    internal func setActiveForTraitCollection (_ traitCollection : UITraitCollection) {
+    @objc internal func setActiveForTraitCollection (_ traitCollection : UITraitCollection) {
         func _checkSizeClasses (s1 : UIUserInterfaceSizeClass? , s2 : UIUserInterfaceSizeClass?) -> Bool {
             return (s1 == s2) || s1 == .unspecified
         }

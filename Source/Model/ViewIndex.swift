@@ -42,14 +42,14 @@ public class ViewIndex: NSObject {
     /// The view on which everything in this layout is built
     ///
     /// - Returns: Root View model
-    public func rootViewModel () -> ELViewModel? {
+    @objc public func rootViewModel () -> ELViewModel? {
         return self.contents.first?.value
     }
     
     /// The root view's actual UIView
     ///
     /// - Returns: Root View
-    public func rootView () -> UIView? {
+    @objc public func rootView () -> UIView? {
         return self.rootViewModel()?.target
     }
     
@@ -57,7 +57,7 @@ public class ViewIndex: NSObject {
     ///
     /// - Parameter key: ID
     /// - Returns: UIView for this key
-    public func view (forKey key : String) -> UIView? {
+    @objc public func view (forKey key : String) -> UIView? {
         return self.contents[key]??.target
     }
     
@@ -65,7 +65,7 @@ public class ViewIndex: NSObject {
     ///
     /// - Parameter key: ID
     /// - Returns: ELViewModel
-    public func viewModel (forKey key : String) -> ELViewModel? {
+    @objc public func viewModel (forKey key : String) -> ELViewModel? {
         if let viewModel = self.contents[key] {
             return viewModel
         }
@@ -76,7 +76,7 @@ public class ViewIndex: NSObject {
     /// Get array of all constraints that are described by the views in this index
     ///
     /// - Returns: [ELConstraintModel]
-    public func getAllConstraints () -> [ELConstraintModel] {
+    @objc public func getAllConstraints () -> [ELConstraintModel] {
         var allConstraints : [ELConstraintModel] = []
         
         for (_ , viewModel) in self.contents {
@@ -95,7 +95,7 @@ public class ViewIndex: NSObject {
     /// - Parameters:
     ///   - key: The ID to uniquely identify this model
     ///   - viewModel: Model to be added
-    public func addViewModel (forKey key : String , viewModel : ELViewModel) {
+    @objc public func addViewModel (forKey key : String , viewModel : ELViewModel) {
         if self.contents.keys.contains(key) {
             // Element with this key already exists in the contents
             // TODO: Throw a warning
@@ -105,7 +105,7 @@ public class ViewIndex: NSObject {
     }
     
     /// Remove all models
-    public func clear () {
+    @objc public func clear () {
         self.contents = [:]
     }
 }

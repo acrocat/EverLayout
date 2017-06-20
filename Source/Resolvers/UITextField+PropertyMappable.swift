@@ -23,11 +23,11 @@
 import UIKit
 
 extension UITextField : PlaceholderMappable {
-    func mapPlaceholder(_ placeholder: String) {
+    @objc func mapPlaceholder(_ placeholder: String) {
         self.placeholder = placeholder
     }
     
-    func getMappedPlaceholder() -> String? {
+    @objc func getMappedPlaceholder() -> String? {
         return self.placeholder ?? ""
     }
 }

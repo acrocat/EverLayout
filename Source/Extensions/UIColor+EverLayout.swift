@@ -14,7 +14,7 @@ extension UIColor
     ///
     /// - Parameter name: Color name
     /// - Returns: UIColor instance
-    internal static func color (fromName name : String) -> UIColor?
+    @objc internal static func color (fromName name : String) -> UIColor?
     {
         switch name
         {
@@ -53,7 +53,7 @@ extension UIColor
         }
     }
     
-    internal static func name (ofColor color : UIColor) -> String {
+    @objc internal static func name (ofColor color : UIColor) -> String {
         switch color {
             case UIColor.black:
                 return "black"
@@ -73,7 +73,7 @@ extension UIColor
                 return "green"
             case UIColor.lightGray:
                 return "lightGray"
-            case UIColor.magenta:	
+            case UIColor.magenta:    
                 return "magenta"
             case UIColor.orange:
                 return "orange"
@@ -94,7 +94,7 @@ extension UIColor
     ///
     /// - Parameter name: Hex String EG #333333
     /// - Returns: UIColor instance
-    convenience init?(hex: String) {
+    @objc convenience init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
         

@@ -47,7 +47,7 @@ struct ELReport
 
 class ELReporter: NSObject
 {
-    public static let `default`: ELReporter = ELReporter(config: [
+    @objc public static let `default`: ELReporter = ELReporter(config: [
             .logReports , .sendReportsToEverLayoutBridge
         ])
     
@@ -67,7 +67,7 @@ class ELReporter: NSObject
     /// Report a warning
     ///
     /// - Parameter message: warning message
-    public func warning (message : String)
+    @objc public func warning (message : String)
     {
         self.dispatchReport(ELReport(message: message, emphasis: .warning))
     }
@@ -75,7 +75,7 @@ class ELReporter: NSObject
     /// Report an error
     ///
     /// - Parameter message: error message
-    public func error (message : String)
+    @objc public func error (message : String)
     {
         self.dispatchReport(ELReport(message: message, emphasis: .error))
     }

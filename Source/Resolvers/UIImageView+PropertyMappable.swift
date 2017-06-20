@@ -23,7 +23,7 @@
 import UIKit
 
 extension UIImageView : ImageMappable {
-    func mapImage(_ image: String) {
+    @objc func mapImage(_ image: String) {
         var imageInstance = UIImage(named: image)
         
         if imageInstance == nil {

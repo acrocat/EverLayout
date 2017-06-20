@@ -27,15 +27,15 @@ open class EverLayout: ELRawData
     public weak var delegate : EverLayoutDelegate?
     public var indexParser : LayoutIndexParser!
     
-    private(set) public var viewIndex : ViewIndex = ViewIndex()
-    private(set) public var target : UIView?
-    private(set) public var viewEnvironment : NSObject?
-    private(set) public var injectedData : [String:String] = [:]
+    @objc private(set) public var viewIndex : ViewIndex = ViewIndex()
+    @objc private(set) public var target : UIView?
+    @objc private(set) public var viewEnvironment : NSObject?
+    @objc private(set) public var injectedData : [String:String] = [:]
     
-    public var layoutName : String? {
+    @objc public var layoutName : String? {
         return self.indexParser.layoutName(source: self.rawData)
     }
-    public var rootView : ELViewModel? {
+    @objc public var rootView : ELViewModel? {
         return self.indexParser.rootView(source: self.rawData)
     }
     public var layoutTemplates : [ELLayoutTemplate?]? {
@@ -44,7 +44,7 @@ open class EverLayout: ELRawData
     public var navigationBarProperties : [ELViewProperty?]? {
         return self.indexParser.navigationBarProperties(source: self.rawData)
     }
-    public var controllerTitle : String? {
+    @objc public var controllerTitle : String? {
         return self.indexParser.controllerTitle(source: self.rawData)
     }
     
@@ -68,7 +68,7 @@ open class EverLayout: ELRawData
     /// - Parameters:
     ///   - view: root view
     ///   - viewEnvironment: object containing UIView properties which are referenced in the layout
-    public func build (onView view : UIView , viewEnvironment: NSObject? = nil) {
+    @objc public func build (onView view : UIView , viewEnvironment: NSObject? = nil) {
         // WHAT IS HAPPENING HERE:
         // 1. We assign a target view for which to build on, and a view environment for which to reference.
         // 2. If data is being injected into this layout, we need to modify our raw data to represent this. This must happen before
@@ -219,7 +219,7 @@ open class EverLayout: ELRawData
     ///
     /// - Parameter name: Id of the template
     /// - Returns: Instance of ELLayoutTemplate if template is found
-    public func getTemplate (_ name : String) -> ELLayoutTemplate? {
+    @objc public func getTemplate (_ name : String) -> ELLayoutTemplate? {
         guard let templates = self.layoutTemplates else { return nil }
         
         if let index = templates.index(where: { (template) -> Bool in
@@ -234,7 +234,7 @@ open class EverLayout: ELRawData
     /// Set data to be injected when the layout is built
     ///
     /// - Parameter data: Dictionary of key-values for variables in the layout
-    public func injectDataIntoLayout (data : [String : String]) {
+    @objc public func injectDataIntoLayout (data : [String : String]) {
         // Store this data so that it can be applied when the layout in created
         for (name , val) in data {
             self.injectedData[name] = val
@@ -282,19 +282,23 @@ open class EverLayout: ELRawData
     // ---------------------------------------------------------------------------
     
     /// Clear the layout on the view
-    public func clear () {
-        self.viewIndex.contents.forEach { (_ , view) in
+    @objc public func clear () {
+        self.viewIndex.contents.forEach { (arg) in
+            
+            let (_, view) = arg
             view?.remove()
         }
     }
     
-    public func updateConstraints (withTraitColelction traitCollection : UITraitCollection) {
-        self.viewIndex.contents.forEach { (_ , viewModel) in
+    @objc public func updateConstraints (withTraitColelction traitCollection : UITraitCollection) {
+        self.viewIndex.contents.forEach { (arg) in
+            
+            let (_, viewModel) = arg
             viewModel?.updateConstraints(withTraitCollection: traitCollection)
         }
     }
     
-    public func refresh () {
+    @objc public func refresh () {
         for (_ , viewModel) in self.viewIndex.contents {
             viewModel?.applyAllViewProperties()
             viewModel?.establishAllConstraints(inLayout: self)
@@ -302,7 +306,7 @@ open class EverLayout: ELRawData
     }
     
     /// Clear the layout and rebuild it from layoutData
-    public func reload () {
+    @objc public func reload () {
         if let target = self.target , let viewEnvironment = self.viewEnvironment {
             self.build(onView: target, viewEnvironment: viewEnvironment)
         }

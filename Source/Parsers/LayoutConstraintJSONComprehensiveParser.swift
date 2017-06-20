@@ -103,7 +103,7 @@ class LayoutConstraintJSONComprehensiveParser: LayoutConstraintJSONParser , Layo
         return nil
     }
     
-    func comparableViewReference(source: Any) -> String? {
+    @objc func comparableViewReference(source: Any) -> String? {
         guard let source = self.parseSource(source: source) else { return nil }
         
         return source.rhs["to"]?.string
@@ -123,7 +123,7 @@ class LayoutConstraintJSONComprehensiveParser: LayoutConstraintJSONParser , Layo
         return LayoutConstraintJSONParser.COMP_SIZE_CLASS_KEYS[sizeClassKey]
     }
     
-    func identifier(source: Any) -> String? {
+    @objc func identifier(source: Any) -> String? {
         guard let source = self.parseSource(source: source) else { return nil }
         
         return source.rhs["identifier"]?.string

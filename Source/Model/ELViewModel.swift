@@ -26,10 +26,10 @@ public class ELViewModel: ELRawData
 {
     public var viewParser : LayoutViewParser!
     
-    public var id : String? {
+    @objc public var id : String? {
         return self.viewParser.viewId(source: self.rawData)
     }
-    public var templateClass : UIView.Type? {
+    @objc public var templateClass : UIView.Type? {
         return self.viewParser.viewSuperClass(source: self.rawData)
     }
     public var constraints : [ELConstraintModel?]? {
@@ -38,39 +38,39 @@ public class ELViewModel: ELRawData
     public var properties : [ELViewProperty?]? {
         return self.viewParser.viewProperties(source: self.rawData)
     }
-    public var zIndex : Int {
+    @objc public var zIndex : Int {
         return self.viewParser.viewZIndex(source: self.rawData)
     }
-    public var isNewElement : Bool {
+    @objc public var isNewElement : Bool {
         return self.viewParser.isNewElement(source: self.rawData)
     }
     public var subviews : [ELViewModel?]? {
         return self.viewParser.subviews(source: self.rawData)
     }
-    public var templateLayouts : [String]? {
+    @objc public var templateLayouts : [String]? {
         return self.viewParser.templateLayout(source: self.rawData)
     }
     
     // Actual constraints that are created when this view is built on a view
-    public var appliedConstraints : [ELConstraint] = []
+    @objc public var appliedConstraints : [ELConstraint] = []
     
     /// When the layout is built, the template data that this view requests is stored here
-    public var appliedTemplates : [ELLayoutTemplate] = []
+    @objc public var appliedTemplates : [ELLayoutTemplate] = []
     
     // We cache view properties when EverLayout writes new ones, so that they can be reversed if the layout is unloaded
-    public var cachedProperties : [String : String] = [:]
+    @objc public var cachedProperties : [String : String] = [:]
     
     // The view this model renders to
-    public var target : UIView?
+    @objc public var target : UIView?
     
     // The model that this view is a child of in the index
-    public var parentModel : ELViewModel?
+    @objc public var parentModel : ELViewModel?
     
     // The view is at the root of a layout file
-    public var isRoot : Bool = false
+    @objc public var isRoot : Bool = false
     
     // When a view is removed during a layout update, we mark it inactive so it won't show but its state will be preserved
-    public var isActive : Bool = true
+    @objc public var isActive : Bool = true
     
     public init (rawData : Any , parser : LayoutViewParser) {
         super.init(rawData: rawData)
@@ -78,7 +78,7 @@ public class ELViewModel: ELRawData
         self.viewParser = parser
     }
     
-    public func update (newData : Any) {
+    @objc public func update (newData : Any) {
         // Set new data
         self.rawData = newData
         
@@ -89,7 +89,7 @@ public class ELViewModel: ELRawData
     /// Toggle 'isActive' for each applied constraint depending on the new screen size
     ///
     /// - Parameter traitCollection: Trait collection to adjust constraints for
-    public func updateConstraints (withTraitCollection traitCollection : UITraitCollection) {
+    @objc public func updateConstraints (withTraitCollection traitCollection : UITraitCollection) {
         self.appliedConstraints.forEach { (constraint) in
             constraint.setActiveForTraitCollection(traitCollection)
         }
@@ -99,7 +99,7 @@ public class ELViewModel: ELRawData
     ///
     /// - Parameter attribute: NSLayoutAttribute to match
     /// - Returns: Array of ELConstraints
-    public func getConstraints (forAttribute attribute : NSLayoutAttribute) -> [ELConstraint] {
+    @objc public func getConstraints (forAttribute attribute : NSLayoutAttribute) -> [ELConstraint] {
         return self.appliedConstraints.filter({ (constraint) -> Bool in
             return constraint.firstAttribute == attribute
         })
@@ -109,7 +109,7 @@ public class ELViewModel: ELRawData
     ///
     /// - Parameter identifier: String identifier to match
     /// - Returns: Array of ELConstraints
-    public func getConstraints (forIdentifier identifier : String) -> [ELConstraint] {
+    @objc public func getConstraints (forIdentifier identifier : String) -> [ELConstraint] {
         return self.appliedConstraints.filter({ (constraint) -> Bool in
             return constraint.identifier == identifier
         })
@@ -129,7 +129,7 @@ public class ELViewModel: ELRawData
     ///
     /// - Parameter identifiers: Array of String identifiers
     /// - Returns: Array of ELConstraints that match
-    public func getConstraints (forIdentifiers identifiers : [String]) -> [ELConstraint] {
+    @objc public func getConstraints (forIdentifiers identifiers : [String]) -> [ELConstraint] {
         return self.appliedConstraints.filter({ (constraint) -> Bool in
             return identifiers.contains(constraint.identifier ?? "")
         })
@@ -167,19 +167,21 @@ public class ELViewModel: ELRawData
         return affectingProperties
     }
     
-    public func clearConstraints () {
+    @objc public func clearConstraints () {
         self.target?.removeConstraints(self.appliedConstraints)
         self.appliedConstraints = []
     }
     
-    public func resetViewProperties () {
+    @objc public func resetViewProperties () {
         // Reset the view properties to those that were cached
-        self.cachedProperties.forEach { (propName , propValue) in
+        self.cachedProperties.forEach { (arg) in
+            
+            let (propName, propValue) = arg
             self.target?.applyViewProperty(propertyName: propName, value: propValue)
         }
     }
     
-    public func establishAllConstraints (inLayout layout : EverLayout) {
+    @objc public func establishAllConstraints (inLayout layout : EverLayout) {
         guard let viewEnvironment = layout.viewEnvironment , self.isActive == true else { return }
         
         // Clear existing constraints
@@ -190,7 +192,7 @@ public class ELViewModel: ELRawData
         }
     }
     
-    public func applyAllViewProperties () {
+    @objc public func applyAllViewProperties () {
         // Reset the view properties
         self.resetViewProperties()
         
@@ -200,7 +202,7 @@ public class ELViewModel: ELRawData
         }
     }
     
-    public func remove () {
+    @objc public func remove () {
         if !self.isRoot {
             self.target?.removeFromSuperview()
         } else {

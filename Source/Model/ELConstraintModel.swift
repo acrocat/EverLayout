@@ -41,13 +41,13 @@ public class ELConstraintModel: ELRawData
     public var priority : CGFloat? {
         return self.constraintParser.priority(source: self.rawData)
     }
-    public var relation : NSLayoutRelation {
+    @objc public var relation : NSLayoutRelation {
         return self.constraintParser.relation(source: self.rawData) ?? .equal
     }
-    public var comparableViewReference : String? {
+    @objc public var comparableViewReference : String? {
         return self.constraintParser.comparableViewReference(source: self.rawData)
     }
-    public var identifier : String? {
+    @objc public var identifier : String? {
         return self.constraintParser.identifier(source: self.rawData)
     }
     public var verticalSizeClass : UIUserInterfaceSizeClass? {
@@ -64,7 +64,7 @@ public class ELConstraintModel: ELRawData
         self.constraintParser = parser
     }
     
-    public func establishConstraints (onView view : ELViewModel , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
+    @objc public func establishConstraints (onView view : ELViewModel , withViewIndex viewIndex : ViewIndex , viewEnvironment : NSObject? = nil) {
         guard let target = view.target else { return }
         
         for attr in self.leftSideAttributes ?? [] {
@@ -86,7 +86,7 @@ public class ELConstraintModel: ELRawData
             
             // Constraint priority
             if let priority = self.priority {
-                constraint.priority = UILayoutPriority(priority)
+                constraint.priority = UILayoutPriority(Float(priority))
             }
             
             // SizeClasses

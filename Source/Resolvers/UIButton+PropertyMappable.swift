@@ -23,36 +23,36 @@
 import UIKit
 
 extension UIButton : TextMappable {
-    func mapText(_ text: String) {
+    @objc func mapText(_ text: String) {
         self.setTitle(text, for: .normal)
     }
     
-    func getMappedText() -> String? {
+    @objc func getMappedText() -> String? {
         return self.title(for: .normal) ?? ""
     }
 }
 extension UIButton : FontSizeMappable {
-    func mapFontSize(_ fontSize: String) {
+    @objc func mapFontSize(_ fontSize: String) {
         self.titleLabel?.font = self.titleLabel?.font.withSize(fontSize.toCGFloat() ?? 16)
     }
     
-    func getMappedFontSize() -> String? {
+    @objc func getMappedFontSize() -> String? {
         return self.titleLabel?.font.pointSize.description
     }
 }
 extension UIButton : TextColorMappable {
-    func mapTextColor(_ color: String) {
+    @objc func mapTextColor(_ color: String) {
         self.setTitleColor(UIColor.color(fromName: color) ?? UIColor(hex: color), for: .normal)
     }
     
-    func getMappedTextColor() -> String? {
+    @objc func getMappedTextColor() -> String? {
         guard let color = self.titleColor(for: .normal) else { return nil }
         
         return UIColor.name(ofColor: color)
     }
 }
 extension UIButton : BackgroundImageMappable {
-    func mapBackgroundImage(_ image: String) {
+    @objc func mapBackgroundImage(_ image: String) {
         var imageInstance = UIImage(named: image)
         
         if imageInstance == nil {
@@ -63,7 +63,7 @@ extension UIButton : BackgroundImageMappable {
     }
 }
 extension UIButton : ImageMappable {
-    func mapImage(_ image: String) {
+    @objc func mapImage(_ image: String) {
         var imageInstance = UIImage(named: image)
         
         if imageInstance == nil {

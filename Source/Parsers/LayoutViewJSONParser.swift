@@ -133,10 +133,11 @@ class LayoutViewJSONParser: NSObject , LayoutViewParser
         guard let source = self.parseSource(source: source) else { return nil }
         guard let jsonData = source.viewData[LayoutViewJSONParser.KEY_PROPERTIES]?.dictionary else { return nil }
         
-        return jsonData.map({ (key , value) -> ELViewProperty? in
-            guard let value = value.string else { return nil }
+        return jsonData.map({ (arg) -> ELViewProperty? in
+            let (key,value) = arg
+            guard let stringValue = value.string else { return nil }
             
-            return ELViewProperty(rawData: (key , value) , parser : LayoutPropertyJSONParser())
+            return ELViewProperty(rawData: (key , stringValue) , parser : LayoutPropertyJSONParser())
         })
     }
     

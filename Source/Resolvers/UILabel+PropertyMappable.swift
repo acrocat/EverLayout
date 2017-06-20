@@ -27,20 +27,20 @@ import UIKit
 */
 
 extension UILabel : TextMappable {
-    func mapText(_ text: String) {
+    @objc func mapText(_ text: String) {
         self.text = text
     }
     
-    func getMappedText() -> String? {
+    @objc func getMappedText() -> String? {
         return self.text ?? ""
     }
 }
 extension UILabel : TextColorMappable {
-    func mapTextColor(_ color: String) {
+    @objc func mapTextColor(_ color: String) {
         self.textColor = UIColor.color(fromName: color) ?? UIColor(hex: color)
     }
     
-    func getMappedTextColor() -> String? {
+    @objc func getMappedTextColor() -> String? {
         return UIColor.name(ofColor: self.textColor)
     }
 }
@@ -56,14 +56,16 @@ extension UILabel : LineBreakModeMappable {
         ]
     }
     
-    func mapLineBreakMode(_ lineBreakMode: String) {
+    @objc func mapLineBreakMode(_ lineBreakMode: String) {
         if let breakMode = self.lineBreakModes[lineBreakMode] {
             self.lineBreakMode = breakMode
         }
     }
     
-    func getMappedLineBreakMode() -> String? {
-        return self.lineBreakModes.filter { (key , value) -> Bool in
+    @objc func getMappedLineBreakMode() -> String? {
+        return self.lineBreakModes.filter { (arg) -> Bool in
+            
+            let (key, value) = arg
             return value == self.lineBreakMode
             }.first?.key
     }
@@ -79,37 +81,39 @@ extension UILabel : TextAlignmentMappable {
         ]
     }
     
-    func mapTextAlignment(_ textAlignment: String) {
+    @objc func mapTextAlignment(_ textAlignment: String) {
         if let alignment = self.textAlignments[textAlignment] {
             self.textAlignment = alignment
         }
     }
     
-    func getMappedTextAlignment() -> String? {
-        return self.textAlignments.filter { (key , value) -> Bool in
+    @objc func getMappedTextAlignment() -> String? {
+        return self.textAlignments.filter { (arg) -> Bool in
+            
+            let (key, value) = arg
             return value == self.textAlignment
             }.first?.key
     }
 }
 extension UILabel : NumberOfLinesMappable {
-    func mapNumberOfLines(_ numberOfLines: String) {
+    @objc func mapNumberOfLines(_ numberOfLines: String) {
         if let linesInt = Int(numberOfLines) {
             self.numberOfLines = linesInt
         }
     }
     
-    func getMappedNumberOfLines() -> String? {
+    @objc func getMappedNumberOfLines() -> String? {
         return String(self.numberOfLines)
     }
 }
 extension UILabel : FontSizeMappable {
-    func mapFontSize(_ fontSize: String) {
+    @objc func mapFontSize(_ fontSize: String) {
         if let float = fontSize.toCGFloat() {
             self.font = self.font.withSize(float)
         }
     }
     
-    func getMappedFontSize() -> String? {
+    @objc func getMappedFontSize() -> String? {
         return String(describing: self.font.pointSize)
     }
 }

@@ -23,27 +23,27 @@
 import UIKit
 
 extension UINavigationBar : TextColorMappable {
-    func mapTextColor(_ color: String) {
+    @objc func mapTextColor(_ color: String) {
         guard let color = UIColor.color(fromName: color) ?? UIColor(hex: color) else { return }
         
         self.titleTextAttributes = [
-            NSForegroundColorAttributeName : color as Any
+            NSAttributedStringKey.foregroundColor.rawValue : color as Any
         ]
     }
     
-    func getMappedTextColor() -> String? {
-        guard let color = self.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor else { return nil }
+    @objc func getMappedTextColor() -> String? {
+        guard let color = self.titleTextAttributes?[NSAttributedStringKey.foregroundColor.rawValue] as? UIColor else { return nil }
         
         return UIColor.name(ofColor: color)
     }
 }
 
 extension UINavigationBar : TranslucentMappable {
-    func mapIsTranslucent(_ translucent: String) {
+    @objc func mapIsTranslucent(_ translucent: String) {
         self.isTranslucent = translucent.lowercased() == "true"
     }
     
-    func getMappedIsTranslucent() -> String? {
+    @objc func getMappedIsTranslucent() -> String? {
         return self.isTranslucent ? "true" : "false"
     }
 }
@@ -61,11 +61,11 @@ extension UINavigationBar {
 }
 
 extension UINavigationBar : TintColorMappable {
-    func mapTintColor(_ tintColor: String) {
+    @objc func mapTintColor(_ tintColor: String) {
         self.tintColor = UIColor.color(fromName: tintColor) ?? UIColor(hex: tintColor)
     }
     
-    func getMappedTintColor() -> String? {
+    @objc func getMappedTintColor() -> String? {
         return UIColor.name(ofColor: self.tintColor)
     }
 }

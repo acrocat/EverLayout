@@ -26,7 +26,7 @@ extension UIImage {
     /// Attempt to initialise UIImage with a remote image
     ///
     /// - Parameter address: URL in String
-    internal convenience init? (address : String) {
+    @objc internal convenience init? (address : String) {
         if let imageUrl = URL(string: address) {
             if let imageData = NSData(contentsOf: imageUrl) {
                 self.init(data: imageData as Data)

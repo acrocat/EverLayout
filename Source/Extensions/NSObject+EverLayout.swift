@@ -28,7 +28,7 @@ extension NSObject
     ///
     /// - Parameter key: property name to search for
     /// - Returns: The property you're looking for, or nada
-    open func property (forKey key : String) -> Any?
+    @objc open func property (forKey key : String) -> Any?
     {
         // Use reflection to make this a safe inspection of the object
         if self.checkForProperty(key) || self is NSDictionary
@@ -41,12 +41,14 @@ extension NSObject
         }
     }
     
-    internal func checkForProperty (_ name : String) -> Bool
+    @objc internal func checkForProperty (_ name : String) -> Bool
     {
         var mirror : Mirror? = Mirror(reflecting: self)
         while mirror != nil
         {
-            if mirror?.children.contains(where: { (property , value) -> Bool in
+            if mirror?.children.contains(where: { (arg) -> Bool in
+                
+                let (property, value) = arg
                 return property == name
             }) == true
             {

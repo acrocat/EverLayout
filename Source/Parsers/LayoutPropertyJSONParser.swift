@@ -34,12 +34,12 @@ class LayoutPropertyJSONParser: NSObject , LayoutPropertyParser
         )
     }
     
-    func propertyName (source: Any) -> String?
+    @objc func propertyName (source: Any) -> String?
     {
         return self.parseSource(source: source)?.lhs
     }
     
-    func propertyValue (source: Any) -> String?
+    @objc func propertyValue (source: Any) -> String?
     {
         return self.parseSource(source: source)?.rhs
     }

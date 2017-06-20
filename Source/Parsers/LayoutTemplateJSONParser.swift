@@ -11,7 +11,7 @@ import UIKit
 class LayoutTemplateJSONParser: NSObject , LayoutTemplateParser {
     // A template embodies a subset of what can be done inside a view model, so to parse this data
     // I will just pass them to a view parser
-    let viewParser : LayoutViewJSONParser = LayoutViewJSONParser()
+    @objc let viewParser : LayoutViewJSONParser = LayoutViewJSONParser()
     
     private func parseSource (source : Any?) -> (templateId : String , templateData : Dictionary<String , JSON>)? {
         guard let source = source as? (String , JSON) else { return nil }
@@ -20,7 +20,7 @@ class LayoutTemplateJSONParser: NSObject , LayoutTemplateParser {
         return (templateId : source.0 , templateData : templateData)
     }
     
-    func templateId(source: Any) -> String? {
+    @objc func templateId(source: Any) -> String? {
         guard let source = self.parseSource(source: source) else { return nil }
         
         return source.templateId

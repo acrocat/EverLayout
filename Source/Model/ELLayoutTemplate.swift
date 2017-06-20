@@ -25,7 +25,7 @@ import UIKit
 public class ELLayoutTemplate: ELRawData {
     var templateParser : LayoutTemplateParser!
     
-    public var templateId : String? {
+    @objc public var templateId : String? {
         return self.templateParser.templateId(source: self.rawData)
     }
     public var constraints : [ELConstraintModel?]? {

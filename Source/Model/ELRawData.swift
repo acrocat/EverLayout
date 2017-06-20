@@ -24,9 +24,9 @@ import UIKit
 
 open class ELRawData: NSObject
 {
-    public var rawData : Any!
+    @objc public var rawData : Any!
     
-    public init (rawData : Any)
+    @objc public init (rawData : Any)
     {
         super.init()
         

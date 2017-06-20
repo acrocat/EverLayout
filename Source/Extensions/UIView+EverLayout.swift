@@ -28,7 +28,7 @@ extension UIView
     ///
     /// - Parameter view: view to compare with
     /// - Returns: True is they share a superview
-    internal func sharesAncestry (withView view : UIView) -> Bool {
+    @objc internal func sharesAncestry (withView view : UIView) -> Bool {
         var superview = self.superview
         while superview != nil {
             if view.isDescendant(of: superview!) { return true }

@@ -266,7 +266,7 @@ class LayoutConstraintJSONShorthandParser: LayoutConstraintJSONParser , LayoutCo
     ///
     /// - Parameter source: raw constraint data
     /// - Returns: Name of view
-    func comparableViewReference (source: Any) -> String?
+    @objc func comparableViewReference (source: Any) -> String?
     {
         return self.parseTargetViewName(source: source)
     }
@@ -289,7 +289,7 @@ class LayoutConstraintJSONShorthandParser: LayoutConstraintJSONParser , LayoutCo
     ///
     /// - Parameter source: raw constraint data
     /// - Returns: String identifier
-    func identifier(source: Any) -> String?
+    @objc func identifier(source: Any) -> String?
     {
         guard let source = self.parseSource(source: source) else { return nil }
         

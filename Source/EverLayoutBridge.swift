@@ -45,11 +45,11 @@ internal extension Data {
 }
 
 public class EverLayoutBridge: NSObject , StreamDelegate {
-    static let shared : EverLayoutBridge = EverLayoutBridge()
+    @objc static let shared : EverLayoutBridge = EverLayoutBridge()
     
-    public static var connectedHost : CFString?
+    @objc public static var connectedHost : CFString?
     public static var connectedPort : UInt32?
-    public static var connected : Bool = false
+    @objc public static var connected : Bool = false
     private static var attemptingConnection : Bool = false
     
     private static var inputStream : InputStream?
@@ -60,15 +60,15 @@ public class EverLayoutBridge: NSObject , StreamDelegate {
     private static let DEFAULT_IP : String = "127.0.0.1"
     private static let DEFAULT_PORT : String = "3000"
     
-    static var readStream : Unmanaged<CFReadStream>?
-    static var writeStream : Unmanaged<CFWriteStream>?
+    @objc static var readStream : Unmanaged<CFReadStream>?
+    @objc static var writeStream : Unmanaged<CFWriteStream>?
     
     /// Try to establish a socket connection with the EverLayout Bridge server app
     ///
     /// - Parameters:
     ///   - IP: Address to connect to
     ///   - port: Port to connect on
-    public static func connectToLayoutServer (withIP IP : String? = nil , port : String? = nil)
+    @objc public static func connectToLayoutServer (withIP IP : String? = nil , port : String? = nil)
     {
         let address = (IP ?? self.DEFAULT_IP) as CFString
         let port : UInt32 = UInt32(port ?? self.DEFAULT_PORT)!
@@ -122,7 +122,7 @@ public class EverLayoutBridge: NSObject , StreamDelegate {
     /// Report a message to the bridge
     ///
     /// - Parameter message: message to report
-    public static func sendReport (message : String) {
+    @objc public static func sendReport (message : String) {
 //        self.socket?.emit("report", [
 //                "message":message
 //            ])
@@ -143,7 +143,7 @@ public class EverLayoutBridge: NSObject , StreamDelegate {
             // Data has been received
             if let aStream = aStream as? InputStream {
                 let data = Data(reading: aStream)
-                let jsonData = JSON(data: data)
+                let jsonData = JSON(data)
                 
                 if let layoutName = jsonData.dictionary?["name"]?.string {
                     print(layoutName)
