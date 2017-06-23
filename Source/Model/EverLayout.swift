@@ -303,6 +303,8 @@ open class EverLayout: ELRawData
     
     /// Clear the layout and rebuild it from layoutData
     public func reload () {
+        self.clear()
+        
         if let target = self.target , let viewEnvironment = self.viewEnvironment {
             self.build(onView: target, viewEnvironment: viewEnvironment)
         }
