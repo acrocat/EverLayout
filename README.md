@@ -1,3 +1,5 @@
+<img src="http://i.imgur.com/85FA6JR.png" width="400" />
+
 # EverLayout
 EverLayout translates JSON/XML data into iOS layouts which can be downloaded, reused and updated at runtime.
 
@@ -136,6 +138,8 @@ layouts described with code.
 ## Further Reading
 
 [Building and distributing iOS Layouts with EverLayout](https://hackernoon.com/building-and-distributing-ios-layouts-with-everlayout-c9ea41750f6#.b41s5bsh7)
+
+[Downloading an iOS Layout](https://medium.com/@greatirl/downloading-an-ios-layout-a9b0ede80809)
 
 ## Contribute
 
