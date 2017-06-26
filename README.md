@@ -1,4 +1,4 @@
-<img src="http://i.imgur.com/85FA6JR.png" width="400" />
+<img src="http://i.imgur.com/5d67LhG.png"/>
 
 # EverLayout
 EverLayout translates JSON/XML data into iOS layouts which can be downloaded, reused and updated at runtime.
