@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.backgroundColor = .white
         self.window?.makeKeyAndVisible()
         
-        self.window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        self.window?.rootViewController = ViewController()
         
         EverLayoutBridge.connectToLayoutServer(withIP: nil, port: "3333")
         

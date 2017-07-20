@@ -1,5 +1,5 @@
 PODS:
-  - EverLayout (0.8.3)
+  - EverLayout (0.9.4)
 
 DEPENDENCIES:
   - EverLayout (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  EverLayout: 584790b1ec6c42c935bd6ba996d290cb6cb8a5ae
+  EverLayout: 4bc70d329889773a7b94ea3c22c557a4ed78c555
 
 PODFILE CHECKSUM: 3ad4d29e3ae7babd77c018b416f6c4731d8e4c44
 

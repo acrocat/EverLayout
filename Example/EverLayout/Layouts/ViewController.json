@@ -1,6 +1,31 @@
 {
 	"name":"ViewController",
 	"root":{
-        
+        "views":{
+            "!labelWrapper": {
+                "constraints":{
+                    "top":"@super <22",
+                    "left bottom right":"@super"
+                },
+                "properties": {
+                    "backgroundColor":"orange"
+                },
+                "views":{
+                    "!myLabel:UILabel":{
+                        "constraints":{
+                            "center left right":"@super"
+                        },
+                        "properties":{
+                            "textColor":"white",
+                            "text":"Placeholder text",
+                            "fontSize":"30",
+                            "numberOfLines":"0",
+                            "lineBreakMode":"byWordWrapping",
+                            "textAlignment":"center"
+                        }
+                    }
+                }
+            }
+        }
 	}
 }
