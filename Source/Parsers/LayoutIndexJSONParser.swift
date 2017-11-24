@@ -34,7 +34,7 @@ public class LayoutIndexJSONParser : NSObject , LayoutIndexParser
     {
         guard let source = source as? Data else { return nil }
         
-        return JSON(data: source).dictionary
+        return JSON(source).dictionary
     }
     
     /// Parse the name of the layout

@@ -86,7 +86,7 @@ public class ELConstraintModel: ELRawData
             
             // Constraint priority
             if let priority = self.priority {
-                constraint.priority = UILayoutPriority(priority)
+                constraint.priority = UILayoutPriority(Float(priority))
             }
             
             // SizeClasses

@@ -143,7 +143,7 @@ public class EverLayoutBridge: NSObject , StreamDelegate {
             // Data has been received
             if let aStream = aStream as? InputStream {
                 let data = Data(reading: aStream)
-                let jsonData = JSON(data: data)
+                let jsonData = JSON(data)
                 
                 if let layoutName = jsonData.dictionary?["name"]?.string {
                     print(layoutName)

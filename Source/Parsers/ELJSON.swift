@@ -57,7 +57,7 @@ class ELJSON
         
         for (index , item) in source
         {
-            rd[index] = ELJSON(data: item)
+            rd[index] = ELJSON(item)
         }
         
         return rd

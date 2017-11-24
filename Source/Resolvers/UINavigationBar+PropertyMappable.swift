@@ -27,13 +27,12 @@ extension UINavigationBar : TextColorMappable {
         guard let color = UIColor.color(fromName: color) ?? UIColor(hex: color) else { return }
         
         self.titleTextAttributes = [
-            NSForegroundColorAttributeName : color as Any
+            NSAttributedStringKey.foregroundColor: color as Any
         ]
     }
     
     func getMappedTextColor() -> String? {
-        guard let color = self.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor else { return nil }
-        
+        guard let color = self.titleTextAttributes?[NSAttributedStringKey.foregroundColor] as? UIColor else { return nil }
         return UIColor.name(ofColor: color)
     }
 }

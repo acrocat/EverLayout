@@ -49,12 +49,10 @@
 		607FACE51AFB9204008FA782 /* EverLayout_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EverLayout_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		6C816DDE82F1A6E24711E5D6 /* Pods-EverLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6FBF717F3D779EE53B60BB94 /* Pods_EverLayout_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84330371EDA12CB8D9059F2B /* Pods-EverLayout_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example/Pods-EverLayout_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AD172D4C8DDC72C6345A37B9 /* Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Example-EverLayout_Tests/Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E8DE5AF42CAD2294178D05CA /* EverLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = EverLayout.podspec; path = ../EverLayout.podspec; sourceTree = "<group>"; };
-		EAE7F957D64545DBA9550C6D /* Pods-EverLayout_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EverLayout_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EverLayout_Tests/Pods-EverLayout_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		ED38724217A7381DFD07ED5F /* Pods_EverLayout_Example_EverLayout_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EverLayout_Example_EverLayout_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -94,8 +92,6 @@
 			children = (
 				5BA14713EB37B785EE6DB287 /* Pods-EverLayout_Example.debug.xcconfig */,
 				84330371EDA12CB8D9059F2B /* Pods-EverLayout_Example.release.xcconfig */,
-				6C816DDE82F1A6E24711E5D6 /* Pods-EverLayout_Tests.debug.xcconfig */,
-				EAE7F957D64545DBA9550C6D /* Pods-EverLayout_Tests.release.xcconfig */,
 				41598E1AD6B87E446F112090 /* Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig */,
 				AD172D4C8DDC72C6345A37B9 /* Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig */,
 			);
@@ -230,10 +226,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = TXS69XU8F2;
 						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = TXS69XU8F2;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -514,12 +512,13 @@
 			baseConfigurationReference = 5BA14713EB37B785EE6DB287 /* Pods-EverLayout_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TXS69XU8F2;
 				INFOPLIST_FILE = EverLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -528,12 +527,13 @@
 			baseConfigurationReference = 84330371EDA12CB8D9059F2B /* Pods-EverLayout_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TXS69XU8F2;
 				INFOPLIST_FILE = EverLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -541,6 +541,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 41598E1AD6B87E446F112090 /* Pods-EverLayout_Example-EverLayout_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = TXS69XU8F2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -553,7 +554,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EverLayout_Example.app/EverLayout_Example";
 			};
 			name = Debug;
@@ -562,6 +563,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AD172D4C8DDC72C6345A37B9 /* Pods-EverLayout_Example-EverLayout_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = TXS69XU8F2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -570,7 +572,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EverLayout_Example.app/EverLayout_Example";
 			};
 			name = Release;
